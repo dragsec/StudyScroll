@@ -9,33 +9,33 @@
     {
       "id": "sql-left-join",
       "difficulty": "easy",
-      "prompt": "Forum check: what happens to unmatched left-side rows in a LEFT JOIN?",
+      "prompt": "What happens to unmatched left-side rows in a LEFT JOIN?",
       "answers": [
         {
           "id": "a",
-          "text": "From what I've seen, a LEFT JOIN preserves every row from its left input.",
+          "text": "A LEFT JOIN preserves every row from its left input.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A LEFT JOIN preserves every row from its left input.",
-            "sus": "This one is legit. A LEFT JOIN preserves every row from its left input."
+            "legit": "A LEFT JOIN preserves every row from its left input. Legit was the accurate read.",
+            "sus": "A LEFT JOIN preserves every row from its left input. The evidence supports the original reply."
           }
         },
         {
           "id": "b",
-          "text": "The practical answer is: a later WHERE condition on a right-side column can still filter them out.",
+          "text": "A later WHERE condition on a right-side column can still filter them out.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A later WHERE condition on a right-side column can still filter them out.",
-            "sus": "This one is legit. A later WHERE condition on a right-side column can still filter them out."
+            "legit": "A later WHERE condition on a right-side column can still filter them out. Marking it Legit was correct.",
+            "sus": "A later WHERE condition on a right-side column can still filter them out. The claim is supported rather than suspicious."
           }
         },
         {
           "id": "c",
-          "text": "My answer: They remain in the result with nulls for missing right-side columns.",
+          "text": "They remain in the result with nulls for missing right-side columns.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. They remain in the result with nulls for missing right-side columns.",
-            "sus": "This one is legit. They remain in the result with nulls for missing right-side columns."
+            "legit": "They remain in the result with nulls for missing right-side columns. The source agrees with your Legit vote.",
+            "sus": "They remain in the result with nulls for missing right-side columns. The Sus label does not fit this claim."
           }
         }
       ],
@@ -48,33 +48,33 @@
     {
       "id": "sql-null-comparison",
       "difficulty": "easy",
-      "prompt": "This keeps starting arguments: how should SQL test whether a value is null?",
+      "prompt": "How should SQL test whether a value is null?",
       "answers": [
         {
           "id": "a",
-          "text": "The practical answer is: null represents an unknown or missing value, not an ordinary comparable value.",
+          "text": "Null represents an unknown or missing value, not an ordinary comparable value.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Null represents an unknown or missing value, not an ordinary comparable value.",
-            "sus": "This one is legit. Null represents an unknown or missing value, not an ordinary comparable value."
+            "legit": "Null represents an unknown or missing value, not an ordinary comparable value. You classified that correctly as Legit.",
+            "sus": "Null represents an unknown or missing value, not an ordinary comparable value. The original wording holds up."
           }
         },
         {
           "id": "b",
-          "text": "My answer: Use `IS NULL` or `IS NOT NULL`.",
+          "text": "Use `IS NULL` or `IS NOT NULL`.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Use `IS NULL` or `IS NOT NULL`.",
-            "sus": "This one is legit. Use `IS NULL` or `IS NOT NULL`."
+            "legit": "Use `IS NULL` or `IS NOT NULL`. You were right to trust this reply.",
+            "sus": "Use `IS NULL` or `IS NOT NULL`. The reply belongs under Legit."
           }
         },
         {
           "id": "c",
-          "text": "I'd phrase it like this: Use `= NULL`.",
+          "text": "Use `= NULL`.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Comparisons with null evaluate to unknown rather than true.",
-            "sus": "Good catch. Comparisons with null evaluate to unknown rather than true."
+            "legit": "Comparisons with null evaluate to unknown rather than true. That makes the original claim unsafe to label Legit.",
+            "sus": "Comparisons with null evaluate to unknown rather than true. Your judgment caught the technical error."
           }
         }
       ],
@@ -87,33 +87,33 @@
     {
       "id": "sql-count",
       "difficulty": "easy",
-      "prompt": "Settle a debate for me: what is the difference between `COUNT(*)` and `COUNT(column)`?",
+      "prompt": "What is the difference between `COUNT(*)` and `COUNT(column)`?",
       "answers": [
         {
           "id": "a",
-          "text": "Pretty sure this is the key: `COUNT(*)` counts rows.",
+          "text": "`COUNT(*)` counts rows.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. `COUNT(*)` counts rows.",
-            "sus": "This one is legit. `COUNT(*)` counts rows."
+            "legit": "`COUNT(*)` counts rows. This supports the Legit label you chose.",
+            "sus": "`COUNT(*)` counts rows. There was no false claim to flag here."
           }
         },
         {
           "id": "b",
-          "text": "From what I've seen, `COUNT(column)` treats each null as a zero and counts it.",
+          "text": "`COUNT(column)` treats each null as a zero and counts it.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. COUNT(column) excludes rows where the counted expression is null.",
-            "sus": "Good catch. COUNT(column) excludes rows where the counted expression is null."
+            "legit": "COUNT(column) excludes rows where the counted expression is null. The error puts the original reply under Sus.",
+            "sus": "COUNT(column) excludes rows where the counted expression is null. Sus was the correct call here."
           }
         },
         {
           "id": "c",
-          "text": "The practical answer is: they always return the same number.",
+          "text": "They always return the same number.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Nullable expressions can make `COUNT(column)` smaller than `COUNT(*)`.",
-            "sus": "Good catch. Nullable expressions can make `COUNT(column)` smaller than `COUNT(*)`."
+            "legit": "Nullable expressions can make `COUNT(column)` smaller than `COUNT(*)`. The source contradicts the original reply.",
+            "sus": "Nullable expressions can make `COUNT(column)` smaller than `COUNT(*)`. The Sus label fits the misconception."
           }
         }
       ],
@@ -126,33 +126,33 @@
     {
       "id": "sql-group-by",
       "difficulty": "medium",
-      "prompt": "Settle a debate for me: what does GROUP BY do before aggregate results are produced?",
+      "prompt": "What does GROUP BY do before aggregate results are produced?",
       "answers": [
         {
           "id": "a",
-          "text": "Pretty sure this is the key: Only ORDER BY guarantees presentation order.",
+          "text": "Only ORDER BY guarantees presentation order.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Only ORDER BY guarantees presentation order.",
-            "sus": "This one is legit. Only ORDER BY guarantees presentation order."
+            "legit": "Only ORDER BY guarantees presentation order. This supports the Legit label you chose.",
+            "sus": "Only ORDER BY guarantees presentation order. The claim is supported rather than suspicious."
           }
         },
         {
           "id": "b",
-          "text": "From what I've seen, each group produces one aggregate result row unless further grouping features are used.",
+          "text": "Each group produces one aggregate result row unless further grouping features are used.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Each group produces one aggregate result row unless further grouping features are used.",
-            "sus": "This one is legit. Each group produces one aggregate result row unless further grouping features are used."
+            "legit": "Each group produces one aggregate result row unless further grouping features are used. Legit was the accurate read.",
+            "sus": "Each group produces one aggregate result row unless further grouping features are used. The Sus label does not fit this claim."
           }
         },
         {
           "id": "c",
-          "text": "The practical answer is: it partitions input rows into groups with equal grouping expressions.",
+          "text": "It partitions input rows into groups with equal grouping expressions.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. It partitions input rows into groups with equal grouping expressions.",
-            "sus": "This one is legit. It partitions input rows into groups with equal grouping expressions."
+            "legit": "It partitions input rows into groups with equal grouping expressions. Marking it Legit was correct.",
+            "sus": "It partitions input rows into groups with equal grouping expressions. The original wording holds up."
           }
         }
       ],
@@ -165,33 +165,33 @@
     {
       "id": "sql-index-write-cost",
       "difficulty": "medium",
-      "prompt": "Tiny knowledge check: can adding an index make every workload faster?",
+      "prompt": "Can adding an index make every workload faster?",
       "answers": [
         {
           "id": "a",
-          "text": "Unless I'm mixing things up, the optimizer may ignore an index when another plan is cheaper.",
+          "text": "The optimizer may ignore an index when another plan is cheaper.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The optimizer may ignore an index when another plan is cheaper.",
-            "sus": "This one is legit. The optimizer may ignore an index when another plan is cheaper."
+            "legit": "The optimizer may ignore an index when another plan is cheaper. Your Legit judgment holds up.",
+            "sus": "The optimizer may ignore an index when another plan is cheaper. The evidence supports the original reply."
           }
         },
         {
           "id": "b",
-          "text": "This is what trips people up: Yes, indexes have no write or storage cost.",
+          "text": "Yes, indexes have no write or storage cost.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Indexes consume storage and must be maintained during writes.",
-            "sus": "Good catch. Indexes consume storage and must be maintained during writes."
+            "legit": "Indexes consume storage and must be maintained during writes. That distinction makes the original answer Sus.",
+            "sus": "Indexes consume storage and must be maintained during writes. The evidence supports your Sus vote."
           }
         },
         {
           "id": "c",
-          "text": "This was the explanation that clicked for me: An index can speed selected reads while slowing inserts and updates.",
+          "text": "An index can speed selected reads while slowing inserts and updates.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. An index can speed selected reads while slowing inserts and updates.",
-            "sus": "This one is legit. An index can speed selected reads while slowing inserts and updates."
+            "legit": "An index can speed selected reads while slowing inserts and updates. That makes your Legit call correct.",
+            "sus": "An index can speed selected reads while slowing inserts and updates. The Sus label does not fit this claim."
           }
         }
       ],
@@ -204,33 +204,33 @@
     {
       "id": "sql-transaction-atomicity",
       "difficulty": "medium",
-      "prompt": "A teammate asked me this: what does transaction atomicity promise?",
+      "prompt": "What does transaction atomicity promise?",
       "answers": [
         {
           "id": "a",
-          "text": "This was the explanation that clicked for me: The transaction's changes commit as a unit or are rolled back as a unit.",
+          "text": "The transaction's changes commit as a unit or are rolled back as a unit.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The transaction's changes commit as a unit or are rolled back as a unit.",
-            "sus": "This one is legit. The transaction's changes commit as a unit or are rolled back as a unit."
+            "legit": "The transaction's changes commit as a unit or are rolled back as a unit. That makes your Legit call correct.",
+            "sus": "The transaction's changes commit as a unit or are rolled back as a unit. This one was safe to mark Legit."
           }
         },
         {
           "id": "b",
-          "text": "Pretty sure this is the key: Other transactions can never run concurrently.",
+          "text": "Other transactions can never run concurrently.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Concurrency is controlled by isolation, not atomicity alone.",
-            "sus": "Good catch. Concurrency is controlled by isolation, not atomicity alone."
+            "legit": "Concurrency is controlled by isolation, not atomicity alone. The source contradicts the original reply.",
+            "sus": "Concurrency is controlled by isolation, not atomicity alone. Your Sus vote caught the problem."
           }
         },
         {
           "id": "c",
-          "text": "From what I've seen, atomicity alone guarantees that committed data survives a system crash.",
+          "text": "Atomicity alone guarantees that committed data survives a system crash.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Survival of committed data is the durability property, not atomicity by itself.",
-            "sus": "Good catch. Survival of committed data is the durability property, not atomicity by itself."
+            "legit": "Survival of committed data is the durability property, not atomicity by itself. The original reply should be marked Sus.",
+            "sus": "Survival of committed data is the durability property, not atomicity by itself. You were right not to trust that reply."
           }
         }
       ],
@@ -243,33 +243,33 @@
     {
       "id": "sql-isolation",
       "difficulty": "medium",
-      "prompt": "Someone dropped this in the group chat: do all SQL isolation levels prevent every read anomaly?",
+      "prompt": "Do all SQL isolation levels prevent every read anomaly?",
       "answers": [
         {
           "id": "a",
-          "text": "The way I understand it: serializable aims to produce outcomes consistent with some serial order.",
+          "text": "Serializable aims to produce outcomes consistent with some serial order.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Serializable aims to produce outcomes consistent with some serial order.",
-            "sus": "This one is legit. Serializable aims to produce outcomes consistent with some serial order."
+            "legit": "Serializable aims to produce outcomes consistent with some serial order. Your Legit judgment holds up.",
+            "sus": "Serializable aims to produce outcomes consistent with some serial order. The evidence supports the original reply."
           }
         },
         {
           "id": "b",
-          "text": "Short version: The exact behavior can depend on the database implementation.",
+          "text": "The exact behavior can depend on the database implementation.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The exact behavior can depend on the database implementation.",
-            "sus": "This one is legit. The exact behavior can depend on the database implementation."
+            "legit": "The exact behavior can depend on the database implementation. That is a solid Legit pick.",
+            "sus": "The exact behavior can depend on the database implementation. The claim is supported rather than suspicious."
           }
         },
         {
           "id": "c",
-          "text": "I'd go with this: Yes, every level behaves like serial execution.",
+          "text": "Yes, every level behaves like serial execution.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Lower isolation levels allow specific anomalies.",
-            "sus": "Good catch. Lower isolation levels allow specific anomalies."
+            "legit": "Lower isolation levels allow specific anomalies. The original claim needed a Sus vote.",
+            "sus": "Lower isolation levels allow specific anomalies. That was correctly classified as Sus."
           }
         }
       ],
@@ -282,33 +282,33 @@
     {
       "id": "sql-window-function",
       "difficulty": "medium",
-      "prompt": "I've seen mixed takes, so: how does a window function differ from GROUP BY aggregation?",
+      "prompt": "How does a window function differ from GROUP BY aggregation?",
       "answers": [
         {
           "id": "a",
-          "text": "I think the important part is this: a partition defines which rows participate in each window calculation.",
+          "text": "A partition defines which rows participate in each window calculation.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A partition defines which rows participate in each window calculation.",
-            "sus": "This one is legit. A partition defines which rows participate in each window calculation."
+            "legit": "A partition defines which rows participate in each window calculation. This supports the Legit label you chose.",
+            "sus": "A partition defines which rows participate in each window calculation. The claim is supported rather than suspicious."
           }
         },
         {
           "id": "b",
-          "text": "Unless I'm mixing things up, it can compute across related rows without collapsing them into one row per group.",
+          "text": "It can compute across related rows without collapsing them into one row per group.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. It can compute across related rows without collapsing them into one row per group.",
-            "sus": "This one is legit. It can compute across related rows without collapsing them into one row per group."
+            "legit": "It can compute across related rows without collapsing them into one row per group. Legit was the accurate read.",
+            "sus": "It can compute across related rows without collapsing them into one row per group. The Sus label does not fit this claim."
           }
         },
         {
           "id": "c",
-          "text": "This is what trips people up: It can only be used without an ORDER BY clause.",
+          "text": "It can only be used without an ORDER BY clause.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Many window calculations use ordering inside the window specification.",
-            "sus": "Good catch. Many window calculations use ordering inside the window specification."
+            "legit": "Many window calculations use ordering inside the window specification. The source contradicts the original reply.",
+            "sus": "Many window calculations use ordering inside the window specification. The evidence supports your Sus vote."
           }
         }
       ],
@@ -321,33 +321,33 @@
     {
       "id": "sql-foreign-key",
       "difficulty": "medium",
-      "prompt": "A teammate asked me this: what does a foreign key enforce?",
+      "prompt": "What does a foreign key enforce?",
       "answers": [
         {
           "id": "a",
-          "text": "This was the explanation that clicked for me: Referenced values must satisfy the declared referential relationship.",
+          "text": "Referenced values must satisfy the declared referential relationship.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Referenced values must satisfy the declared referential relationship.",
-            "sus": "This one is legit. Referenced values must satisfy the declared referential relationship."
+            "legit": "Referenced values must satisfy the declared referential relationship. The source agrees with your Legit vote.",
+            "sus": "Referenced values must satisfy the declared referential relationship. This is a Legit statement, not a trap."
           }
         },
         {
           "id": "b",
-          "text": "Pretty sure this is the key: It automatically creates every useful index on the referencing table.",
+          "text": "It automatically creates every useful index on the referencing table.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Index creation behavior varies and referencing columns may need an explicit index.",
-            "sus": "Good catch. Index creation behavior varies and referencing columns may need an explicit index."
+            "legit": "Index creation behavior varies and referencing columns may need an explicit index. The original wording does not hold up.",
+            "sus": "Index creation behavior varies and referencing columns may need an explicit index. You flagged exactly what was wrong."
           }
         },
         {
           "id": "c",
-          "text": "From what I've seen, a foreign key proves that every referenced row is valid under all business rules.",
+          "text": "A foreign key proves that every referenced row is valid under all business rules.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A foreign key enforces the declared relationship only; other business rules need separate constraints or logic.",
-            "sus": "Good catch. A foreign key enforces the declared relationship only; other business rules need separate constraints or logic."
+            "legit": "A foreign key enforces the declared relationship only; other business rules need separate constraints or logic. The reply changes an important technical fact.",
+            "sus": "A foreign key enforces the declared relationship only; other business rules need separate constraints or logic. Sus was the correct call here."
           }
         }
       ],
@@ -360,33 +360,33 @@
     {
       "id": "sql-mvcc",
       "difficulty": "hard",
-      "prompt": "This keeps starting arguments: why do MVCC databases keep multiple row versions?",
+      "prompt": "Why do MVCC databases keep multiple row versions?",
       "answers": [
         {
           "id": "a",
-          "text": "The practical answer is: old versions are always retained forever.",
+          "text": "Old versions are always retained forever.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Obsolete versions are eventually reclaimed by database maintenance.",
-            "sus": "Good catch. Obsolete versions are eventually reclaimed by database maintenance."
+            "legit": "Obsolete versions are eventually reclaimed by database maintenance. The original wording does not hold up.",
+            "sus": "Obsolete versions are eventually reclaimed by database maintenance. The evidence supports your Sus vote."
           }
         },
         {
           "id": "b",
-          "text": "My answer: Visibility rules decide which version a transaction can see.",
+          "text": "Visibility rules decide which version a transaction can see.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Visibility rules decide which version a transaction can see.",
-            "sus": "This one is legit. Visibility rules decide which version a transaction can see."
+            "legit": "Visibility rules decide which version a transaction can see. That makes your Legit call correct.",
+            "sus": "Visibility rules decide which version a transaction can see. This reply deserved a Legit vote."
           }
         },
         {
           "id": "c",
-          "text": "I'd phrase it like this: Readers can observe a consistent snapshot while concurrent changes proceed.",
+          "text": "Readers can observe a consistent snapshot while concurrent changes proceed.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Readers can observe a consistent snapshot while concurrent changes proceed.",
-            "sus": "This one is legit. Readers can observe a consistent snapshot while concurrent changes proceed."
+            "legit": "Readers can observe a consistent snapshot while concurrent changes proceed. This supports the Legit label you chose.",
+            "sus": "Readers can observe a consistent snapshot while concurrent changes proceed. This one should stay marked Legit."
           }
         }
       ],
@@ -399,33 +399,33 @@
     {
       "id": "sql-upsert-race",
       "difficulty": "hard",
-      "prompt": "Settle a debate for me: why is a database-native upsert safer than a separate SELECT followed by INSERT?",
+      "prompt": "Why is a database-native upsert safer than a separate SELECT followed by INSERT?",
       "answers": [
         {
           "id": "a",
-          "text": "Pretty sure this is the key: A unique constraint normally defines the conflict being handled.",
+          "text": "A unique constraint normally defines the conflict being handled.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A unique constraint normally defines the conflict being handled.",
-            "sus": "This one is legit. A unique constraint normally defines the conflict being handled."
+            "legit": "A unique constraint normally defines the conflict being handled. Your Legit vote was right.",
+            "sus": "A unique constraint normally defines the conflict being handled. This one should stay marked Legit."
           }
         },
         {
           "id": "b",
-          "text": "From what I've seen, it can resolve the conflict atomically under the database's concurrency rules.",
+          "text": "It can resolve the conflict atomically under the database's concurrency rules.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. It can resolve the conflict atomically under the database's concurrency rules.",
-            "sus": "This one is legit. It can resolve the conflict atomically under the database's concurrency rules."
+            "legit": "It can resolve the conflict atomically under the database's concurrency rules. Your Legit judgment holds up.",
+            "sus": "It can resolve the conflict atomically under the database's concurrency rules. This is a Legit statement, not a trap."
           }
         },
         {
           "id": "c",
-          "text": "The practical answer is: a prior SELECT permanently locks the absence of a row.",
+          "text": "A prior SELECT permanently locks the absence of a row.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Another transaction can insert between a separate check and insert.",
-            "sus": "Good catch. Another transaction can insert between a separate check and insert."
+            "legit": "Another transaction can insert between a separate check and insert. The original reply is what needed flagging.",
+            "sus": "Another transaction can insert between a separate check and insert. The evidence supports your Sus vote."
           }
         }
       ],
@@ -438,33 +438,33 @@
     {
       "id": "sql-recursive-cte",
       "difficulty": "hard",
-      "prompt": "Before I confidently say the wrong thing: what can a recursive common table expression express?",
+      "prompt": "What can a recursive common table expression express?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd phrase it like this: Recursive CTEs can traverse only trees, never graphs.",
+          "text": "Recursive CTEs can traverse only trees, never graphs.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Recursive CTEs can traverse graphs too, provided the query handles termination and cycles appropriately.",
-            "sus": "Good catch. Recursive CTEs can traverse graphs too, provided the query handles termination and cycles appropriately."
+            "legit": "Recursive CTEs can traverse graphs too, provided the query handles termination and cycles appropriately. That distinction makes the original answer Sus.",
+            "sus": "Recursive CTEs can traverse graphs too, provided the query handles termination and cycles appropriately. Your judgment caught the technical error."
           }
         },
         {
           "id": "b",
-          "text": "The way I understand it: only calculations that finish in one non-recursive query step.",
+          "text": "Only calculations that finish in one non-recursive query step.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A recursive term repeatedly consumes rows produced by earlier iterations.",
-            "sus": "Good catch. A recursive term repeatedly consumes rows produced by earlier iterations."
+            "legit": "A recursive term repeatedly consumes rows produced by earlier iterations. The error puts the original reply under Sus.",
+            "sus": "A recursive term repeatedly consumes rows produced by earlier iterations. That makes your Sus choice accurate."
           }
         },
         {
           "id": "c",
-          "text": "Short version: A recursive CTE always detects and stops cycles automatically.",
+          "text": "A recursive CTE always detects and stops cycles automatically.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Cycle handling depends on the query and database features; recursion needs an explicit safe stopping strategy.",
-            "sus": "Good catch. Cycle handling depends on the query and database features; recursion needs an explicit safe stopping strategy."
+            "legit": "Cycle handling depends on the query and database features; recursion needs an explicit safe stopping strategy. The source contradicts the original reply.",
+            "sus": "Cycle handling depends on the query and database features; recursion needs an explicit safe stopping strategy. You spotted the misleading part."
           }
         }
       ],

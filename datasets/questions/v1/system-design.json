@@ -9,33 +9,33 @@
     {
       "id": "system-design-load-balancer",
       "difficulty": "easy",
-      "prompt": "Before I confidently say the wrong thing: what is a common role of a load balancer?",
+      "prompt": "What is a common role of a load balancer?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd phrase it like this: Health checks can prevent routing to unhealthy instances.",
+          "text": "Health checks can prevent routing to unhealthy instances.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Health checks can prevent routing to unhealthy instances.",
-            "sus": "This one is legit. Health checks can prevent routing to unhealthy instances."
+            "legit": "Health checks can prevent routing to unhealthy instances. This supports the Legit label you chose.",
+            "sus": "Health checks can prevent routing to unhealthy instances. This one should stay marked Legit."
           }
         },
         {
           "id": "b",
-          "text": "The way I understand it: distribute incoming requests across healthy service instances.",
+          "text": "Distribute incoming requests across healthy service instances.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Distribute incoming requests across healthy service instances.",
-            "sus": "This one is legit. Distribute incoming requests across healthy service instances."
+            "legit": "Distribute incoming requests across healthy service instances. Legit was the accurate read.",
+            "sus": "Distribute incoming requests across healthy service instances. This is a Legit statement, not a trap."
           }
         },
         {
           "id": "c",
-          "text": "Short version: A load balancer routes traffic; it is not the primary database.",
+          "text": "A load balancer routes traffic; it is not the primary database.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A load balancer routes traffic; it is not the primary database.",
-            "sus": "This one is legit. A load balancer routes traffic; it is not the primary database."
+            "legit": "A load balancer routes traffic; it is not the primary database. Marking it Legit was correct.",
+            "sus": "A load balancer routes traffic; it is not the primary database. The rule confirms the reply instead of refuting it."
           }
         }
       ],
@@ -48,33 +48,33 @@
     {
       "id": "system-design-cache",
       "difficulty": "easy",
-      "prompt": "Someone dropped this in the group chat: why is a cache placed in front of a slower data source?",
+      "prompt": "Why is a cache placed in front of a slower data source?",
       "answers": [
         {
           "id": "a",
-          "text": "The way I understand it: to serve repeated reads with lower latency and less backend load.",
+          "text": "To serve repeated reads with lower latency and less backend load.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. To serve repeated reads with lower latency and less backend load.",
-            "sus": "This one is legit. To serve repeated reads with lower latency and less backend load."
+            "legit": "To serve repeated reads with lower latency and less backend load. Your Legit judgment holds up.",
+            "sus": "To serve repeated reads with lower latency and less backend load. The reply belongs under Legit."
           }
         },
         {
           "id": "b",
-          "text": "Short version: To guarantee that data can never become stale.",
+          "text": "To guarantee that data can never become stale.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Caches need an explicit freshness and invalidation strategy.",
-            "sus": "Good catch. Caches need an explicit freshness and invalidation strategy."
+            "legit": "Caches need an explicit freshness and invalidation strategy. The Legit label misses the flaw here.",
+            "sus": "Caches need an explicit freshness and invalidation strategy. The evidence supports your Sus vote."
           }
         },
         {
           "id": "c",
-          "text": "I'd go with this: A cache miss still requires access to the underlying source.",
+          "text": "A cache miss still requires access to the underlying source.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A cache miss still requires access to the underlying source.",
-            "sus": "This one is legit. A cache miss still requires access to the underlying source."
+            "legit": "A cache miss still requires access to the underlying source. That makes your Legit call correct.",
+            "sus": "A cache miss still requires access to the underlying source. This one was safe to mark Legit."
           }
         }
       ],
@@ -87,33 +87,33 @@
     {
       "id": "system-design-replication",
       "difficulty": "easy",
-      "prompt": "Forum check: what does data replication provide?",
+      "prompt": "What does data replication provide?",
       "answers": [
         {
           "id": "a",
-          "text": "From what I've seen, automatic protection from every application bug.",
+          "text": "Automatic protection from every application bug.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A bad write can be replicated to every copy.",
-            "sus": "Good catch. A bad write can be replicated to every copy."
+            "legit": "A bad write can be replicated to every copy. The original reply was the misconception in the thread.",
+            "sus": "A bad write can be replicated to every copy. That makes your Sus choice accurate."
           }
         },
         {
           "id": "b",
-          "text": "The practical answer is: a live replica is a complete substitute for an independent backup.",
+          "text": "A live replica is a complete substitute for an independent backup.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Replication can copy deletion or corruption, so recovery still needs an appropriate backup strategy.",
-            "sus": "Good catch. Replication can copy deletion or corruption, so recovery still needs an appropriate backup strategy."
+            "legit": "Replication can copy deletion or corruption, so recovery still needs an appropriate backup strategy. That distinction makes the original answer Sus.",
+            "sus": "Replication can copy deletion or corruption, so recovery still needs an appropriate backup strategy. You spotted the misleading part."
           }
         },
         {
           "id": "c",
-          "text": "My answer: Additional copies that can improve availability or read capacity.",
+          "text": "Additional copies that can improve availability or read capacity.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Additional copies that can improve availability or read capacity.",
-            "sus": "This one is legit. Additional copies that can improve availability or read capacity."
+            "legit": "Additional copies that can improve availability or read capacity. You were right to trust this reply.",
+            "sus": "Additional copies that can improve availability or read capacity. This is a Legit statement, not a trap."
           }
         }
       ],
@@ -126,33 +126,33 @@
     {
       "id": "system-design-sharding",
       "difficulty": "medium",
-      "prompt": "Curious where people land on this: what does database sharding change?",
+      "prompt": "What does database sharding change?",
       "answers": [
         {
           "id": "a",
-          "text": "My answer: Cross-shard queries and transactions can become more complex.",
+          "text": "Cross-shard queries and transactions can become more complex.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Cross-shard queries and transactions can become more complex.",
-            "sus": "This one is legit. Cross-shard queries and transactions can become more complex."
+            "legit": "Cross-shard queries and transactions can become more complex. That makes your Legit call correct.",
+            "sus": "Cross-shard queries and transactions can become more complex. This one was safe to mark Legit."
           }
         },
         {
           "id": "b",
-          "text": "I'd phrase it like this: It partitions data across multiple database nodes.",
+          "text": "It partitions data across multiple database nodes.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. It partitions data across multiple database nodes.",
-            "sus": "This one is legit. It partitions data across multiple database nodes."
+            "legit": "It partitions data across multiple database nodes. This supports the Legit label you chose.",
+            "sus": "It partitions data across multiple database nodes. This was accurate as written."
           }
         },
         {
           "id": "c",
-          "text": "The way I understand it: the partition key determines placement and strongly affects balance.",
+          "text": "The partition key determines placement and strongly affects balance.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The partition key determines placement and strongly affects balance.",
-            "sus": "This one is legit. The partition key determines placement and strongly affects balance."
+            "legit": "The partition key determines placement and strongly affects balance. Legit was the accurate read.",
+            "sus": "The partition key determines placement and strongly affects balance. This reply deserved a Legit vote."
           }
         }
       ],
@@ -165,33 +165,33 @@
     {
       "id": "system-design-idempotency",
       "difficulty": "medium",
-      "prompt": "Before I confidently say the wrong thing: why are idempotency keys useful for write APIs?",
+      "prompt": "Why are idempotency keys useful for write APIs?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd phrase it like this: They help repeated delivery avoid creating the same logical operation twice.",
+          "text": "They help repeated delivery avoid creating the same logical operation twice.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. They help repeated delivery avoid creating the same logical operation twice.",
-            "sus": "This one is legit. They help repeated delivery avoid creating the same logical operation twice."
+            "legit": "They help repeated delivery avoid creating the same logical operation twice. This supports the Legit label you chose.",
+            "sus": "They help repeated delivery avoid creating the same logical operation twice. There was no false claim to flag here."
           }
         },
         {
           "id": "b",
-          "text": "The way I understand it: they make network retries unnecessary.",
+          "text": "They make network retries unnecessary.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Retries still occur; the key helps the server recognize duplicates.",
-            "sus": "Good catch. Retries still occur; the key helps the server recognize duplicates."
+            "legit": "Retries still occur; the key helps the server recognize duplicates. The error puts the original reply under Sus.",
+            "sus": "Retries still occur; the key helps the server recognize duplicates. Sus was the correct call here."
           }
         },
         {
           "id": "c",
-          "text": "Short version: The server must store or derive the result associated with a key.",
+          "text": "The server must store or derive the result associated with a key.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The server must store or derive the result associated with a key.",
-            "sus": "This one is legit. The server must store or derive the result associated with a key."
+            "legit": "The server must store or derive the result associated with a key. Marking it Legit was correct.",
+            "sus": "The server must store or derive the result associated with a key. This was accurate as written."
           }
         }
       ],
@@ -204,33 +204,33 @@
     {
       "id": "system-design-queue",
       "difficulty": "medium",
-      "prompt": "This keeps starting arguments: what does a durable message queue help decouple?",
+      "prompt": "What does a durable message queue help decouple?",
       "answers": [
         {
           "id": "a",
-          "text": "The practical answer is: it guarantees each message is processed exactly once without application logic.",
+          "text": "It guarantees each message is processed exactly once without application logic.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Many queues use at-least-once delivery, so consumers should handle duplicates.",
-            "sus": "Good catch. Many queues use at-least-once delivery, so consumers should handle duplicates."
+            "legit": "Many queues use at-least-once delivery, so consumers should handle duplicates. The source contradicts the original reply.",
+            "sus": "Many queues use at-least-once delivery, so consumers should handle duplicates. The evidence supports your Sus vote."
           }
         },
         {
           "id": "b",
-          "text": "My answer: A queue always preserves one global message order across all consumers.",
+          "text": "A queue always preserves one global message order across all consumers.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Ordering guarantees depend on the queue type, partitioning, and consumer design.",
-            "sus": "Good catch. Ordering guarantees depend on the queue type, partitioning, and consumer design."
+            "legit": "Ordering guarantees depend on the queue type, partitioning, and consumer design. The original reply should be marked Sus.",
+            "sus": "Ordering guarantees depend on the queue type, partitioning, and consumer design. That was correctly classified as Sus."
           }
         },
         {
           "id": "c",
-          "text": "I'd phrase it like this: It lets producers and consumers operate at different rates and tolerate each other's temporary outages.",
+          "text": "It lets producers and consumers operate at different rates and tolerate each other's temporary outages.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. It lets producers and consumers operate at different rates and tolerate each other's temporary outages.",
-            "sus": "This one is legit. It lets producers and consumers operate at different rates and tolerate each other's temporary outages."
+            "legit": "It lets producers and consumers operate at different rates and tolerate each other's temporary outages. The evidence backs your Legit choice.",
+            "sus": "It lets producers and consumers operate at different rates and tolerate each other's temporary outages. There was no false claim to flag here."
           }
         }
       ],
@@ -243,33 +243,33 @@
     {
       "id": "system-design-circuit-breaker",
       "difficulty": "medium",
-      "prompt": "Tiny knowledge check: what is the purpose of a circuit breaker?",
+      "prompt": "What is the purpose of a circuit breaker?",
       "answers": [
         {
           "id": "a",
-          "text": "Unless I'm mixing things up, a half-open state can probe whether recovery has occurred.",
+          "text": "A half-open state can probe whether recovery has occurred.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A half-open state can probe whether recovery has occurred.",
-            "sus": "This one is legit. A half-open state can probe whether recovery has occurred."
+            "legit": "A half-open state can probe whether recovery has occurred. Legit was the accurate read.",
+            "sus": "A half-open state can probe whether recovery has occurred. This reply deserved a Legit vote."
           }
         },
         {
           "id": "b",
-          "text": "This is what trips people up: Stop repeated calls to a failing dependency for a period.",
+          "text": "Stop repeated calls to a failing dependency for a period.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Stop repeated calls to a failing dependency for a period.",
-            "sus": "This one is legit. Stop repeated calls to a failing dependency for a period."
+            "legit": "Stop repeated calls to a failing dependency for a period. Marking it Legit was correct.",
+            "sus": "Stop repeated calls to a failing dependency for a period. This one should stay marked Legit."
           }
         },
         {
           "id": "c",
-          "text": "This was the explanation that clicked for me: Repair the dependency automatically.",
+          "text": "Repair the dependency automatically.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. It limits cascading damage but does not fix the underlying service.",
-            "sus": "Good catch. It limits cascading damage but does not fix the underlying service."
+            "legit": "It limits cascading damage but does not fix the underlying service. The original statement is materially misleading.",
+            "sus": "It limits cascading damage but does not fix the underlying service. Good read: the original claim was flawed."
           }
         }
       ],
@@ -282,33 +282,33 @@
     {
       "id": "system-design-rate-limit",
       "difficulty": "medium",
-      "prompt": "A teammate asked me this: what does rate limiting protect?",
+      "prompt": "What does rate limiting protect?",
       "answers": [
         {
           "id": "a",
-          "text": "This was the explanation that clicked for me: Capacity and fairness by restricting request volume over time.",
+          "text": "Capacity and fairness by restricting request volume over time.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Capacity and fairness by restricting request volume over time.",
-            "sus": "This one is legit. Capacity and fairness by restricting request volume over time."
+            "legit": "Capacity and fairness by restricting request volume over time. The source agrees with your Legit vote.",
+            "sus": "Capacity and fairness by restricting request volume over time. This one was safe to mark Legit."
           }
         },
         {
           "id": "b",
-          "text": "Pretty sure this is the key: It guarantees low latency after every accepted request.",
+          "text": "It guarantees low latency after every accepted request.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Accepted work can still be slow for other reasons.",
-            "sus": "Good catch. Accepted work can still be slow for other reasons."
+            "legit": "Accepted work can still be slow for other reasons. The original wording does not hold up.",
+            "sus": "Accepted work can still be slow for other reasons. Your Sus vote caught the problem."
           }
         },
         {
           "id": "c",
-          "text": "From what I've seen, distributed rate limits require a strategy for shared state or approximation.",
+          "text": "Distributed rate limits require a strategy for shared state or approximation.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Distributed rate limits require a strategy for shared state or approximation.",
-            "sus": "This one is legit. Distributed rate limits require a strategy for shared state or approximation."
+            "legit": "Distributed rate limits require a strategy for shared state or approximation. Your call matches the underlying rule.",
+            "sus": "Distributed rate limits require a strategy for shared state or approximation. This reply deserved a Legit vote."
           }
         }
       ],
@@ -321,33 +321,33 @@
     {
       "id": "system-design-cdn",
       "difficulty": "medium",
-      "prompt": "No searching: why serve static assets through a CDN?",
+      "prompt": "Why serve static assets through a CDN?",
       "answers": [
         {
           "id": "a",
-          "text": "This is what trips people up: A CDN makes cache invalidation unnecessary.",
+          "text": "A CDN makes cache invalidation unnecessary.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Changed content still needs versioning, expiry, or invalidation.",
-            "sus": "Good catch. Changed content still needs versioning, expiry, or invalidation."
+            "legit": "Changed content still needs versioning, expiry, or invalidation. The original reply is what needed flagging.",
+            "sus": "Changed content still needs versioning, expiry, or invalidation. The evidence supports your Sus vote."
           }
         },
         {
           "id": "b",
-          "text": "This was the explanation that clicked for me: A CDN safely caches every origin response by default.",
+          "text": "A CDN safely caches every origin response by default.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Cacheability depends on method, headers, status, and CDN configuration; private responses need particular care.",
-            "sus": "Good catch. Cacheability depends on method, headers, status, and CDN configuration; private responses need particular care."
+            "legit": "Cacheability depends on method, headers, status, and CDN configuration; private responses need particular care. The original reply was the misconception in the thread.",
+            "sus": "Cacheability depends on method, headers, status, and CDN configuration; private responses need particular care. That was correctly classified as Sus."
           }
         },
         {
           "id": "c",
-          "text": "Pretty sure this is the key: Edge locations can reduce latency and origin traffic.",
+          "text": "Edge locations can reduce latency and origin traffic.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Edge locations can reduce latency and origin traffic.",
-            "sus": "This one is legit. Edge locations can reduce latency and origin traffic."
+            "legit": "Edge locations can reduce latency and origin traffic. This supports the Legit label you chose.",
+            "sus": "Edge locations can reduce latency and origin traffic. The claim is supported rather than suspicious."
           }
         }
       ],
@@ -360,33 +360,33 @@
     {
       "id": "system-design-cap",
       "difficulty": "hard",
-      "prompt": "Quick gut check: what choice does the CAP theorem highlight during a network partition?",
+      "prompt": "What choice does the CAP theorem highlight during a network partition?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd go with this: Different operations can make different tradeoffs.",
+          "text": "Different operations can make different tradeoffs.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Different operations can make different tradeoffs.",
-            "sus": "This one is legit. Different operations can make different tradeoffs."
+            "legit": "Different operations can make different tradeoffs. The source agrees with your Legit vote.",
+            "sus": "Different operations can make different tradeoffs. The Sus label does not fit this claim."
           }
         },
         {
           "id": "b",
-          "text": "I think the important part is this: a distributed system cannot guarantee both linearizable consistency and availability for every request while the partition persists.",
+          "text": "A distributed system cannot guarantee both linearizable consistency and availability for every request while the partition persists.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A distributed system cannot guarantee both linearizable consistency and availability for every request while the partition persists.",
-            "sus": "This one is legit. A distributed system cannot guarantee both linearizable consistency and availability for every request while the partition persists."
+            "legit": "A distributed system cannot guarantee both linearizable consistency and availability for every request while the partition persists. The evidence backs your Legit choice.",
+            "sus": "A distributed system cannot guarantee both linearizable consistency and availability for every request while the partition persists. The original wording holds up."
           }
         },
         {
           "id": "c",
-          "text": "Unless I'm mixing things up, a system must permanently choose only two of three properties even without failures.",
+          "text": "A system must permanently choose only two of three properties even without failures.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. The tradeoff concerns behavior while a partition prevents communication.",
-            "sus": "Good catch. The tradeoff concerns behavior while a partition prevents communication."
+            "legit": "The tradeoff concerns behavior while a partition prevents communication. The original reply was the misconception in the thread.",
+            "sus": "The tradeoff concerns behavior while a partition prevents communication. That makes your Sus choice accurate."
           }
         }
       ],
@@ -399,33 +399,33 @@
     {
       "id": "system-design-backpressure",
       "difficulty": "hard",
-      "prompt": "Curious where people land on this: what is backpressure in a data-processing system?",
+      "prompt": "What is backpressure in a data-processing system?",
       "answers": [
         {
           "id": "a",
-          "text": "My answer: A way for slower consumers to limit or signal upstream production.",
+          "text": "A way for slower consumers to limit or signal upstream production.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A way for slower consumers to limit or signal upstream production.",
-            "sus": "This one is legit. A way for slower consumers to limit or signal upstream production."
+            "legit": "A way for slower consumers to limit or signal upstream production. You were right to trust this reply.",
+            "sus": "A way for slower consumers to limit or signal upstream production. This one was safe to mark Legit."
           }
         },
         {
           "id": "b",
-          "text": "I'd phrase it like this: A requirement to buffer unlimited work in memory.",
+          "text": "A requirement to buffer unlimited work in memory.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Unlimited buffering delays failure and can exhaust resources.",
-            "sus": "Good catch. Unlimited buffering delays failure and can exhaust resources."
+            "legit": "Unlimited buffering delays failure and can exhaust resources. The original wording does not hold up.",
+            "sus": "Unlimited buffering delays failure and can exhaust resources. Your Sus vote caught the problem."
           }
         },
         {
           "id": "c",
-          "text": "The way I understand it: dropping, batching, blocking, or shedding work are possible policies.",
+          "text": "Dropping, batching, blocking, or shedding work are possible policies.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Dropping, batching, blocking, or shedding work are possible policies.",
-            "sus": "This one is legit. Dropping, batching, blocking, or shedding work are possible policies."
+            "legit": "Dropping, batching, blocking, or shedding work are possible policies. Your Legit judgment holds up.",
+            "sus": "Dropping, batching, blocking, or shedding work are possible policies. This reply deserved a Legit vote."
           }
         }
       ],
@@ -438,33 +438,33 @@
     {
       "id": "system-design-saga",
       "difficulty": "hard",
-      "prompt": "Curious where people land on this: what does a saga coordinate?",
+      "prompt": "What does a saga coordinate?",
       "answers": [
         {
           "id": "a",
-          "text": "My answer: A single ACID transaction that locks every service database.",
+          "text": "A single ACID transaction that locks every service database.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Sagas avoid one global database transaction across services.",
-            "sus": "Good catch. Sagas avoid one global database transaction across services."
+            "legit": "Sagas avoid one global database transaction across services. The original statement is materially misleading.",
+            "sus": "Sagas avoid one global database transaction across services. Good read: the original claim was flawed."
           }
         },
         {
           "id": "b",
-          "text": "I'd phrase it like this: A compensating action automatically rewinds database history as if the earlier step never happened.",
+          "text": "A compensating action automatically rewinds database history as if the earlier step never happened.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Compensation is new business logic and may not perfectly reverse every prior effect.",
-            "sus": "Good catch. Compensation is new business logic and may not perfectly reverse every prior effect."
+            "legit": "Compensation is new business logic and may not perfectly reverse every prior effect. The original wording does not hold up.",
+            "sus": "Compensation is new business logic and may not perfectly reverse every prior effect. Your judgment caught the technical error."
           }
         },
         {
           "id": "c",
-          "text": "The way I understand it: a saga guarantees globally serializable isolation across every participating service.",
+          "text": "A saga guarantees globally serializable isolation across every participating service.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A saga coordinates local transactions but does not by itself provide one globally serializable transaction.",
-            "sus": "Good catch. A saga coordinates local transactions but does not by itself provide one globally serializable transaction."
+            "legit": "A saga coordinates local transactions but does not by itself provide one globally serializable transaction. The reply changes an important technical fact.",
+            "sus": "A saga coordinates local transactions but does not by itself provide one globally serializable transaction. That makes your Sus choice accurate."
           }
         }
       ],

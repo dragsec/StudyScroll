@@ -9,33 +9,33 @@
     {
       "id": "docker-image-container",
       "difficulty": "easy",
-      "prompt": "No searching: how does a Docker image differ from a container?",
+      "prompt": "How does a Docker image differ from a container?",
       "answers": [
         {
           "id": "a",
-          "text": "This is what trips people up: Multiple containers can be created from one image.",
+          "text": "Multiple containers can be created from one image.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Multiple containers can be created from one image.",
-            "sus": "This one is legit. Multiple containers can be created from one image."
+            "legit": "Multiple containers can be created from one image. That is a solid Legit pick.",
+            "sus": "Multiple containers can be created from one image. This was accurate as written."
           }
         },
         {
           "id": "b",
-          "text": "This was the explanation that clicked for me: An image is an immutable template used to create containers.",
+          "text": "An image is an immutable template used to create containers.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. An image is an immutable template used to create containers.",
-            "sus": "This one is legit. An image is an immutable template used to create containers."
+            "legit": "An image is an immutable template used to create containers. That makes your Legit call correct.",
+            "sus": "An image is an immutable template used to create containers. This reply deserved a Legit vote."
           }
         },
         {
           "id": "c",
-          "text": "Pretty sure this is the key: A container is a runtime instance created from an image.",
+          "text": "A container is a runtime instance created from an image.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A container is a runtime instance created from an image.",
-            "sus": "This one is legit. A container is a runtime instance created from an image."
+            "legit": "A container is a runtime instance created from an image. This supports the Legit label you chose.",
+            "sus": "A container is a runtime instance created from an image. This one should stay marked Legit."
           }
         }
       ],
@@ -48,33 +48,33 @@
     {
       "id": "docker-volume",
       "difficulty": "easy",
-      "prompt": "Forum check: why use a Docker volume?",
+      "prompt": "Why use a Docker volume?",
       "answers": [
         {
           "id": "a",
-          "text": "From what I've seen, to persist data outside a container's writable layer.",
+          "text": "To persist data outside a container's writable layer.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. To persist data outside a container's writable layer.",
-            "sus": "This one is legit. To persist data outside a container's writable layer."
+            "legit": "To persist data outside a container's writable layer. Your Legit judgment holds up.",
+            "sus": "To persist data outside a container's writable layer. The reply belongs under Legit."
           }
         },
         {
           "id": "b",
-          "text": "The practical answer is: to bake source code permanently into an image.",
+          "text": "To bake source code permanently into an image.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Image build instructions add files to images; volumes hold runtime data.",
-            "sus": "Good catch. Image build instructions add files to images; volumes hold runtime data."
+            "legit": "Image build instructions add files to images; volumes hold runtime data. The Legit label misses the flaw here.",
+            "sus": "Image build instructions add files to images; volumes hold runtime data. The evidence supports your Sus vote."
           }
         },
         {
           "id": "c",
-          "text": "My answer: A volume can survive deletion of the container that used it.",
+          "text": "A volume can survive deletion of the container that used it.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A volume can survive deletion of the container that used it.",
-            "sus": "This one is legit. A volume can survive deletion of the container that used it."
+            "legit": "A volume can survive deletion of the container that used it. That makes your Legit call correct.",
+            "sus": "A volume can survive deletion of the container that used it. This one was safe to mark Legit."
           }
         }
       ],
@@ -87,33 +87,33 @@
     {
       "id": "docker-port",
       "difficulty": "easy",
-      "prompt": "This keeps starting arguments: does exposing a port in a Dockerfile publish it to the host?",
+      "prompt": "Does exposing a port in a Dockerfile publish it to the host?",
       "answers": [
         {
           "id": "a",
-          "text": "The practical answer is: `docker run -p` can map a host port to a container port.",
+          "text": "`docker run -p` can map a host port to a container port.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. `docker run -p` can map a host port to a container port.",
-            "sus": "This one is legit. `docker run -p` can map a host port to a container port."
+            "legit": "`docker run -p` can map a host port to a container port. You classified that correctly as Legit.",
+            "sus": "`docker run -p` can map a host port to a container port. This was accurate as written."
           }
         },
         {
           "id": "b",
-          "text": "My answer: A port must appear in EXPOSE before `docker run -p` can publish it.",
+          "text": "A port must appear in EXPOSE before `docker run -p` can publish it.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Runtime port publishing can map a container port even when the Dockerfile does not declare EXPOSE.",
-            "sus": "Good catch. Runtime port publishing can map a container port even when the Dockerfile does not declare EXPOSE."
+            "legit": "Runtime port publishing can map a container port even when the Dockerfile does not declare EXPOSE. The original reply was the misconception in the thread.",
+            "sus": "Runtime port publishing can map a container port even when the Dockerfile does not declare EXPOSE. Your vote matches the correction."
           }
         },
         {
           "id": "c",
-          "text": "I'd phrase it like this: Yes, EXPOSE automatically creates a host mapping.",
+          "text": "Yes, EXPOSE automatically creates a host mapping.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Publishing requires a runtime port mapping; EXPOSE is metadata/documentation.",
-            "sus": "Good catch. Publishing requires a runtime port mapping; EXPOSE is metadata/documentation."
+            "legit": "Publishing requires a runtime port mapping; EXPOSE is metadata/documentation. That distinction makes the original answer Sus.",
+            "sus": "Publishing requires a runtime port mapping; EXPOSE is metadata/documentation. Your Sus vote caught the problem."
           }
         }
       ],
@@ -126,33 +126,33 @@
     {
       "id": "docker-layer-cache",
       "difficulty": "medium",
-      "prompt": "Forum check: why copy dependency manifests before application source in many Dockerfiles?",
+      "prompt": "Why copy dependency manifests before application source in many Dockerfiles?",
       "answers": [
         {
           "id": "a",
-          "text": "From what I've seen, a change to an earlier layer invalidates reuse of later layers.",
+          "text": "A change to an earlier layer invalidates reuse of later layers.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A change to an earlier layer invalidates reuse of later layers.",
-            "sus": "This one is legit. A change to an earlier layer invalidates reuse of later layers."
+            "legit": "A change to an earlier layer invalidates reuse of later layers. Your Legit judgment holds up.",
+            "sus": "A change to an earlier layer invalidates reuse of later layers. This reply deserved a Legit vote."
           }
         },
         {
           "id": "b",
-          "text": "The practical answer is: the dependency-install layer can remain cached when only source files change.",
+          "text": "The dependency-install layer can remain cached when only source files change.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The dependency-install layer can remain cached when only source files change.",
-            "sus": "This one is legit. The dependency-install layer can remain cached when only source files change."
+            "legit": "The dependency-install layer can remain cached when only source files change. That is a solid Legit pick.",
+            "sus": "The dependency-install layer can remain cached when only source files change. This one should stay marked Legit."
           }
         },
         {
           "id": "c",
-          "text": "My answer: The ordering is a cache optimization, not a network rule.",
+          "text": "The ordering is a cache optimization, not a network rule.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The ordering is a cache optimization, not a network rule.",
-            "sus": "This one is legit. The ordering is a cache optimization, not a network rule."
+            "legit": "The ordering is a cache optimization, not a network rule. That makes your Legit call correct.",
+            "sus": "The ordering is a cache optimization, not a network rule. This is a Legit statement, not a trap."
           }
         }
       ],
@@ -165,33 +165,33 @@
     {
       "id": "docker-bind-mount",
       "difficulty": "medium",
-      "prompt": "Let's clear this one up: how does a bind mount differ from a named volume?",
+      "prompt": "How does a bind mount differ from a named volume?",
       "answers": [
         {
           "id": "a",
-          "text": "Short version: A bind mount maps a specific host path into the container.",
+          "text": "A bind mount maps a specific host path into the container.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A bind mount maps a specific host path into the container.",
-            "sus": "This one is legit. A bind mount maps a specific host path into the container."
+            "legit": "A bind mount maps a specific host path into the container. You classified that correctly as Legit.",
+            "sus": "A bind mount maps a specific host path into the container. The original wording holds up."
           }
         },
         {
           "id": "b",
-          "text": "I'd go with this: A bind mount is stored only inside the image.",
+          "text": "A bind mount is stored only inside the image.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Bind mounts reference host filesystem paths at runtime.",
-            "sus": "Good catch. Bind mounts reference host filesystem paths at runtime."
+            "legit": "Bind mounts reference host filesystem paths at runtime. The reply changes an important technical fact.",
+            "sus": "Bind mounts reference host filesystem paths at runtime. Good read: the original claim was flawed."
           }
         },
         {
           "id": "c",
-          "text": "I think the important part is this: named volumes are managed through Docker's volume storage.",
+          "text": "Named volumes are managed through Docker's volume storage.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Named volumes are managed through Docker's volume storage.",
-            "sus": "This one is legit. Named volumes are managed through Docker's volume storage."
+            "legit": "Named volumes are managed through Docker's volume storage. Your Legit vote was right.",
+            "sus": "Named volumes are managed through Docker's volume storage. There was no false claim to flag here."
           }
         }
       ],
@@ -204,33 +204,33 @@
     {
       "id": "docker-multistage",
       "difficulty": "medium",
-      "prompt": "I've seen mixed takes, so: why use a multi-stage Docker build?",
+      "prompt": "Why use a multi-stage Docker build?",
       "answers": [
         {
           "id": "a",
-          "text": "I think the important part is this: every stage runs as a separate production container.",
+          "text": "Every stage runs as a separate production container.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Stages are build phases; only selected outputs need to reach the final image.",
-            "sus": "Good catch. Stages are build phases; only selected outputs need to reach the final image."
+            "legit": "Stages are build phases; only selected outputs need to reach the final image. That makes the original claim unsafe to label Legit.",
+            "sus": "Stages are build phases; only selected outputs need to reach the final image. Your judgment caught the technical error."
           }
         },
         {
           "id": "b",
-          "text": "Unless I'm mixing things up, a multi-stage build automatically updates every base image to its newest version.",
+          "text": "A multi-stage build automatically updates every base image to its newest version.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Base-image selection and update policy remain explicit build concerns.",
-            "sus": "Good catch. Base-image selection and update policy remain explicit build concerns."
+            "legit": "Base-image selection and update policy remain explicit build concerns. The original claim needed a Sus vote.",
+            "sus": "Base-image selection and update policy remain explicit build concerns. That makes your Sus choice accurate."
           }
         },
         {
           "id": "c",
-          "text": "This is what trips people up: Build tools can stay in an earlier stage while only runtime artifacts enter the final image.",
+          "text": "Build tools can stay in an earlier stage while only runtime artifacts enter the final image.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Build tools can stay in an earlier stage while only runtime artifacts enter the final image.",
-            "sus": "This one is legit. Build tools can stay in an earlier stage while only runtime artifacts enter the final image."
+            "legit": "Build tools can stay in an earlier stage while only runtime artifacts enter the final image. Marking it Legit was correct.",
+            "sus": "Build tools can stay in an earlier stage while only runtime artifacts enter the final image. The original wording holds up."
           }
         }
       ],
@@ -243,33 +243,33 @@
     {
       "id": "docker-pid1",
       "difficulty": "medium",
-      "prompt": "Quick gut check: why does PID 1 behavior matter inside a container?",
+      "prompt": "Why does PID 1 behavior matter inside a container?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd go with this: An init process can help with signal forwarding and zombie reaping.",
+          "text": "An init process can help with signal forwarding and zombie reaping.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. An init process can help with signal forwarding and zombie reaping.",
-            "sus": "This one is legit. An init process can help with signal forwarding and zombie reaping."
+            "legit": "An init process can help with signal forwarding and zombie reaping. You were right to trust this reply.",
+            "sus": "An init process can help with signal forwarding and zombie reaping. This one was safe to mark Legit."
           }
         },
         {
           "id": "b",
-          "text": "I think the important part is this: the main process needs correct signal handling and must reap child processes when it creates them.",
+          "text": "The main process needs correct signal handling and must reap child processes when it creates them.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The main process needs correct signal handling and must reap child processes when it creates them.",
-            "sus": "This one is legit. The main process needs correct signal handling and must reap child processes when it creates them."
+            "legit": "The main process needs correct signal handling and must reap child processes when it creates them. Your Legit vote was right.",
+            "sus": "The main process needs correct signal handling and must reap child processes when it creates them. This was accurate as written."
           }
         },
         {
           "id": "c",
-          "text": "Unless I'm mixing things up, pID 1 cannot receive termination signals.",
+          "text": "PID 1 cannot receive termination signals.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. PID 1 can receive signals, but the process and entrypoint must forward or handle them correctly.",
-            "sus": "Good catch. PID 1 can receive signals, but the process and entrypoint must forward or handle them correctly."
+            "legit": "PID 1 can receive signals, but the process and entrypoint must forward or handle them correctly. The original reply was the misconception in the thread.",
+            "sus": "PID 1 can receive signals, but the process and entrypoint must forward or handle them correctly. That makes your Sus choice accurate."
           }
         }
       ],
@@ -282,33 +282,33 @@
     {
       "id": "docker-secrets",
       "difficulty": "medium",
-      "prompt": "Settle a debate for me: is an image environment variable a safe place for a permanent secret?",
+      "prompt": "Is an image environment variable a safe place for a permanent secret?",
       "answers": [
         {
           "id": "a",
-          "text": "Pretty sure this is the key: Yes, image configuration is invisible to anyone who pulls it.",
+          "text": "Yes, image configuration is invisible to anyone who pulls it.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Image metadata and layers can expose embedded values.",
-            "sus": "Good catch. Image metadata and layers can expose embedded values."
+            "legit": "Image metadata and layers can expose embedded values. That distinction makes the original answer Sus.",
+            "sus": "Image metadata and layers can expose embedded values. Your Sus vote caught the problem."
           }
         },
         {
           "id": "b",
-          "text": "From what I've seen, secrets should be injected through an appropriate runtime secret mechanism.",
+          "text": "Secrets should be injected through an appropriate runtime secret mechanism.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Secrets should be injected through an appropriate runtime secret mechanism.",
-            "sus": "This one is legit. Secrets should be injected through an appropriate runtime secret mechanism."
+            "legit": "Secrets should be injected through an appropriate runtime secret mechanism. Legit was the accurate read.",
+            "sus": "Secrets should be injected through an appropriate runtime secret mechanism. This one was safe to mark Legit."
           }
         },
         {
           "id": "c",
-          "text": "The practical answer is: removing a secret in a later layer may not remove it from earlier image history.",
+          "text": "Removing a secret in a later layer may not remove it from earlier image history.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Removing a secret in a later layer may not remove it from earlier image history.",
-            "sus": "This one is legit. Removing a secret in a later layer may not remove it from earlier image history."
+            "legit": "Removing a secret in a later layer may not remove it from earlier image history. Marking it Legit was correct.",
+            "sus": "Removing a secret in a later layer may not remove it from earlier image history. This was accurate as written."
           }
         }
       ],
@@ -321,33 +321,33 @@
     {
       "id": "docker-healthcheck",
       "difficulty": "medium",
-      "prompt": "Tiny knowledge check: what does a Docker health check indicate?",
+      "prompt": "What does a Docker health check indicate?",
       "answers": [
         {
           "id": "a",
-          "text": "Unless I'm mixing things up, that every downstream dependency is permanently available.",
+          "text": "That every downstream dependency is permanently available.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A health command only tests what it was designed to observe.",
-            "sus": "Good catch. A health command only tests what it was designed to observe."
+            "legit": "A health command only tests what it was designed to observe. The original reply was the misconception in the thread.",
+            "sus": "A health command only tests what it was designed to observe. Sus was the correct call here."
           }
         },
         {
           "id": "b",
-          "text": "This is what trips people up: A Docker health check by itself always restarts an unhealthy container.",
+          "text": "A Docker health check by itself always restarts an unhealthy container.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A health check reports status; restart behavior requires an orchestrator or other policy.",
-            "sus": "Good catch. A health check reports status; restart behavior requires an orchestrator or other policy."
+            "legit": "A health check reports status; restart behavior requires an orchestrator or other policy. That distinction makes the original answer Sus.",
+            "sus": "A health check reports status; restart behavior requires an orchestrator or other policy. The Sus label fits the misconception."
           }
         },
         {
           "id": "c",
-          "text": "This was the explanation that clicked for me: Whether a configured command considers the container healthy.",
+          "text": "Whether a configured command considers the container healthy.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Whether a configured command considers the container healthy.",
-            "sus": "This one is legit. Whether a configured command considers the container healthy."
+            "legit": "Whether a configured command considers the container healthy. That makes your Legit call correct.",
+            "sus": "Whether a configured command considers the container healthy. The Sus label does not fit this claim."
           }
         }
       ],
@@ -360,72 +360,72 @@
     {
       "id": "docker-compose-depends",
       "difficulty": "hard",
-      "prompt": "Tiny knowledge check: does basic Compose `depends_on` prove a dependency is ready to serve requests?",
+      "prompt": "Does basic Compose `depends_on` prove a dependency is ready to serve requests?",
       "answers": [
         {
           "id": "a",
-          "text": "Unless I'm mixing things up, health-based conditions can improve orchestration when supported and configured.",
+          "text": "Health-based conditions can improve orchestration when supported and configured.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Health-based conditions can improve orchestration when supported and configured.",
-            "sus": "This one is legit. Health-based conditions can improve orchestration when supported and configured."
+            "legit": "Health-based conditions can improve orchestration when supported and configured. Legit was the accurate read.",
+            "sus": "Health-based conditions can improve orchestration when supported and configured. The evidence supports the original reply."
           }
         },
         {
           "id": "b",
-          "text": "This is what trips people up: Yes, process start order guarantees application readiness.",
+          "text": "Yes, process start order guarantees application readiness.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A started container may still be initializing; readiness needs a health condition or retry logic.",
-            "sus": "Good catch. A started container may still be initializing; readiness needs a health condition or retry logic."
+            "legit": "A started container may still be initializing; readiness needs a health condition or retry logic. The Legit label misses the flaw here.",
+            "sus": "A started container may still be initializing; readiness needs a health condition or retry logic. You spotted the misleading part."
           }
         },
         {
           "id": "c",
-          "text": "This was the explanation that clicked for me: Applications should tolerate dependency startup delays.",
+          "text": "Applications should tolerate dependency startup delays.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Applications should tolerate dependency startup delays.",
-            "sus": "This one is legit. Applications should tolerate dependency startup delays."
+            "legit": "Applications should tolerate dependency startup delays. The source agrees with your Legit vote.",
+            "sus": "Applications should tolerate dependency startup delays. The Sus label does not fit this claim."
           }
         }
       ],
       "reference": {
-        "title": "Docker Documentation",
-        "url": "https://docs.docker.com/"
+        "title": "Docker Compose startup order",
+        "url": "https://docs.docker.com/compose/how-tos/startup-order/"
       },
       "review_status": "approved"
     },
     {
       "id": "docker-network",
       "difficulty": "hard",
-      "prompt": "Tiny knowledge check: how do containers discover each other on a user-defined Docker network?",
+      "prompt": "How do containers discover each other on a user-defined Docker network?",
       "answers": [
         {
           "id": "a",
-          "text": "Unless I'm mixing things up, they can use Docker-provided name resolution for container or service names.",
+          "text": "They can use Docker-provided name resolution for container or service names.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. They can use Docker-provided name resolution for container or service names.",
-            "sus": "This one is legit. They can use Docker-provided name resolution for container or service names."
+            "legit": "They can use Docker-provided name resolution for container or service names. Your call matches the underlying rule.",
+            "sus": "They can use Docker-provided name resolution for container or service names. The evidence supports the original reply."
           }
         },
         {
           "id": "b",
-          "text": "This is what trips people up: They must all publish ports to the public host interface.",
+          "text": "They must all publish ports to the public host interface.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Publishing is unnecessary for container-to-container traffic on the shared network.",
-            "sus": "Good catch. Publishing is unnecessary for container-to-container traffic on the shared network."
+            "legit": "Publishing is unnecessary for container-to-container traffic on the shared network. That makes the original claim unsafe to label Legit.",
+            "sus": "Publishing is unnecessary for container-to-container traffic on the shared network. You spotted the misleading part."
           }
         },
         {
           "id": "c",
-          "text": "This was the explanation that clicked for me: Network isolation controls which containers can communicate directly.",
+          "text": "Network isolation controls which containers can communicate directly.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Network isolation controls which containers can communicate directly.",
-            "sus": "This one is legit. Network isolation controls which containers can communicate directly."
+            "legit": "Network isolation controls which containers can communicate directly. You were right to trust this reply.",
+            "sus": "Network isolation controls which containers can communicate directly. The Sus label does not fit this claim."
           }
         }
       ],
@@ -438,33 +438,33 @@
     {
       "id": "docker-non-root",
       "difficulty": "hard",
-      "prompt": "Someone dropped this in the group chat: why run a container process as a non-root user?",
+      "prompt": "Why run a container process as a non-root user?",
       "answers": [
         {
           "id": "a",
-          "text": "The way I understand it: it makes host kernel vulnerabilities impossible.",
+          "text": "It makes host kernel vulnerabilities impossible.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Least privilege reduces impact but does not eliminate container escape risks.",
-            "sus": "Good catch. Least privilege reduces impact but does not eliminate container escape risks."
+            "legit": "Least privilege reduces impact but does not eliminate container escape risks. The reply changes an important technical fact.",
+            "sus": "Least privilege reduces impact but does not eliminate container escape risks. That makes your Sus choice accurate."
           }
         },
         {
           "id": "b",
-          "text": "Short version: A non-root process cannot listen on any network port.",
+          "text": "A non-root process cannot listen on any network port.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Non-root processes can listen on unprivileged ports and may receive narrowly configured capabilities when needed.",
-            "sus": "Good catch. Non-root processes can listen on unprivileged ports and may receive narrowly configured capabilities when needed."
+            "legit": "Non-root processes can listen on unprivileged ports and may receive narrowly configured capabilities when needed. That makes the original claim unsafe to label Legit.",
+            "sus": "Non-root processes can listen on unprivileged ports and may receive narrowly configured capabilities when needed. You spotted the misleading part."
           }
         },
         {
           "id": "c",
-          "text": "I'd go with this: A Dockerfile USER instruction automatically changes ownership of files copied earlier.",
+          "text": "A Dockerfile USER instruction automatically changes ownership of files copied earlier.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. USER selects the account for later instructions and runtime; file ownership must be set separately, such as with COPY --chown.",
-            "sus": "Good catch. USER selects the account for later instructions and runtime; file ownership must be set separately, such as with COPY --chown."
+            "legit": "USER selects the account for later instructions and runtime; file ownership must be set separately, such as with COPY --chown. The original claim needed a Sus vote.",
+            "sus": "USER selects the account for later instructions and runtime; file ownership must be set separately, such as with COPY --chown. Your vote matches the correction."
           }
         }
       ],

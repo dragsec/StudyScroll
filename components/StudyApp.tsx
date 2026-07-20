@@ -8,6 +8,7 @@ import {
   Bookmark,
   ChevronRight,
   CircleHelp,
+  ExternalLink,
   Flame,
   KeyRound,
   LockKeyhole,
@@ -910,7 +911,14 @@ function QuestionSheet({
         <div className="question-context">
           <div><span className="topic-chip">{question.topic}</span><DifficultyBadge level={question.difficulty} /></div>
           <h2>{question.prompt}</h2>
-          <code>{question.clue}</code>
+          <a
+            className="question-reference"
+            href={question.source}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Source: {question.clue} <ExternalLink aria-hidden="true" size={14} />
+          </a>
         </div>
         <div className="answers-list">
           {question.answers.map((answer) => {
@@ -947,7 +955,7 @@ function QuestionSheet({
                 {revealed && (
                   <div className="answer-feedback">
                     <strong>{correct ? "Correct!" : "Careful."}</strong>
-                    <p>{answer.feedback}</p>
+                    <p>{answer.feedback[choice ?? answer.verdict]}</p>
                   </div>
                 )}
               </article>

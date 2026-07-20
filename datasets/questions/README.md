@@ -12,7 +12,7 @@ The requested "normal" band is stored as `medium` to match the difficulty name a
 
 Every question contains three answers. Every answer stores its ground-truth verdict and separate feedback for a learner who selects `legit` or `sus`. Questions deliberately vary from zero to three Sus statements, so learners cannot infer an answer pattern from the other cards.
 
-The generated v1 copy uses a restrained social-feed voice. Prompts sound like discussion starters, and answers read like replies from different community members. The generator applies that voice deterministically while keeping the underlying claims and corrections separate and reviewable.
+The v1 copy uses a restrained social-feed voice. Prompts read like real technical posts and answers read like direct community replies. Reusable conversational wrappers are intentionally banned so the dataset does not repeat the same synthetic-sounding openers.
 
 ## Review status
 

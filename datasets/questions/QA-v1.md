@@ -17,7 +17,7 @@ That produces 504 answer statements and 1,008 vote-specific feedback paths.
 
 | Topic | Questions | Easy | Medium | Hard | 0 Sus | 1 Sus | 2 Sus | 3 Sus |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Javascript | 12 | 3 | 6 | 3 | 2 | 6 | 3 | 1 |
+| JavaScript | 12 | 3 | 6 | 3 | 2 | 6 | 3 | 1 |
 | Python | 12 | 3 | 6 | 3 | 2 | 6 | 3 | 1 |
 | DSA | 12 | 3 | 6 | 3 | 2 | 6 | 3 | 1 |
 | Java | 12 | 3 | 6 | 3 | 2 | 6 | 3 | 1 |
@@ -34,7 +34,7 @@ That produces 504 answer statements and 1,008 vote-specific feedback paths.
 
 ## Review performed
 
-Every prompt, statement, verdict, and feedback branch received a manual semantic review. The review checked that:
+Every prompt, statement, verdict, and feedback branch received an editorial and technical review during MVP development. The review checked that:
 
 - each Legit statement is true within the wording of its prompt;
 - each Sus statement expresses a clear misconception rather than an arguable opinion;
@@ -48,9 +48,11 @@ The review tightened several claims whose original wording left room for edge ca
 
 ## Social-feed voice
 
-All 168 prompts and 504 answer statements pass through a deterministic voice layer. It varies discussion starters and reply styles to evoke a technical forum or comment thread without changing the claim being judged. Reply openers do not repeat within one question, and technical names such as TCP, AWS, ConcurrentHashMap, and JavaScript preserve their capitalization.
+The prompts and replies are written as direct technical posts and comments. They do not pass through reusable conversational wrappers. This keeps the feed social without making every learner sound like the same person repeating a handful of catchphrases.
 
-Vote feedback stays more direct than the simulated replies. It confirms the judgment, then presents the reviewed factual statement or correction without social hedging.
+Vote feedback leads with the question-specific fact or correction, then confirms the learner's judgment with varied language. The automated checks reject the canned openers removed during the editorial pass.
+
+The current release contains no exact duplicate prompt, answer statement, or feedback string. Similar openings remain only where the parallel wording teaches a real contrast, such as stack versus queue or injective versus surjective functions.
 
 ## Automated gates
 
@@ -59,7 +61,7 @@ Run `npm run validate:dataset` before committing dataset changes. The validator 
 - missing topics, questions, answers, references, verdicts, or feedback;
 - duplicate question IDs, prompts, or answer text;
 - invalid difficulty totals or review states;
-- contradictory feedback prefixes for the stored ground-truth verdict;
+- missing or identical feedback branches and banned canned openers;
 - malformed prompts and placeholder values;
 - a return to a fixed Sus-count pattern.
 
@@ -67,6 +69,6 @@ The source generator rotates answers deterministically, so builds are reproducib
 
 ## Reference policy
 
-Each topic file links to a primary or authoritative source family, including language specifications, official platform documentation, RFCs, standards-oriented references, and open textbooks. References are stored with the questions so they can be migrated into a relational database later.
+Each topic file links to a primary or authoritative source family, including language specifications, official platform documentation, RFCs, standards-oriented references, and open textbooks. Version-sensitive claims use direct documentation pages. References are stored with the questions so they can be migrated into a relational database later.
 
-This dataset is ready for prototype use. Future versions should keep the same review and validation gates, record changes in a new version folder, and add subject-matter expert review before making high-stakes educational claims.
+This dataset is ready for prototype use. That is not the same as independent subject-matter certification. Future versions should keep the same review and validation gates, record changes in a new version folder, add claim-level deep links throughout, and add subject-matter expert review before making high-stakes educational claims.

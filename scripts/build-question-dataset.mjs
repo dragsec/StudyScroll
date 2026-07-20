@@ -15,55 +15,89 @@ function stableHash(value) {
   return hash >>> 0;
 }
 
-function lowerFirst(value) {
-  const protectedOpening = /^(AWS|S3|SQL|TCP|UDP|HTTP|CORS|QUIC|MVCC|EXPOSE|GROUP BY|LEFT JOIN|ConcurrentHashMap|CloudFront|DynamoDB|JavaScript|Java\b|Python|Docker|Linux|Spring Boot|WeakMap|Promise|Atomics|Optional|Bayes)/;
-  if (value.startsWith("`") || value.startsWith("@") || protectedOpening.test(value)) return value;
-  return value.charAt(0).toLowerCase() + value.slice(1);
+const feedbackEndings = {
+  legitCorrect: [
+    "Your Legit vote was right.",
+    "Legit was the accurate read.",
+    "You classified that correctly as Legit.",
+    "That makes your Legit call correct.",
+    "The evidence backs your Legit choice.",
+    "Your Legit judgment holds up.",
+    "Marking it Legit was correct.",
+    "You were right to trust this reply.",
+    "This supports the Legit label you chose.",
+    "Your call matches the underlying rule.",
+    "That is a solid Legit pick.",
+    "The source agrees with your Legit vote."
+  ],
+  legitMisread: [
+    "The reply belongs under Legit.",
+    "This one should stay marked Legit.",
+    "The Sus label does not fit this claim.",
+    "This was accurate as written.",
+    "The evidence supports the original reply.",
+    "There was no false claim to flag here.",
+    "This is a Legit statement, not a trap.",
+    "The original wording holds up.",
+    "This reply deserved a Legit vote.",
+    "The claim is supported rather than suspicious.",
+    "This one was safe to mark Legit.",
+    "The rule confirms the reply instead of refuting it."
+  ],
+  susMisread: [
+    "The original reply should be marked Sus.",
+    "That makes the original claim unsafe to label Legit.",
+    "The error puts the original reply under Sus.",
+    "The original wording does not hold up.",
+    "The original reply was the misconception in the thread.",
+    "The Legit label misses the flaw here.",
+    "The original claim needed a Sus vote.",
+    "The source contradicts the original reply.",
+    "The reply changes an important technical fact.",
+    "That distinction makes the original answer Sus.",
+    "The original statement is materially misleading.",
+    "The original reply is what needed flagging."
+  ],
+  susCorrect: [
+    "Your Sus vote caught the problem.",
+    "Sus was the correct call here.",
+    "You spotted the misleading part.",
+    "That was correctly classified as Sus.",
+    "Your judgment caught the technical error.",
+    "You were right not to trust that reply.",
+    "The Sus label fits the misconception.",
+    "Your vote matches the correction.",
+    "You flagged exactly what was wrong.",
+    "That makes your Sus choice accurate.",
+    "The evidence supports your Sus vote.",
+    "Good read: the original claim was flawed."
+  ]
+};
+
+function feedbackEnding(kind, questionId, answerIndex) {
+  const endings = feedbackEndings[kind];
+  const offset = stableHash(`${questionId}:${kind}`) + answerIndex * 5;
+  return endings[offset % endings.length];
 }
 
-const promptVoices = [
-  (prompt) => `Quick gut check: ${lowerFirst(prompt)}`,
-  (prompt) => `Settle a debate for me: ${lowerFirst(prompt)}`,
-  (prompt) => `Someone dropped this in the group chat: ${lowerFirst(prompt)}`,
-  (prompt) => `No searching: ${lowerFirst(prompt)}`,
-  (prompt) => `Curious where people land on this: ${lowerFirst(prompt)}`,
-  (prompt) => `I've seen mixed takes, so: ${lowerFirst(prompt)}`,
-  (prompt) => `Forum check: ${lowerFirst(prompt)}`,
-  (prompt) => `Let's clear this one up: ${lowerFirst(prompt)}`,
-  (prompt) => `A teammate asked me this: ${lowerFirst(prompt)}`,
-  (prompt) => `Before I confidently say the wrong thing: ${lowerFirst(prompt)}`,
-  (prompt) => `Tiny knowledge check: ${lowerFirst(prompt)}`,
-  (prompt) => `This keeps starting arguments: ${lowerFirst(prompt)}`
-];
+function buildFeedback(answer, questionId, answerIndex) {
+  if (answer.verdict === "legit") {
+    return {
+      legit: `${answer.text} ${feedbackEnding("legitCorrect", questionId, answerIndex)}`,
+      sus: `${answer.text} ${feedbackEnding("legitMisread", questionId, answerIndex)}`
+    };
+  }
 
-const answerVoices = [
-  (answer) => `I'd go with this: ${answer}`,
-  (answer) => `Pretty sure this is the key: ${answer}`,
-  (answer) => `The way I understand it: ${lowerFirst(answer)}`,
-  (answer) => `This is what trips people up: ${answer}`,
-  (answer) => `My answer: ${answer}`,
-  (answer) => `I think the important part is this: ${lowerFirst(answer)}`,
-  (answer) => `From what I've seen, ${lowerFirst(answer)}`,
-  (answer) => `Short version: ${answer}`,
-  (answer) => `This was the explanation that clicked for me: ${answer}`,
-  (answer) => `I'd phrase it like this: ${answer}`,
-  (answer) => `Unless I'm mixing things up, ${lowerFirst(answer)}`,
-  (answer) => `The practical answer is: ${lowerFirst(answer)}`
-];
-
-function socializePrompt(prompt, questionId) {
-  return promptVoices[stableHash(questionId) % promptVoices.length](prompt);
-}
-
-function socializeAnswer(answer, questionId, answerIndex) {
-  const voiceIndex = (stableHash(questionId) + answerIndex * 5) % answerVoices.length;
-  return answerVoices[voiceIndex](answer);
+  return {
+    legit: `${answer.correction} ${feedbackEnding("susMisread", questionId, answerIndex)}`,
+    sus: `${answer.correction} ${feedbackEnding("susCorrect", questionId, answerIndex)}`
+  };
 }
 
 const banks = [
   {
     id: "javascript",
-    name: "Javascript",
+    name: "JavaScript",
     reference: { title: "ECMAScript Language Specification", url: "https://tc39.es/ecma262/multipage/" },
     questions: [
       Q("javascript-typeof-null", "easy", "What does `typeof null` tell you in JavaScript?", [L("It returns `\"object\"` because of a historical compatibility quirk."), S("It returns `\"null\"` because null is its own primitive value.", "The operator returns `\"object\"`, even though null is a primitive value."), L("The result does not mean that null behaves like a normal object.")]),
@@ -441,6 +475,18 @@ const thirdSusByQuestion = new Map([
   ["discrete-bayes", S("Bayes' theorem requires the two events to be independent.", "Bayes' theorem is useful precisely for relating conditional probabilities and does not require independence.")]
 ]);
 
+// Version-sensitive claims use direct documentation pages instead of only the
+// broader source family assigned to their topic.
+const referenceOverrides = new Map([
+  ["python-gil", { title: "Python support for free threading", url: "https://docs.python.org/3/howto/free-threading-python.html" }],
+  ["docker-compose-depends", { title: "Docker Compose startup order", url: "https://docs.docker.com/compose/how-tos/startup-order/" }],
+  ["aws-rds-multi-az", { title: "RDS Multi-AZ DB instance deployments", url: "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZSingleStandby.html" }],
+  ["javascript-weakmap", { title: "WeakMap reference", url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap" }],
+  ["spring-graceful-shutdown", { title: "Spring Boot graceful shutdown", url: "https://docs.spring.io/spring-boot/reference/web/graceful-shutdown.html" }],
+  ["java-volatile", { title: "Java Language Specification: Threads and Locks", url: "https://docs.oracle.com/javase/specs/jls/se26/html/jls-17.html" }],
+  ["linux-load-average", { title: "Linux proc_loadavg manual page", url: "https://man7.org/linux/man-pages/man5/proc_loadavg.5.html" }]
+]);
+
 const outputDir = path.join(process.cwd(), "datasets", "questions", "v1");
 await mkdir(outputDir, { recursive: true });
 
@@ -476,21 +522,14 @@ for (const [bankIndex, bank] of banks.entries()) {
     return ({
     id: question.id,
     difficulty: question.difficulty,
-    prompt: socializePrompt(question.prompt, question.id),
+    prompt: question.prompt,
     answers: [...answers.slice(rotation), ...answers.slice(0, rotation)].map((answer, index) => ({
       id: ["a", "b", "c"][index],
-      text: socializeAnswer(answer.text, question.id, index),
+      text: answer.text,
       verdict: answer.verdict,
-      feedback: {
-        legit: answer.verdict === "legit"
-          ? `Yep, this one checks out. ${answer.text}`
-          : `Not this one. ${answer.correction}`,
-        sus: answer.verdict === "sus"
-          ? `Good catch. ${answer.correction}`
-          : `This one is legit. ${answer.text}`
-      }
+      feedback: buildFeedback(answer, question.id, index)
     })),
-    reference: bank.reference,
+    reference: referenceOverrides.get(question.id) ?? bank.reference,
     review_status: "approved"
   });
   });

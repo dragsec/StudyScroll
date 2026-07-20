@@ -77,7 +77,7 @@ const comparisons = [
 ];
 
 const topicNames = [
-  "Javascript",
+  "JavaScript",
   "Python",
   "DSA",
   "JAVA",
@@ -178,8 +178,8 @@ export default function LandingPage() {
 
       <section className="landing-section topics-section" aria-labelledby="topics-title">
         <div className="section-content">
-          <h2 id="topics-title">14 topics and growing.<br />1,000+ questions each.</h2>
-          <p className="section-intro">AI-generated, cross-validated, difficulty-calibrated.</p>
+          <h2 id="topics-title">14 topics and growing.<br />168 reviewed questions.</h2>
+          <p className="section-intro">Curated, source-backed, and balanced across three difficulty levels.</p>
           <div className="topic-cloud" aria-label="Available topics">
             {topicNames.map((topic) => <span key={topic}>{topic}</span>)}
           </div>

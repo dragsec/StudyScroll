@@ -847,7 +847,8 @@ button:disabled {
 }
 
 .question-card code,
-.question-context code {
+.question-context code,
+.question-reference {
   display: block;
   margin-top: 0.75rem;
   padding: 0.65rem 0.75rem;
@@ -860,6 +861,18 @@ button:disabled {
   line-height: 1.35;
   overflow-wrap: anywhere;
   white-space: normal;
+}
+
+.question-reference {
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+  text-decoration: none;
+}
+
+.question-reference:hover {
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .card-footer {

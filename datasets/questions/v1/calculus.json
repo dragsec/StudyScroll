@@ -9,33 +9,33 @@
     {
       "id": "calculus-derivative",
       "difficulty": "easy",
-      "prompt": "Before I confidently say the wrong thing: for a real-valued function of one real variable, what does its derivative represent at a point?",
+      "prompt": "For a real-valued function of one real variable, what does its derivative represent at a point?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd phrase it like this: Geometrically it is the slope of the tangent line.",
+          "text": "Geometrically it is the slope of the tangent line.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Geometrically it is the slope of the tangent line.",
-            "sus": "This one is legit. Geometrically it is the slope of the tangent line."
+            "legit": "Geometrically it is the slope of the tangent line. The evidence backs your Legit choice.",
+            "sus": "Geometrically it is the slope of the tangent line. This one should stay marked Legit."
           }
         },
         {
           "id": "b",
-          "text": "The way I understand it: the instantaneous rate of change when the derivative exists.",
+          "text": "The instantaneous rate of change when the derivative exists.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The instantaneous rate of change when the derivative exists.",
-            "sus": "This one is legit. The instantaneous rate of change when the derivative exists."
+            "legit": "The instantaneous rate of change when the derivative exists. Your call matches the underlying rule.",
+            "sus": "The instantaneous rate of change when the derivative exists. This is a Legit statement, not a trap."
           }
         },
         {
           "id": "c",
-          "text": "Short version: Definite integration, not differentiation, describes accumulated signed area.",
+          "text": "Definite integration, not differentiation, describes accumulated signed area.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Definite integration, not differentiation, describes accumulated signed area.",
-            "sus": "This one is legit. Definite integration, not differentiation, describes accumulated signed area."
+            "legit": "Definite integration, not differentiation, describes accumulated signed area. You classified that correctly as Legit.",
+            "sus": "Definite integration, not differentiation, describes accumulated signed area. The rule confirms the reply instead of refuting it."
           }
         }
       ],
@@ -48,33 +48,33 @@
     {
       "id": "calculus-power-rule",
       "difficulty": "easy",
-      "prompt": "Someone dropped this in the group chat: for a positive integer n, what is the derivative of `x^n`?",
+      "prompt": "For a positive integer n, what is the derivative of `x^n`?",
       "answers": [
         {
           "id": "a",
-          "text": "The way I understand it: `n x^(n-1)`.",
+          "text": "`n x^(n-1)`.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. `n x^(n-1)`.",
-            "sus": "This one is legit. `n x^(n-1)`."
+            "legit": "`n x^(n-1)`. Legit was the accurate read.",
+            "sus": "`n x^(n-1)`. This reply deserved a Legit vote."
           }
         },
         {
           "id": "b",
-          "text": "Short version: `x^(n+1)/(n+1)`.",
+          "text": "`x^(n+1)/(n+1)`.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. That expression is an antiderivative, not the derivative.",
-            "sus": "Good catch. That expression is an antiderivative, not the derivative."
+            "legit": "That expression is an antiderivative, not the derivative. The Legit label misses the flaw here.",
+            "sus": "That expression is an antiderivative, not the derivative. The Sus label fits the misconception."
           }
         },
         {
           "id": "c",
-          "text": "I'd go with this: The exponent decreases by one and multiplies the result.",
+          "text": "The exponent decreases by one and multiplies the result.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The exponent decreases by one and multiplies the result.",
-            "sus": "This one is legit. The exponent decreases by one and multiplies the result."
+            "legit": "The exponent decreases by one and multiplies the result. The source agrees with your Legit vote.",
+            "sus": "The exponent decreases by one and multiplies the result. This is a Legit statement, not a trap."
           }
         }
       ],
@@ -87,33 +87,33 @@
     {
       "id": "calculus-integral-area",
       "difficulty": "easy",
-      "prompt": "Someone dropped this in the group chat: does a definite integral always equal ordinary geometric area?",
+      "prompt": "Does a definite integral always equal ordinary geometric area?",
       "answers": [
         {
           "id": "a",
-          "text": "The way I understand it: it represents accumulated signed change.",
+          "text": "It represents accumulated signed change.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. It represents accumulated signed change.",
-            "sus": "This one is legit. It represents accumulated signed change."
+            "legit": "It represents accumulated signed change. Legit was the accurate read.",
+            "sus": "It represents accumulated signed change. The evidence supports the original reply."
           }
         },
         {
           "id": "b",
-          "text": "Short version: If a definite integral is zero, the function must be zero everywhere on the interval.",
+          "text": "If a definite integral is zero, the function must be zero everywhere on the interval.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Positive and negative contributions can cancel, so a zero integral does not force the function to vanish.",
-            "sus": "Good catch. Positive and negative contributions can cancel, so a zero integral does not force the function to vanish."
+            "legit": "Positive and negative contributions can cancel, so a zero integral does not force the function to vanish. That makes the original claim unsafe to label Legit.",
+            "sus": "Positive and negative contributions can cancel, so a zero integral does not force the function to vanish. The evidence supports your Sus vote."
           }
         },
         {
           "id": "c",
-          "text": "I'd go with this: Yes, it is always nonnegative.",
+          "text": "Yes, it is always nonnegative.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A definite integral is signed; regions below the axis contribute negatively.",
-            "sus": "Good catch. A definite integral is signed; regions below the axis contribute negatively."
+            "legit": "A definite integral is signed; regions below the axis contribute negatively. The original claim needed a Sus vote.",
+            "sus": "A definite integral is signed; regions below the axis contribute negatively. That was correctly classified as Sus."
           }
         }
       ],
@@ -126,33 +126,33 @@
     {
       "id": "calculus-chain-rule",
       "difficulty": "medium",
-      "prompt": "Tiny knowledge check: when is the chain rule used?",
+      "prompt": "When is the chain rule used?",
       "answers": [
         {
           "id": "a",
-          "text": "Unless I'm mixing things up, the outer derivative is multiplied by the derivative of the inner function.",
+          "text": "The outer derivative is multiplied by the derivative of the inner function.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The outer derivative is multiplied by the derivative of the inner function.",
-            "sus": "This one is legit. The outer derivative is multiplied by the derivative of the inner function."
+            "legit": "The outer derivative is multiplied by the derivative of the inner function. Legit was the accurate read.",
+            "sus": "The outer derivative is multiplied by the derivative of the inner function. The reply belongs under Legit."
           }
         },
         {
           "id": "b",
-          "text": "This is what trips people up: When differentiating a composition of functions.",
+          "text": "When differentiating a composition of functions.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. When differentiating a composition of functions.",
-            "sus": "This one is legit. When differentiating a composition of functions."
+            "legit": "When differentiating a composition of functions. Marking it Legit was correct.",
+            "sus": "When differentiating a composition of functions. There was no false claim to flag here."
           }
         },
         {
           "id": "c",
-          "text": "This was the explanation that clicked for me: Products use the product rule; compositions use the chain rule.",
+          "text": "Products use the product rule; compositions use the chain rule.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Products use the product rule; compositions use the chain rule.",
-            "sus": "This one is legit. Products use the product rule; compositions use the chain rule."
+            "legit": "Products use the product rule; compositions use the chain rule. The source agrees with your Legit vote.",
+            "sus": "Products use the product rule; compositions use the chain rule. This one was safe to mark Legit."
           }
         }
       ],
@@ -165,33 +165,33 @@
     {
       "id": "calculus-product-rule",
       "difficulty": "medium",
-      "prompt": "A teammate asked me this: what is the derivative of a product `f(x)g(x)`?",
+      "prompt": "What is the derivative of a product `f(x)g(x)`?",
       "answers": [
         {
           "id": "a",
-          "text": "This was the explanation that clicked for me: `f'(x)g(x) + f(x)g'(x)`.",
+          "text": "`f'(x)g(x) + f(x)g'(x)`.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. `f'(x)g(x) + f(x)g'(x)`.",
-            "sus": "This one is legit. `f'(x)g(x) + f(x)g'(x)`."
+            "legit": "`f'(x)g(x) + f(x)g'(x)`. That makes your Legit call correct.",
+            "sus": "`f'(x)g(x) + f(x)g'(x)`. This one was safe to mark Legit."
           }
         },
         {
           "id": "b",
-          "text": "Pretty sure this is the key: `f'(x)g'(x)`.",
+          "text": "`f'(x)g'(x)`.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Differentiating each factor and multiplying omits two required terms.",
-            "sus": "Good catch. Differentiating each factor and multiplying omits two required terms."
+            "legit": "Differentiating each factor and multiplying omits two required terms. The original wording does not hold up.",
+            "sus": "Differentiating each factor and multiplying omits two required terms. You flagged exactly what was wrong."
           }
         },
         {
           "id": "c",
-          "text": "From what I've seen, if one factor is constant, the derivative of the whole product must be zero.",
+          "text": "If one factor is constant, the derivative of the whole product must be zero.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A constant factor remains and multiplies the derivative of the other factor.",
-            "sus": "Good catch. A constant factor remains and multiplies the derivative of the other factor."
+            "legit": "A constant factor remains and multiplies the derivative of the other factor. The reply changes an important technical fact.",
+            "sus": "A constant factor remains and multiplies the derivative of the other factor. Sus was the correct call here."
           }
         }
       ],
@@ -204,33 +204,33 @@
     {
       "id": "calculus-ftc",
       "difficulty": "medium",
-      "prompt": "Let's clear this one up: what connection does the Fundamental Theorem of Calculus make?",
+      "prompt": "What connection does the Fundamental Theorem of Calculus make?",
       "answers": [
         {
           "id": "a",
-          "text": "Short version: It says every discontinuous function has an elementary antiderivative.",
+          "text": "It says every discontinuous function has an elementary antiderivative.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. The theorem has hypotheses and does not guarantee elementary formulas.",
-            "sus": "Good catch. The theorem has hypotheses and does not guarantee elementary formulas."
+            "legit": "The theorem has hypotheses and does not guarantee elementary formulas. The source contradicts the original reply.",
+            "sus": "The theorem has hypotheses and does not guarantee elementary formulas. The evidence supports your Sus vote."
           }
         },
         {
           "id": "b",
-          "text": "I'd go with this: Under suitable conditions, differentiating an integral with a variable upper limit recovers the integrand.",
+          "text": "Under suitable conditions, differentiating an integral with a variable upper limit recovers the integrand.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Under suitable conditions, differentiating an integral with a variable upper limit recovers the integrand.",
-            "sus": "This one is legit. Under suitable conditions, differentiating an integral with a variable upper limit recovers the integrand."
+            "legit": "Under suitable conditions, differentiating an integral with a variable upper limit recovers the integrand. You were right to trust this reply.",
+            "sus": "Under suitable conditions, differentiating an integral with a variable upper limit recovers the integrand. The evidence supports the original reply."
           }
         },
         {
           "id": "c",
-          "text": "I think the important part is this: it connects accumulation by integration with antiderivatives.",
+          "text": "It connects accumulation by integration with antiderivatives.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. It connects accumulation by integration with antiderivatives.",
-            "sus": "This one is legit. It connects accumulation by integration with antiderivatives."
+            "legit": "It connects accumulation by integration with antiderivatives. Your Legit vote was right.",
+            "sus": "It connects accumulation by integration with antiderivatives. The claim is supported rather than suspicious."
           }
         }
       ],
@@ -243,33 +243,33 @@
     {
       "id": "calculus-continuity",
       "difficulty": "medium",
-      "prompt": "Someone dropped this in the group chat: does continuity at a point guarantee differentiability there?",
+      "prompt": "Does continuity at a point guarantee differentiability there?",
       "answers": [
         {
           "id": "a",
-          "text": "The way I understand it: the absolute-value function is continuous but not differentiable at zero.",
+          "text": "The absolute-value function is continuous but not differentiable at zero.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The absolute-value function is continuous but not differentiable at zero.",
-            "sus": "This one is legit. The absolute-value function is continuous but not differentiable at zero."
+            "legit": "The absolute-value function is continuous but not differentiable at zero. Legit was the accurate read.",
+            "sus": "The absolute-value function is continuous but not differentiable at zero. The reply belongs under Legit."
           }
         },
         {
           "id": "b",
-          "text": "Short version: Yes, every continuous graph has a tangent slope.",
+          "text": "Yes, every continuous graph has a tangent slope.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A continuous function can have a corner or cusp and fail to be differentiable.",
-            "sus": "Good catch. A continuous function can have a corner or cusp and fail to be differentiable."
+            "legit": "A continuous function can have a corner or cusp and fail to be differentiable. That distinction makes the original answer Sus.",
+            "sus": "A continuous function can have a corner or cusp and fail to be differentiable. You spotted the misleading part."
           }
         },
         {
           "id": "c",
-          "text": "I'd go with this: Differentiability implies continuity at that point.",
+          "text": "Differentiability implies continuity at that point.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Differentiability implies continuity at that point.",
-            "sus": "This one is legit. Differentiability implies continuity at that point."
+            "legit": "Differentiability implies continuity at that point. The source agrees with your Legit vote.",
+            "sus": "Differentiability implies continuity at that point. This one was safe to mark Legit."
           }
         }
       ],
@@ -282,33 +282,33 @@
     {
       "id": "calculus-critical-point",
       "difficulty": "medium",
-      "prompt": "Someone dropped this in the group chat: does `f'(c) = 0` guarantee a local maximum or minimum?",
+      "prompt": "Does `f'(c) = 0` guarantee a local maximum or minimum?",
       "answers": [
         {
           "id": "a",
-          "text": "The way I understand it: yes, every stationary point is an extremum.",
+          "text": "Yes, every stationary point is an extremum.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A stationary point can be neither, as with `x^3` at zero.",
-            "sus": "Good catch. A stationary point can be neither, as with `x^3` at zero."
+            "legit": "A stationary point can be neither, as with `x^3` at zero. The reply changes an important technical fact.",
+            "sus": "A stationary point can be neither, as with `x^3` at zero. That makes your Sus choice accurate."
           }
         },
         {
           "id": "b",
-          "text": "Short version: It identifies a critical point that needs further analysis.",
+          "text": "It identifies a critical point that needs further analysis.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. It identifies a critical point that needs further analysis.",
-            "sus": "This one is legit. It identifies a critical point that needs further analysis."
+            "legit": "It identifies a critical point that needs further analysis. You classified that correctly as Legit.",
+            "sus": "It identifies a critical point that needs further analysis. This one should stay marked Legit."
           }
         },
         {
           "id": "c",
-          "text": "I'd go with this: Sign changes or higher-derivative information can help classify the point.",
+          "text": "Sign changes or higher-derivative information can help classify the point.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Sign changes or higher-derivative information can help classify the point.",
-            "sus": "This one is legit. Sign changes or higher-derivative information can help classify the point."
+            "legit": "Sign changes or higher-derivative information can help classify the point. You were right to trust this reply.",
+            "sus": "Sign changes or higher-derivative information can help classify the point. This is a Legit statement, not a trap."
           }
         }
       ],
@@ -321,33 +321,33 @@
     {
       "id": "calculus-substitution",
       "difficulty": "medium",
-      "prompt": "I've seen mixed takes, so: what is substitution in integration designed to reverse?",
+      "prompt": "What is substitution in integration designed to reverse?",
       "answers": [
         {
           "id": "a",
-          "text": "I think the important part is this: the quotient rule only.",
+          "text": "The quotient rule only.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Substitution broadly handles compositions paired with an inner derivative.",
-            "sus": "Good catch. Substitution broadly handles compositions paired with an inner derivative."
+            "legit": "Substitution broadly handles compositions paired with an inner derivative. That distinction makes the original answer Sus.",
+            "sus": "Substitution broadly handles compositions paired with an inner derivative. You flagged exactly what was wrong."
           }
         },
         {
           "id": "b",
-          "text": "Unless I'm mixing things up, a valid substitution never requires changing the bounds of a definite integral.",
+          "text": "A valid substitution never requires changing the bounds of a definite integral.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. For a definite integral, either transform the bounds to the new variable or return to the original variable before evaluating.",
-            "sus": "Good catch. For a definite integral, either transform the bounds to the new variable or return to the original variable before evaluating."
+            "legit": "For a definite integral, either transform the bounds to the new variable or return to the original variable before evaluating. The error puts the original reply under Sus.",
+            "sus": "For a definite integral, either transform the bounds to the new variable or return to the original variable before evaluating. Sus was the correct call here."
           }
         },
         {
           "id": "c",
-          "text": "This is what trips people up: The chain rule.",
+          "text": "The chain rule.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The chain rule.",
-            "sus": "This one is legit. The chain rule."
+            "legit": "The chain rule. That is a solid Legit pick.",
+            "sus": "The chain rule. The rule confirms the reply instead of refuting it."
           }
         }
       ],
@@ -360,33 +360,33 @@
     {
       "id": "calculus-partial",
       "difficulty": "hard",
-      "prompt": "Settle a debate for me: what does a partial derivative hold fixed?",
+      "prompt": "What does a partial derivative hold fixed?",
       "answers": [
         {
           "id": "a",
-          "text": "Pretty sure this is the key: Partial derivatives describe coordinate-direction rates of change.",
+          "text": "Partial derivatives describe coordinate-direction rates of change.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Partial derivatives describe coordinate-direction rates of change.",
-            "sus": "This one is legit. Partial derivatives describe coordinate-direction rates of change."
+            "legit": "Partial derivatives describe coordinate-direction rates of change. Your Legit vote was right.",
+            "sus": "Partial derivatives describe coordinate-direction rates of change. There was no false claim to flag here."
           }
         },
         {
           "id": "b",
-          "text": "From what I've seen, the other independent variables while one variable changes.",
+          "text": "The other independent variables while one variable changes.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The other independent variables while one variable changes.",
-            "sus": "This one is legit. The other independent variables while one variable changes."
+            "legit": "The other independent variables while one variable changes. Your Legit judgment holds up.",
+            "sus": "The other independent variables while one variable changes. This one was safe to mark Legit."
           }
         },
         {
           "id": "c",
-          "text": "The practical answer is: the function value itself.",
+          "text": "The function value itself.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. The function value generally changes as the selected variable changes.",
-            "sus": "Good catch. The function value generally changes as the selected variable changes."
+            "legit": "The function value generally changes as the selected variable changes. The source contradicts the original reply.",
+            "sus": "The function value generally changes as the selected variable changes. The evidence supports your Sus vote."
           }
         }
       ],
@@ -399,33 +399,33 @@
     {
       "id": "calculus-gradient",
       "difficulty": "hard",
-      "prompt": "Quick gut check: in Euclidean space, what does the gradient of a differentiable scalar field indicate?",
+      "prompt": "In Euclidean space, what does the gradient of a differentiable scalar field indicate?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd go with this: The direction of steepest local increase when the gradient is nonzero.",
+          "text": "The direction of steepest local increase when the gradient is nonzero.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The direction of steepest local increase when the gradient is nonzero.",
-            "sus": "This one is legit. The direction of steepest local increase when the gradient is nonzero."
+            "legit": "The direction of steepest local increase when the gradient is nonzero. The source agrees with your Legit vote.",
+            "sus": "The direction of steepest local increase when the gradient is nonzero. This is a Legit statement, not a trap."
           }
         },
         {
           "id": "b",
-          "text": "I think the important part is this: a direction tangent to every regular level surface.",
+          "text": "A direction tangent to every regular level surface.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. The gradient is normal to a regular level surface.",
-            "sus": "Good catch. The gradient is normal to a regular level surface."
+            "legit": "The gradient is normal to a regular level surface. The original reply is what needed flagging.",
+            "sus": "The gradient is normal to a regular level surface. Your Sus vote caught the problem."
           }
         },
         {
           "id": "c",
-          "text": "Unless I'm mixing things up, its magnitude is the maximum directional derivative over unit directions at that point.",
+          "text": "Its magnitude is the maximum directional derivative over unit directions at that point.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Its magnitude is the maximum directional derivative over unit directions at that point.",
-            "sus": "This one is legit. Its magnitude is the maximum directional derivative over unit directions at that point."
+            "legit": "Its magnitude is the maximum directional derivative over unit directions at that point. Your call matches the underlying rule.",
+            "sus": "Its magnitude is the maximum directional derivative over unit directions at that point. The evidence supports the original reply."
           }
         }
       ],
@@ -438,33 +438,33 @@
     {
       "id": "calculus-taylor",
       "difficulty": "hard",
-      "prompt": "No searching: does a function always equal its Taylor series wherever all derivatives exist?",
+      "prompt": "Does a function always equal its Taylor series wherever all derivatives exist?",
       "answers": [
         {
           "id": "a",
-          "text": "This is what trips people up: Every Taylor series has an infinite radius of convergence.",
+          "text": "Every Taylor series has an infinite radius of convergence.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A Taylor series can have a finite or even zero radius of convergence.",
-            "sus": "Good catch. A Taylor series can have a finite or even zero radius of convergence."
+            "legit": "A Taylor series can have a finite or even zero radius of convergence. The source contradicts the original reply.",
+            "sus": "A Taylor series can have a finite or even zero radius of convergence. The evidence supports your Sus vote."
           }
         },
         {
           "id": "b",
-          "text": "This was the explanation that clicked for me: Adding more Taylor terms always improves the approximation at every input.",
+          "text": "Adding more Taylor terms always improves the approximation at every input.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Improvement depends on the input, convergence region, and remainder; more terms do not give a universal guarantee.",
-            "sus": "Good catch. Improvement depends on the input, convergence region, and remainder; more terms do not give a universal guarantee."
+            "legit": "Improvement depends on the input, convergence region, and remainder; more terms do not give a universal guarantee. The original reply should be marked Sus.",
+            "sus": "Improvement depends on the input, convergence region, and remainder; more terms do not give a universal guarantee. That was correctly classified as Sus."
           }
         },
         {
           "id": "c",
-          "text": "Pretty sure this is the key: Yes, infinite differentiability guarantees equality.",
+          "text": "Yes, infinite differentiability guarantees equality.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Some smooth functions have Taylor series that do not equal the function away from the expansion point.",
-            "sus": "Good catch. Some smooth functions have Taylor series that do not equal the function away from the expansion point."
+            "legit": "Some smooth functions have Taylor series that do not equal the function away from the expansion point. The Legit label misses the flaw here.",
+            "sus": "Some smooth functions have Taylor series that do not equal the function away from the expansion point. You flagged exactly what was wrong."
           }
         }
       ],

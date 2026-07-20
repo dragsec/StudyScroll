@@ -9,33 +9,33 @@
     {
       "id": "linux-permissions",
       "difficulty": "easy",
-      "prompt": "A teammate asked me this: how are traditional Linux read, write, and execute mode bits grouped?",
+      "prompt": "How are traditional Linux read, write, and execute mode bits grouped?",
       "answers": [
         {
           "id": "a",
-          "text": "This was the explanation that clicked for me: Mode bits apply broadly to filesystem objects.",
+          "text": "Mode bits apply broadly to filesystem objects.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Mode bits apply broadly to filesystem objects.",
-            "sus": "This one is legit. Mode bits apply broadly to filesystem objects."
+            "legit": "Mode bits apply broadly to filesystem objects. The source agrees with your Legit vote.",
+            "sus": "Mode bits apply broadly to filesystem objects. This one was safe to mark Legit."
           }
         },
         {
           "id": "b",
-          "text": "Pretty sure this is the key: Execute permission on a directory controls traversal rather than running the directory.",
+          "text": "Execute permission on a directory controls traversal rather than running the directory.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Execute permission on a directory controls traversal rather than running the directory.",
-            "sus": "This one is legit. Execute permission on a directory controls traversal rather than running the directory."
+            "legit": "Execute permission on a directory controls traversal rather than running the directory. The evidence backs your Legit choice.",
+            "sus": "Execute permission on a directory controls traversal rather than running the directory. This was accurate as written."
           }
         },
         {
           "id": "c",
-          "text": "From what I've seen, they are grouped for the owning user, owning group, and others.",
+          "text": "They are grouped for the owning user, owning group, and others.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. They are grouped for the owning user, owning group, and others.",
-            "sus": "This one is legit. They are grouped for the owning user, owning group, and others."
+            "legit": "They are grouped for the owning user, owning group, and others. Your call matches the underlying rule.",
+            "sus": "They are grouped for the owning user, owning group, and others. This reply deserved a Legit vote."
           }
         }
       ],
@@ -48,33 +48,33 @@
     {
       "id": "linux-process",
       "difficulty": "easy",
-      "prompt": "Before I confidently say the wrong thing: what is a Linux process?",
+      "prompt": "What is a Linux process?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd phrase it like this: Each process has an identifier and a virtual address space.",
+          "text": "Each process has an identifier and a virtual address space.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Each process has an identifier and a virtual address space.",
-            "sus": "This one is legit. Each process has an identifier and a virtual address space."
+            "legit": "Each process has an identifier and a virtual address space. This supports the Legit label you chose.",
+            "sus": "Each process has an identifier and a virtual address space. The claim is supported rather than suspicious."
           }
         },
         {
           "id": "b",
-          "text": "The way I understand it: a running program instance with execution state and resources.",
+          "text": "A running program instance with execution state and resources.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A running program instance with execution state and resources.",
-            "sus": "This one is legit. A running program instance with execution state and resources."
+            "legit": "A running program instance with execution state and resources. Legit was the accurate read.",
+            "sus": "A running program instance with execution state and resources. The Sus label does not fit this claim."
           }
         },
         {
           "id": "c",
-          "text": "Short version: A file that can never have more than one running instance.",
+          "text": "A file that can never have more than one running instance.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. The same executable can be used by many processes.",
-            "sus": "Good catch. The same executable can be used by many processes."
+            "legit": "The same executable can be used by many processes. The source contradicts the original reply.",
+            "sus": "The same executable can be used by many processes. You spotted the misleading part."
           }
         }
       ],
@@ -87,33 +87,33 @@
     {
       "id": "linux-pipe",
       "difficulty": "easy",
-      "prompt": "Curious where people land on this: what does a shell pipeline such as `a | b` connect?",
+      "prompt": "What does a shell pipeline such as `a | b` connect?",
       "answers": [
         {
           "id": "a",
-          "text": "My answer: The standard output of `a` to the standard input of `b`.",
+          "text": "The standard output of `a` to the standard input of `b`.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The standard output of `a` to the standard input of `b`.",
-            "sus": "This one is legit. The standard output of `a` to the standard input of `b`."
+            "legit": "The standard output of `a` to the standard input of `b`. The source agrees with your Legit vote.",
+            "sus": "The standard output of `a` to the standard input of `b`. This is a Legit statement, not a trap."
           }
         },
         {
           "id": "b",
-          "text": "I'd phrase it like this: The filesystems of two machines automatically.",
+          "text": "The filesystems of two machines automatically.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A shell pipe carries a byte stream between local processes unless other tools add networking.",
-            "sus": "Good catch. A shell pipe carries a byte stream between local processes unless other tools add networking."
+            "legit": "A shell pipe carries a byte stream between local processes unless other tools add networking. The source contradicts the original reply.",
+            "sus": "A shell pipe carries a byte stream between local processes unless other tools add networking. You flagged exactly what was wrong."
           }
         },
         {
           "id": "c",
-          "text": "The way I understand it: a pipe preserves application-level message or record boundaries.",
+          "text": "A pipe preserves application-level message or record boundaries.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A normal pipe is a byte stream; applications must define their own framing when needed.",
-            "sus": "Good catch. A normal pipe is a byte stream; applications must define their own framing when needed."
+            "legit": "A normal pipe is a byte stream; applications must define their own framing when needed. The original reply should be marked Sus.",
+            "sus": "A normal pipe is a byte stream; applications must define their own framing when needed. Sus was the correct call here."
           }
         }
       ],
@@ -126,33 +126,33 @@
     {
       "id": "linux-fork",
       "difficulty": "medium",
-      "prompt": "A teammate asked me this: what does `fork()` create?",
+      "prompt": "What does `fork()` create?",
       "answers": [
         {
           "id": "a",
-          "text": "This was the explanation that clicked for me: The child is a separate process with its own PID.",
+          "text": "The child is a separate process with its own PID.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The child is a separate process with its own PID.",
-            "sus": "This one is legit. The child is a separate process with its own PID."
+            "legit": "The child is a separate process with its own PID. You were right to trust this reply.",
+            "sus": "The child is a separate process with its own PID. This one was safe to mark Legit."
           }
         },
         {
           "id": "b",
-          "text": "Pretty sure this is the key: Copy-on-write commonly delays copying memory pages until one process writes.",
+          "text": "Copy-on-write commonly delays copying memory pages until one process writes.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Copy-on-write commonly delays copying memory pages until one process writes.",
-            "sus": "This one is legit. Copy-on-write commonly delays copying memory pages until one process writes."
+            "legit": "Copy-on-write commonly delays copying memory pages until one process writes. Your Legit vote was right.",
+            "sus": "Copy-on-write commonly delays copying memory pages until one process writes. This was accurate as written."
           }
         },
         {
           "id": "c",
-          "text": "From what I've seen, a child process initially based on the calling process.",
+          "text": "A child process initially based on the calling process.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A child process initially based on the calling process.",
-            "sus": "This one is legit. A child process initially based on the calling process."
+            "legit": "A child process initially based on the calling process. Your Legit judgment holds up.",
+            "sus": "A child process initially based on the calling process. This reply deserved a Legit vote."
           }
         }
       ],
@@ -165,33 +165,33 @@
     {
       "id": "linux-signal",
       "difficulty": "medium",
-      "prompt": "Quick gut check: what is a Unix signal?",
+      "prompt": "What is a Unix signal?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd go with this: Some signals can be handled or blocked, while SIGKILL cannot be caught.",
+          "text": "Some signals can be handled or blocked, while SIGKILL cannot be caught.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Some signals can be handled or blocked, while SIGKILL cannot be caught.",
-            "sus": "This one is legit. Some signals can be handled or blocked, while SIGKILL cannot be caught."
+            "legit": "Some signals can be handled or blocked, while SIGKILL cannot be caught. That makes your Legit call correct.",
+            "sus": "Some signals can be handled or blocked, while SIGKILL cannot be caught. This one was safe to mark Legit."
           }
         },
         {
           "id": "b",
-          "text": "I think the important part is this: an asynchronous notification delivered to a process or thread.",
+          "text": "An asynchronous notification delivered to a process or thread.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. An asynchronous notification delivered to a process or thread.",
-            "sus": "This one is legit. An asynchronous notification delivered to a process or thread."
+            "legit": "An asynchronous notification delivered to a process or thread. This supports the Legit label you chose.",
+            "sus": "An asynchronous notification delivered to a process or thread. This was accurate as written."
           }
         },
         {
           "id": "c",
-          "text": "Unless I'm mixing things up, a guaranteed queue that preserves unlimited repeated notifications.",
+          "text": "A guaranteed queue that preserves unlimited repeated notifications.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Standard signals can coalesce and are not an unlimited message queue.",
-            "sus": "Good catch. Standard signals can coalesce and are not an unlimited message queue."
+            "legit": "Standard signals can coalesce and are not an unlimited message queue. The original reply should be marked Sus.",
+            "sus": "Standard signals can coalesce and are not an unlimited message queue. That makes your Sus choice accurate."
           }
         }
       ],
@@ -204,33 +204,33 @@
     {
       "id": "linux-symlink",
       "difficulty": "medium",
-      "prompt": "This keeps starting arguments: how does a symbolic link differ from a hard link?",
+      "prompt": "How does a symbolic link differ from a hard link?",
       "answers": [
         {
           "id": "a",
-          "text": "The practical answer is: a symbolic link stores a path to another filesystem object.",
+          "text": "A symbolic link stores a path to another filesystem object.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A symbolic link stores a path to another filesystem object.",
-            "sus": "This one is legit. A symbolic link stores a path to another filesystem object."
+            "legit": "A symbolic link stores a path to another filesystem object. That is a solid Legit pick.",
+            "sus": "A symbolic link stores a path to another filesystem object. This was accurate as written."
           }
         },
         {
           "id": "b",
-          "text": "My answer: A symbolic link must stay on the same filesystem as its target.",
+          "text": "A symbolic link must stay on the same filesystem as its target.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Symbolic links can point across filesystem boundaries.",
-            "sus": "Good catch. Symbolic links can point across filesystem boundaries."
+            "legit": "Symbolic links can point across filesystem boundaries. The original reply should be marked Sus.",
+            "sus": "Symbolic links can point across filesystem boundaries. Good read: the original claim was flawed."
           }
         },
         {
           "id": "c",
-          "text": "I'd phrase it like this: The target must exist before a symbolic link can be created.",
+          "text": "The target must exist before a symbolic link can be created.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A symbolic link can be created for a nonexistent path and will then be dangling.",
-            "sus": "Good catch. A symbolic link can be created for a nonexistent path and will then be dangling."
+            "legit": "A symbolic link can be created for a nonexistent path and will then be dangling. The Legit label misses the flaw here.",
+            "sus": "A symbolic link can be created for a nonexistent path and will then be dangling. Your judgment caught the technical error."
           }
         }
       ],
@@ -243,33 +243,33 @@
     {
       "id": "linux-hard-link",
       "difficulty": "medium",
-      "prompt": "Curious where people land on this: what does a hard link reference?",
+      "prompt": "What does a hard link reference?",
       "answers": [
         {
           "id": "a",
-          "text": "My answer: A pathname that is followed dynamically each time.",
+          "text": "A pathname that is followed dynamically each time.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. That describes a symbolic link; a hard link is another name for the inode.",
-            "sus": "Good catch. That describes a symbolic link; a hard link is another name for the inode."
+            "legit": "That describes a symbolic link; a hard link is another name for the inode. The original claim needed a Sus vote.",
+            "sus": "That describes a symbolic link; a hard link is another name for the inode. Good read: the original claim was flawed."
           }
         },
         {
           "id": "b",
-          "text": "I'd phrase it like this: Removing one hard link does not remove the data while another link remains.",
+          "text": "Removing one hard link does not remove the data while another link remains.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Removing one hard link does not remove the data while another link remains.",
-            "sus": "This one is legit. Removing one hard link does not remove the data while another link remains."
+            "legit": "Removing one hard link does not remove the data while another link remains. This supports the Legit label you chose.",
+            "sus": "Removing one hard link does not remove the data while another link remains. The rule confirms the reply instead of refuting it."
           }
         },
         {
           "id": "c",
-          "text": "The way I understand it: the same inode and underlying file data as another directory entry.",
+          "text": "The same inode and underlying file data as another directory entry.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The same inode and underlying file data as another directory entry.",
-            "sus": "This one is legit. The same inode and underlying file data as another directory entry."
+            "legit": "The same inode and underlying file data as another directory entry. Legit was the accurate read.",
+            "sus": "The same inode and underlying file data as another directory entry. The evidence supports the original reply."
           }
         }
       ],
@@ -282,72 +282,72 @@
     {
       "id": "linux-load-average",
       "difficulty": "medium",
-      "prompt": "Someone dropped this in the group chat: does Linux load average equal CPU utilization percentage?",
+      "prompt": "Does Linux load average equal CPU utilization percentage?",
       "answers": [
         {
           "id": "a",
-          "text": "The way I understand it: the three values summarize different time windows.",
+          "text": "The three values summarize different time windows.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. The three values summarize different time windows.",
-            "sus": "This one is legit. The three values summarize different time windows."
+            "legit": "The three values summarize different time windows. Your call matches the underlying rule.",
+            "sus": "The three values summarize different time windows. The evidence supports the original reply."
           }
         },
         {
           "id": "b",
-          "text": "Short version: Yes, a load of 1.0 always means 100 percent CPU use on every machine.",
+          "text": "Yes, a load of 1.0 always means 100 percent CPU use on every machine.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Load average counts runnable and certain uninterruptible tasks and must be interpreted with CPU count.",
-            "sus": "Good catch. Load average counts runnable and certain uninterruptible tasks and must be interpreted with CPU count."
+            "legit": "Load average counts runnable and certain uninterruptible tasks and must be interpreted with CPU count. That makes the original claim unsafe to label Legit.",
+            "sus": "Load average counts runnable and certain uninterruptible tasks and must be interpreted with CPU count. You spotted the misleading part."
           }
         },
         {
           "id": "c",
-          "text": "I'd go with this: I/O-waiting tasks can contribute to load average.",
+          "text": "I/O-waiting tasks can contribute to load average.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. I/O-waiting tasks can contribute to load average.",
-            "sus": "This one is legit. I/O-waiting tasks can contribute to load average."
+            "legit": "I/O-waiting tasks can contribute to load average. You were right to trust this reply.",
+            "sus": "I/O-waiting tasks can contribute to load average. The Sus label does not fit this claim."
           }
         }
       ],
       "reference": {
-        "title": "Linux man-pages project",
-        "url": "https://man7.org/linux/man-pages/"
+        "title": "Linux proc_loadavg manual page",
+        "url": "https://man7.org/linux/man-pages/man5/proc_loadavg.5.html"
       },
       "review_status": "approved"
     },
     {
       "id": "linux-cgroup",
       "difficulty": "medium",
-      "prompt": "Quick gut check: what do Linux control groups provide?",
+      "prompt": "What do Linux control groups provide?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd go with this: Resource accounting and limits for groups of processes.",
+          "text": "Resource accounting and limits for groups of processes.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Resource accounting and limits for groups of processes.",
-            "sus": "This one is legit. Resource accounting and limits for groups of processes."
+            "legit": "Resource accounting and limits for groups of processes. You were right to trust this reply.",
+            "sus": "Resource accounting and limits for groups of processes. This is a Legit statement, not a trap."
           }
         },
         {
           "id": "b",
-          "text": "I think the important part is this: a replacement for all filesystem permissions.",
+          "text": "A replacement for all filesystem permissions.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Cgroups manage resources, while permissions remain a separate security control.",
-            "sus": "Good catch. Cgroups manage resources, while permissions remain a separate security control."
+            "legit": "Cgroups manage resources, while permissions remain a separate security control. The original reply is what needed flagging.",
+            "sus": "Cgroups manage resources, while permissions remain a separate security control. Your judgment caught the technical error."
           }
         },
         {
           "id": "c",
-          "text": "Unless I'm mixing things up, control groups give processes separate views of process IDs and network interfaces.",
+          "text": "Control groups give processes separate views of process IDs and network interfaces.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Namespaces isolate resource views; cgroups primarily account for and control resource usage.",
-            "sus": "Good catch. Namespaces isolate resource views; cgroups primarily account for and control resource usage."
+            "legit": "Namespaces isolate resource views; cgroups primarily account for and control resource usage. The original reply was the misconception in the thread.",
+            "sus": "Namespaces isolate resource views; cgroups primarily account for and control resource usage. That makes your Sus choice accurate."
           }
         }
       ],
@@ -360,33 +360,33 @@
     {
       "id": "linux-namespace",
       "difficulty": "hard",
-      "prompt": "This keeps starting arguments: what do Linux namespaces isolate?",
+      "prompt": "What do Linux namespaces isolate?",
       "answers": [
         {
           "id": "a",
-          "text": "The practical answer is: they automatically encrypt all data between processes.",
+          "text": "They automatically encrypt all data between processes.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Namespaces isolate views; encryption is a separate feature.",
-            "sus": "Good catch. Namespaces isolate views; encryption is a separate feature."
+            "legit": "Namespaces isolate views; encryption is a separate feature. The original reply is what needed flagging.",
+            "sus": "Namespaces isolate views; encryption is a separate feature. The evidence supports your Sus vote."
           }
         },
         {
           "id": "b",
-          "text": "My answer: Containers combine multiple namespace types with other controls.",
+          "text": "Containers combine multiple namespace types with other controls.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Containers combine multiple namespace types with other controls.",
-            "sus": "This one is legit. Containers combine multiple namespace types with other controls."
+            "legit": "Containers combine multiple namespace types with other controls. You were right to trust this reply.",
+            "sus": "Containers combine multiple namespace types with other controls. The evidence supports the original reply."
           }
         },
         {
           "id": "c",
-          "text": "I'd phrase it like this: Selected views of system resources such as process IDs, mounts, or networks.",
+          "text": "Selected views of system resources such as process IDs, mounts, or networks.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Selected views of system resources such as process IDs, mounts, or networks.",
-            "sus": "This one is legit. Selected views of system resources such as process IDs, mounts, or networks."
+            "legit": "Selected views of system resources such as process IDs, mounts, or networks. Your Legit vote was right.",
+            "sus": "Selected views of system resources such as process IDs, mounts, or networks. The claim is supported rather than suspicious."
           }
         }
       ],
@@ -399,33 +399,33 @@
     {
       "id": "linux-epoll",
       "difficulty": "hard",
-      "prompt": "Forum check: why use epoll for many file descriptors?",
+      "prompt": "Why use epoll for many file descriptors?",
       "answers": [
         {
           "id": "a",
-          "text": "From what I've seen, edge-triggered use requires draining readiness carefully to avoid missed progress.",
+          "text": "Edge-triggered use requires draining readiness carefully to avoid missed progress.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Edge-triggered use requires draining readiness carefully to avoid missed progress.",
-            "sus": "This one is legit. Edge-triggered use requires draining readiness carefully to avoid missed progress."
+            "legit": "Edge-triggered use requires draining readiness carefully to avoid missed progress. Your call matches the underlying rule.",
+            "sus": "Edge-triggered use requires draining readiness carefully to avoid missed progress. This reply deserved a Legit vote."
           }
         },
         {
           "id": "b",
-          "text": "The practical answer is: it can report readiness changes without scanning every descriptor on each wait.",
+          "text": "It can report readiness changes without scanning every descriptor on each wait.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. It can report readiness changes without scanning every descriptor on each wait.",
-            "sus": "This one is legit. It can report readiness changes without scanning every descriptor on each wait."
+            "legit": "It can report readiness changes without scanning every descriptor on each wait. You classified that correctly as Legit.",
+            "sus": "It can report readiness changes without scanning every descriptor on each wait. This one should stay marked Legit."
           }
         },
         {
           "id": "c",
-          "text": "My answer: It turns blocking file operations into CPU-parallel work automatically.",
+          "text": "It turns blocking file operations into CPU-parallel work automatically.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Epoll reports readiness; the application still performs the I/O.",
-            "sus": "Good catch. Epoll reports readiness; the application still performs the I/O."
+            "legit": "Epoll reports readiness; the application still performs the I/O. The original statement is materially misleading.",
+            "sus": "Epoll reports readiness; the application still performs the I/O. That was correctly classified as Sus."
           }
         }
       ],
@@ -438,33 +438,33 @@
     {
       "id": "linux-oom",
       "difficulty": "hard",
-      "prompt": "Settle a debate for me: what can happen when Linux cannot satisfy memory demand?",
+      "prompt": "What can happen when Linux cannot satisfy memory demand?",
       "answers": [
         {
           "id": "a",
-          "text": "Pretty sure this is the key: An out-of-memory event can occur only when swap is disabled.",
+          "text": "An out-of-memory event can occur only when swap is disabled.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. OOM can occur with or without swap when the relevant memory domain cannot satisfy an allocation.",
-            "sus": "Good catch. OOM can occur with or without swap when the relevant memory domain cannot satisfy an allocation."
+            "legit": "OOM can occur with or without swap when the relevant memory domain cannot satisfy an allocation. That distinction makes the original answer Sus.",
+            "sus": "OOM can occur with or without swap when the relevant memory domain cannot satisfy an allocation. Your Sus vote caught the problem."
           }
         },
         {
           "id": "b",
-          "text": "From what I've seen, the kernel always adds physical RAM automatically.",
+          "text": "The kernel always adds physical RAM automatically.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Memory is finite; reclaim, swap, and termination are possible responses.",
-            "sus": "Good catch. Memory is finite; reclaim, swap, and termination are possible responses."
+            "legit": "Memory is finite; reclaim, swap, and termination are possible responses. The error puts the original reply under Sus.",
+            "sus": "Memory is finite; reclaim, swap, and termination are possible responses. You were right not to trust that reply."
           }
         },
         {
           "id": "c",
-          "text": "The practical answer is: the OOM killer always terminates the process using the most memory.",
+          "text": "The OOM killer always terminates the process using the most memory.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. The kernel uses an OOM scoring policy, so raw memory use alone does not determine the victim.",
-            "sus": "Good catch. The kernel uses an OOM scoring policy, so raw memory use alone does not determine the victim."
+            "legit": "The kernel uses an OOM scoring policy, so raw memory use alone does not determine the victim. The source contradicts the original reply.",
+            "sus": "The kernel uses an OOM scoring policy, so raw memory use alone does not determine the victim. The evidence supports your Sus vote."
           }
         }
       ],

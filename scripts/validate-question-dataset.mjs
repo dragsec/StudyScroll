@@ -8,6 +8,42 @@ const expectedTopics = 14;
 const errors = [];
 const globalQuestionIds = new Set();
 const globalPrompts = new Map();
+const globalAnswers = new Map();
+const cannedOpeners = [
+  "quick gut check:",
+  "settle a debate for me:",
+  "someone dropped this in the group chat:",
+  "no searching:",
+  "curious where people land on this:",
+  "i've seen mixed takes, so:",
+  "forum check:",
+  "let's clear this one up:",
+  "a teammate asked me this:",
+  "before i confidently say the wrong thing:",
+  "tiny knowledge check:",
+  "this keeps starting arguments:",
+  "i'd go with this:",
+  "pretty sure this is the key:",
+  "the way i understand it:",
+  "this is what trips people up:",
+  "my answer:",
+  "i think the important part is this:",
+  "from what i've seen,",
+  "short version:",
+  "this was the explanation that clicked for me:",
+  "i'd phrase it like this:",
+  "unless i'm mixing things up,",
+  "the practical answer is:",
+  "yep, this one checks out.",
+  "this one is legit.",
+  "not this one.",
+  "good catch."
+];
+
+function hasCannedOpener(value) {
+  const normalized = value.trim().toLowerCase();
+  return cannedOpeners.some((opener) => normalized.startsWith(opener));
+}
 
 function fail(file, message) {
   errors.push(`${file}: ${message}`);
@@ -50,6 +86,9 @@ for (const file of files) {
     if (typeof question.prompt !== "string" || question.prompt.length < 10) {
       fail(file, `${question.id}: prompt is too short`);
     }
+    if (typeof question.prompt === "string" && hasCannedOpener(question.prompt)) {
+      fail(file, `${question.id}: prompt starts with a banned canned opener`);
+    }
     if (typeof question.prompt === "string" && !question.prompt.trim().endsWith("?")) {
       fail(file, `${question.id}: prompt must end with a question mark`);
     }
@@ -87,6 +126,16 @@ for (const file of files) {
       if (typeof answer.text !== "string" || answer.text.length < 5) {
         fail(file, `${question.id}/${answer.id}: answer text is too short`);
       }
+      if (typeof answer.text === "string" && hasCannedOpener(answer.text)) {
+        fail(file, `${question.id}/${answer.id}: answer starts with a banned canned opener`);
+      }
+      const normalizedAnswer = answer.text?.trim().toLowerCase();
+      if (normalizedAnswer) {
+        if (globalAnswers.has(normalizedAnswer)) {
+          fail(file, `${question.id}/${answer.id}: duplicate answer also used by ${globalAnswers.get(normalizedAnswer)}`);
+        }
+        globalAnswers.set(normalizedAnswer, `${question.id}/${answer.id}`);
+      }
       if (answer.verdict !== "legit" && answer.verdict !== "sus") {
         fail(file, `${question.id}/${answer.id}: invalid verdict`);
       }
@@ -96,21 +145,8 @@ for (const file of files) {
       if (answer.feedback?.legit === answer.feedback?.sus) {
         fail(file, `${question.id}/${answer.id}: Legit and Sus feedback must differ`);
       }
-      if (answer.verdict === "legit") {
-        if (!answer.feedback?.legit?.startsWith("Yep, this one checks out.")) {
-          fail(file, `${question.id}/${answer.id}: a legitimate answer needs confirming feedback for a Legit vote`);
-        }
-        if (!answer.feedback?.sus?.startsWith("This one is legit.")) {
-          fail(file, `${question.id}/${answer.id}: a legitimate answer needs a correction for a Sus vote`);
-        }
-      }
-      if (answer.verdict === "sus") {
-        if (!answer.feedback?.legit?.startsWith("Not this one.")) {
-          fail(file, `${question.id}/${answer.id}: a suspicious answer needs corrective feedback for a Legit vote`);
-        }
-        if (!answer.feedback?.sus?.startsWith("Good catch.")) {
-          fail(file, `${question.id}/${answer.id}: a suspicious answer needs confirming feedback for a Sus vote`);
-        }
+      if (hasCannedOpener(answer.feedback?.legit ?? "") || hasCannedOpener(answer.feedback?.sus ?? "")) {
+        fail(file, `${question.id}/${answer.id}: feedback starts with a banned canned opener`);
       }
       if (answer.feedback?.legit?.includes("undefined") || answer.feedback?.sus?.includes("undefined")) {
         fail(file, `${question.id}/${answer.id}: feedback contains an undefined value`);

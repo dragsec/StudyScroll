@@ -9,33 +9,33 @@
     {
       "id": "spring-boot-autoconfiguration",
       "difficulty": "easy",
-      "prompt": "I've seen mixed takes, so: what is Spring Boot auto-configuration trying to do?",
+      "prompt": "What is Spring Boot auto-configuration trying to do?",
       "answers": [
         {
           "id": "a",
-          "text": "I think the important part is this: auto-configuration is conditional on the application environment.",
+          "text": "Auto-configuration is conditional on the application environment.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Auto-configuration is conditional on the application environment.",
-            "sus": "This one is legit. Auto-configuration is conditional on the application environment."
+            "legit": "Auto-configuration is conditional on the application environment. This supports the Legit label you chose.",
+            "sus": "Auto-configuration is conditional on the application environment. This one should stay marked Legit."
           }
         },
         {
           "id": "b",
-          "text": "Unless I'm mixing things up, user-defined beans can cause many defaults to back off.",
+          "text": "User-defined beans can cause many defaults to back off.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. User-defined beans can cause many defaults to back off.",
-            "sus": "This one is legit. User-defined beans can cause many defaults to back off."
+            "legit": "User-defined beans can cause many defaults to back off. Legit was the accurate read.",
+            "sus": "User-defined beans can cause many defaults to back off. This is a Legit statement, not a trap."
           }
         },
         {
           "id": "c",
-          "text": "This is what trips people up: Configure common beans based on the classpath, properties, and existing beans.",
+          "text": "Configure common beans based on the classpath, properties, and existing beans.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Configure common beans based on the classpath, properties, and existing beans.",
-            "sus": "This one is legit. Configure common beans based on the classpath, properties, and existing beans."
+            "legit": "Configure common beans based on the classpath, properties, and existing beans. Marking it Legit was correct.",
+            "sus": "Configure common beans based on the classpath, properties, and existing beans. The rule confirms the reply instead of refuting it."
           }
         }
       ],
@@ -48,33 +48,33 @@
     {
       "id": "spring-boot-starter",
       "difficulty": "easy",
-      "prompt": "I've seen mixed takes, so: what is a Spring Boot starter?",
+      "prompt": "What is a Spring Boot starter?",
       "answers": [
         {
           "id": "a",
-          "text": "I think the important part is this: starters reduce the need to select every transitive library manually.",
+          "text": "Starters reduce the need to select every transitive library manually.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Starters reduce the need to select every transitive library manually.",
-            "sus": "This one is legit. Starters reduce the need to select every transitive library manually."
+            "legit": "Starters reduce the need to select every transitive library manually. The evidence backs your Legit choice.",
+            "sus": "Starters reduce the need to select every transitive library manually. The claim is supported rather than suspicious."
           }
         },
         {
           "id": "b",
-          "text": "Unless I'm mixing things up, a curated dependency descriptor for a common capability.",
+          "text": "A curated dependency descriptor for a common capability.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A curated dependency descriptor for a common capability.",
-            "sus": "This one is legit. A curated dependency descriptor for a common capability."
+            "legit": "A curated dependency descriptor for a common capability. Your call matches the underlying rule.",
+            "sus": "A curated dependency descriptor for a common capability. The Sus label does not fit this claim."
           }
         },
         {
           "id": "c",
-          "text": "This is what trips people up: A running application server managed outside the project.",
+          "text": "A running application server managed outside the project.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A starter is a dependency bundle, not a separate server process.",
-            "sus": "Good catch. A starter is a dependency bundle, not a separate server process."
+            "legit": "A starter is a dependency bundle, not a separate server process. The original reply is what needed flagging.",
+            "sus": "A starter is a dependency bundle, not a separate server process. The evidence supports your Sus vote."
           }
         }
       ],
@@ -87,33 +87,33 @@
     {
       "id": "spring-boot-embedded-server",
       "difficulty": "easy",
-      "prompt": "Quick gut check: can a Spring Boot web application run with an embedded server?",
+      "prompt": "Can a Spring Boot web application run with an embedded server?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd go with this: Yes, it can package and launch a server with the application.",
+          "text": "Yes, it can package and launch a server with the application.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Yes, it can package and launch a server with the application.",
-            "sus": "This one is legit. Yes, it can package and launch a server with the application."
+            "legit": "Yes, it can package and launch a server with the application. You were right to trust this reply.",
+            "sus": "Yes, it can package and launch a server with the application. This one was safe to mark Legit."
           }
         },
         {
           "id": "b",
-          "text": "I think the important part is this: no, every deployment requires a separately installed application server.",
+          "text": "No, every deployment requires a separately installed application server.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Executable Spring Boot applications commonly use an embedded server.",
-            "sus": "Good catch. Executable Spring Boot applications commonly use an embedded server."
+            "legit": "Executable Spring Boot applications commonly use an embedded server. The source contradicts the original reply.",
+            "sus": "Executable Spring Boot applications commonly use an embedded server. Your judgment caught the technical error."
           }
         },
         {
           "id": "c",
-          "text": "Unless I'm mixing things up, an embedded server is suitable only for local development.",
+          "text": "An embedded server is suitable only for local development.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Embedded servers are commonly used in production when deployed and operated appropriately.",
-            "sus": "Good catch. Embedded servers are commonly used in production when deployed and operated appropriately."
+            "legit": "Embedded servers are commonly used in production when deployed and operated appropriately. The original reply should be marked Sus.",
+            "sus": "Embedded servers are commonly used in production when deployed and operated appropriately. That makes your Sus choice accurate."
           }
         }
       ],
@@ -126,33 +126,33 @@
     {
       "id": "spring-boot-constructor-injection",
       "difficulty": "medium",
-      "prompt": "Tiny knowledge check: why is constructor injection often preferred?",
+      "prompt": "Why is constructor injection often preferred?",
       "answers": [
         {
           "id": "a",
-          "text": "Unless I'm mixing things up, constructor parameters make dependencies straightforward to supply in tests.",
+          "text": "Constructor parameters make dependencies straightforward to supply in tests.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Constructor parameters make dependencies straightforward to supply in tests.",
-            "sus": "This one is legit. Constructor parameters make dependencies straightforward to supply in tests."
+            "legit": "Constructor parameters make dependencies straightforward to supply in tests. Legit was the accurate read.",
+            "sus": "Constructor parameters make dependencies straightforward to supply in tests. This reply deserved a Legit vote."
           }
         },
         {
           "id": "b",
-          "text": "This is what trips people up: A single constructor can be used without an explicit Autowired annotation.",
+          "text": "A single constructor can be used without an explicit Autowired annotation.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A single constructor can be used without an explicit Autowired annotation.",
-            "sus": "This one is legit. A single constructor can be used without an explicit Autowired annotation."
+            "legit": "A single constructor can be used without an explicit Autowired annotation. Marking it Legit was correct.",
+            "sus": "A single constructor can be used without an explicit Autowired annotation. This one should stay marked Legit."
           }
         },
         {
           "id": "c",
-          "text": "This was the explanation that clicked for me: Required dependencies are explicit and can be final.",
+          "text": "Required dependencies are explicit and can be final.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Required dependencies are explicit and can be final.",
-            "sus": "This one is legit. Required dependencies are explicit and can be final."
+            "legit": "Required dependencies are explicit and can be final. The source agrees with your Legit vote.",
+            "sus": "Required dependencies are explicit and can be final. This is a Legit statement, not a trap."
           }
         }
       ],
@@ -165,33 +165,33 @@
     {
       "id": "spring-boot-profile",
       "difficulty": "medium",
-      "prompt": "Let's clear this one up: what do Spring profiles control?",
+      "prompt": "What do Spring profiles control?",
       "answers": [
         {
           "id": "a",
-          "text": "Short version: Active profiles can be selected through external configuration.",
+          "text": "Active profiles can be selected through external configuration.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Active profiles can be selected through external configuration.",
-            "sus": "This one is legit. Active profiles can be selected through external configuration."
+            "legit": "Active profiles can be selected through external configuration. Marking it Legit was correct.",
+            "sus": "Active profiles can be selected through external configuration. This was accurate as written."
           }
         },
         {
           "id": "b",
-          "text": "I'd go with this: Conditional activation of beans and configuration for named environments.",
+          "text": "Conditional activation of beans and configuration for named environments.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Conditional activation of beans and configuration for named environments.",
-            "sus": "This one is legit. Conditional activation of beans and configuration for named environments."
+            "legit": "Conditional activation of beans and configuration for named environments. The source agrees with your Legit vote.",
+            "sus": "Conditional activation of beans and configuration for named environments. This reply deserved a Legit vote."
           }
         },
         {
           "id": "c",
-          "text": "I think the important part is this: compile-time Java language features.",
+          "text": "Compile-time Java language features.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Profiles are runtime configuration and bean-selection features.",
-            "sus": "Good catch. Profiles are runtime configuration and bean-selection features."
+            "legit": "Profiles are runtime configuration and bean-selection features. That distinction makes the original answer Sus.",
+            "sus": "Profiles are runtime configuration and bean-selection features. Your judgment caught the technical error."
           }
         }
       ],
@@ -204,33 +204,33 @@
     {
       "id": "spring-boot-actuator",
       "difficulty": "medium",
-      "prompt": "Settle a debate for me: what does Spring Boot Actuator add?",
+      "prompt": "What does Spring Boot Actuator add?",
       "answers": [
         {
           "id": "a",
-          "text": "Pretty sure this is the key: Operational endpoints and production-oriented application information.",
+          "text": "Operational endpoints and production-oriented application information.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Operational endpoints and production-oriented application information.",
-            "sus": "This one is legit. Operational endpoints and production-oriented application information."
+            "legit": "Operational endpoints and production-oriented application information. The evidence backs your Legit choice.",
+            "sus": "Operational endpoints and production-oriented application information. The claim is supported rather than suspicious."
           }
         },
         {
           "id": "b",
-          "text": "From what I've seen, automatic public exposure of every endpoint is always safe.",
+          "text": "Automatic public exposure of every endpoint is always safe.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Endpoint exposure and security must be configured deliberately.",
-            "sus": "Good catch. Endpoint exposure and security must be configured deliberately."
+            "legit": "Endpoint exposure and security must be configured deliberately. The error puts the original reply under Sus.",
+            "sus": "Endpoint exposure and security must be configured deliberately. You were right not to trust that reply."
           }
         },
         {
           "id": "c",
-          "text": "The practical answer is: a healthy Actuator response proves every external dependency is healthy.",
+          "text": "A healthy Actuator response proves every external dependency is healthy.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. A health result covers only the indicators that are configured and included.",
-            "sus": "Good catch. A health result covers only the indicators that are configured and included."
+            "legit": "A health result covers only the indicators that are configured and included. The source contradicts the original reply.",
+            "sus": "A health result covers only the indicators that are configured and included. The evidence supports your Sus vote."
           }
         }
       ],
@@ -243,33 +243,33 @@
     {
       "id": "spring-transaction-proxy",
       "difficulty": "medium",
-      "prompt": "A teammate asked me this: why can self-invocation bypass `@Transactional` in Spring's default proxy mode?",
+      "prompt": "Why can self-invocation bypass `@Transactional` in Spring's default proxy mode?",
       "answers": [
         {
           "id": "a",
-          "text": "This was the explanation that clicked for me: Transactions only work on static methods.",
+          "text": "Transactions only work on static methods.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Proxy interception, not static dispatch, is the key issue.",
-            "sus": "Good catch. Proxy interception, not static dispatch, is the key issue."
+            "legit": "Proxy interception, not static dispatch, is the key issue. The original statement is materially misleading.",
+            "sus": "Proxy interception, not static dispatch, is the key issue. Your vote matches the correction."
           }
         },
         {
           "id": "b",
-          "text": "Pretty sure this is the key: Moving the call across beans or using another transaction mechanism can restore interception.",
+          "text": "Moving the call across beans or using another transaction mechanism can restore interception.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Moving the call across beans or using another transaction mechanism can restore interception.",
-            "sus": "This one is legit. Moving the call across beans or using another transaction mechanism can restore interception."
+            "legit": "Moving the call across beans or using another transaction mechanism can restore interception. This supports the Legit label you chose.",
+            "sus": "Moving the call across beans or using another transaction mechanism can restore interception. The rule confirms the reply instead of refuting it."
           }
         },
         {
           "id": "c",
-          "text": "From what I've seen, a call through `this` does not pass through the Spring proxy.",
+          "text": "A call through `this` does not pass through the Spring proxy.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. A call through `this` does not pass through the Spring proxy.",
-            "sus": "This one is legit. A call through `this` does not pass through the Spring proxy."
+            "legit": "A call through `this` does not pass through the Spring proxy. Legit was the accurate read.",
+            "sus": "A call through `this` does not pass through the Spring proxy. The evidence supports the original reply."
           }
         }
       ],
@@ -282,33 +282,33 @@
     {
       "id": "spring-bean-scope",
       "difficulty": "medium",
-      "prompt": "A teammate asked me this: what is the default scope of a Spring bean?",
+      "prompt": "What is the default scope of a Spring bean?",
       "answers": [
         {
           "id": "a",
-          "text": "This was the explanation that clicked for me: Web-aware contexts also provide request and session scopes.",
+          "text": "Web-aware contexts also provide request and session scopes.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Web-aware contexts also provide request and session scopes.",
-            "sus": "This one is legit. Web-aware contexts also provide request and session scopes."
+            "legit": "Web-aware contexts also provide request and session scopes. That makes your Legit call correct.",
+            "sus": "Web-aware contexts also provide request and session scopes. This is a Legit statement, not a trap."
           }
         },
         {
           "id": "b",
-          "text": "Pretty sure this is the key: Singleton within the application context.",
+          "text": "Singleton within the application context.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Singleton within the application context.",
-            "sus": "This one is legit. Singleton within the application context."
+            "legit": "Singleton within the application context. This supports the Legit label you chose.",
+            "sus": "Singleton within the application context. The rule confirms the reply instead of refuting it."
           }
         },
         {
           "id": "c",
-          "text": "From what I've seen, a new instance for every method call.",
+          "text": "A new instance for every method call.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Prototype creates new instances on lookup; singleton is the default.",
-            "sus": "Good catch. Prototype creates new instances on lookup; singleton is the default."
+            "legit": "Prototype creates new instances on lookup; singleton is the default. The reply changes an important technical fact.",
+            "sus": "Prototype creates new instances on lookup; singleton is the default. You were right not to trust that reply."
           }
         }
       ],
@@ -321,33 +321,33 @@
     {
       "id": "spring-config-precedence",
       "difficulty": "medium",
-      "prompt": "A teammate asked me this: can the same Spring Boot property come from multiple sources?",
+      "prompt": "Can the same Spring Boot property come from multiple sources?",
       "answers": [
         {
           "id": "a",
-          "text": "This was the explanation that clicked for me: Yes, defined precedence rules decide which value wins.",
+          "text": "Yes, defined precedence rules decide which value wins.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Yes, defined precedence rules decide which value wins.",
-            "sus": "This one is legit. Yes, defined precedence rules decide which value wins."
+            "legit": "Yes, defined precedence rules decide which value wins. The source agrees with your Legit vote.",
+            "sus": "Yes, defined precedence rules decide which value wins. The Sus label does not fit this claim."
           }
         },
         {
           "id": "b",
-          "text": "Pretty sure this is the key: Only `application.properties` can supply configuration.",
+          "text": "Only `application.properties` can supply configuration.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Environment variables, command-line arguments, and other sources are supported.",
-            "sus": "Good catch. Environment variables, command-line arguments, and other sources are supported."
+            "legit": "Environment variables, command-line arguments, and other sources are supported. The original wording does not hold up.",
+            "sus": "Environment variables, command-line arguments, and other sources are supported. Your Sus vote caught the problem."
           }
         },
         {
           "id": "c",
-          "text": "From what I've seen, when two property sources define the same key, the lower-priority source always wins.",
+          "text": "When two property sources define the same key, the lower-priority source always wins.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Spring Boot uses defined property-source precedence, and the higher-priority value wins.",
-            "sus": "Good catch. Spring Boot uses defined property-source precedence, and the higher-priority value wins."
+            "legit": "Spring Boot uses defined property-source precedence, and the higher-priority value wins. The reply changes an important technical fact.",
+            "sus": "Spring Boot uses defined property-source precedence, and the higher-priority value wins. You were right not to trust that reply."
           }
         }
       ],
@@ -360,33 +360,33 @@
     {
       "id": "spring-validation",
       "difficulty": "hard",
-      "prompt": "Curious where people land on this: what is needed for Bean Validation annotations to reject invalid request data?",
+      "prompt": "What is needed for Bean Validation annotations to reject invalid request data?",
       "answers": [
         {
           "id": "a",
-          "text": "My answer: Annotations validate every object automatically when it is constructed.",
+          "text": "Annotations validate every object automatically when it is constructed.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Constraints are checked when a validator is invoked through the relevant integration.",
-            "sus": "Good catch. Constraints are checked when a validator is invoked through the relevant integration."
+            "legit": "Constraints are checked when a validator is invoked through the relevant integration. The error puts the original reply under Sus.",
+            "sus": "Constraints are checked when a validator is invoked through the relevant integration. Your vote matches the correction."
           }
         },
         {
           "id": "b",
-          "text": "I'd phrase it like this: Binding errors should be translated into a clear client response.",
+          "text": "Binding errors should be translated into a clear client response.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Binding errors should be translated into a clear client response.",
-            "sus": "This one is legit. Binding errors should be translated into a clear client response."
+            "legit": "Binding errors should be translated into a clear client response. The evidence backs your Legit choice.",
+            "sus": "Binding errors should be translated into a clear client response. The original wording holds up."
           }
         },
         {
           "id": "c",
-          "text": "The way I understand it: validation must be triggered, commonly with `@Valid` or `@Validated`.",
+          "text": "Validation must be triggered, commonly with `@Valid` or `@Validated`.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Validation must be triggered, commonly with `@Valid` or `@Validated`.",
-            "sus": "This one is legit. Validation must be triggered, commonly with `@Valid` or `@Validated`."
+            "legit": "Validation must be triggered, commonly with `@Valid` or `@Validated`. Your call matches the underlying rule.",
+            "sus": "Validation must be triggered, commonly with `@Valid` or `@Validated`. The reply belongs under Legit."
           }
         }
       ],
@@ -399,33 +399,33 @@
     {
       "id": "spring-test-slice",
       "difficulty": "hard",
-      "prompt": "Quick gut check: what is the purpose of a Spring Boot test slice?",
+      "prompt": "What is the purpose of a Spring Boot test slice?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd go with this: `@WebMvcTest` focuses on MVC components rather than the full application.",
+          "text": "`@WebMvcTest` focuses on MVC components rather than the full application.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. `@WebMvcTest` focuses on MVC components rather than the full application.",
-            "sus": "This one is legit. `@WebMvcTest` focuses on MVC components rather than the full application."
+            "legit": "`@WebMvcTest` focuses on MVC components rather than the full application. That makes your Legit call correct.",
+            "sus": "`@WebMvcTest` focuses on MVC components rather than the full application. This one was safe to mark Legit."
           }
         },
         {
           "id": "b",
-          "text": "I think the important part is this: load a focused subset of application configuration for one layer.",
+          "text": "Load a focused subset of application configuration for one layer.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Yep, this one checks out. Load a focused subset of application configuration for one layer.",
-            "sus": "This one is legit. Load a focused subset of application configuration for one layer."
+            "legit": "Load a focused subset of application configuration for one layer. This supports the Legit label you chose.",
+            "sus": "Load a focused subset of application configuration for one layer. This was accurate as written."
           }
         },
         {
           "id": "c",
-          "text": "Unless I'm mixing things up, start every external production dependency.",
+          "text": "Start every external production dependency.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Slices intentionally narrow the context and often use test replacements.",
-            "sus": "Good catch. Slices intentionally narrow the context and often use test replacements."
+            "legit": "Slices intentionally narrow the context and often use test replacements. The original reply should be marked Sus.",
+            "sus": "Slices intentionally narrow the context and often use test replacements. That makes your Sus choice accurate."
           }
         }
       ],
@@ -438,39 +438,39 @@
     {
       "id": "spring-graceful-shutdown",
       "difficulty": "hard",
-      "prompt": "Before I confidently say the wrong thing: what does graceful shutdown aim to do?",
+      "prompt": "What does graceful shutdown aim to do?",
       "answers": [
         {
           "id": "a",
-          "text": "I'd phrase it like this: Graceful shutdown makes every interrupted request safe to retry.",
+          "text": "Graceful shutdown makes every interrupted request safe to retry.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Retry safety depends on the operation's idempotency and application design, not shutdown behavior alone.",
-            "sus": "Good catch. Retry safety depends on the operation's idempotency and application design, not shutdown behavior alone."
+            "legit": "Retry safety depends on the operation's idempotency and application design, not shutdown behavior alone. That makes the original claim unsafe to label Legit.",
+            "sus": "Retry safety depends on the operation's idempotency and application design, not shutdown behavior alone. You flagged exactly what was wrong."
           }
         },
         {
           "id": "b",
-          "text": "The way I understand it: terminate the process immediately without notifying the server.",
+          "text": "Terminate the process immediately without notifying the server.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Immediate termination can drop active work.",
-            "sus": "Good catch. Immediate termination can drop active work."
+            "legit": "Immediate termination can drop active work. The original claim needed a Sus vote.",
+            "sus": "Immediate termination can drop active work. Sus was the correct call here."
           }
         },
         {
           "id": "c",
-          "text": "Short version: Graceful shutdown waits forever for every request by default.",
+          "text": "Graceful shutdown waits forever for every request by default.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not this one. Graceful shutdown is bounded by configured application and infrastructure timeouts.",
-            "sus": "Good catch. Graceful shutdown is bounded by configured application and infrastructure timeouts."
+            "legit": "Graceful shutdown is bounded by configured application and infrastructure timeouts. The original reply is what needed flagging.",
+            "sus": "Graceful shutdown is bounded by configured application and infrastructure timeouts. The Sus label fits the misconception."
           }
         }
       ],
       "reference": {
-        "title": "Spring Boot Reference Documentation",
-        "url": "https://docs.spring.io/spring-boot/reference/"
+        "title": "Spring Boot graceful shutdown",
+        "url": "https://docs.spring.io/spring-boot/reference/web/graceful-shutdown.html"
       },
       "review_status": "approved"
     }
