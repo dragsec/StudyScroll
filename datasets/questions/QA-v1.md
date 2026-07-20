@@ -46,6 +46,12 @@ Every prompt, statement, verdict, and feedback branch received a manual semantic
 
 The review tightened several claims whose original wording left room for edge cases. These included GIL-enabled versus free-threaded CPython, traditional RDS Multi-AZ DB instances, CAP during an active partition, Spring's default proxy transaction mode, Docker Compose startup versus readiness, Linux permission mode bits, the domain of the calculus power rule, the Euclidean gradient claim, and the domains used for trees, induction, and modular congruence.
 
+## Social-feed voice
+
+All 168 prompts and 504 answer statements pass through a deterministic voice layer. It varies discussion starters and reply styles to evoke a technical forum or comment thread without changing the claim being judged. Reply openers do not repeat within one question, and technical names such as TCP, AWS, ConcurrentHashMap, and JavaScript preserve their capitalization.
+
+Vote feedback stays more direct than the simulated replies. It confirms the judgment, then presents the reviewed factual statement or correction without social hedging.
+
 ## Automated gates
 
 Run `npm run validate:dataset` before committing dataset changes. The validator rejects:

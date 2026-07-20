@@ -9,33 +9,33 @@
     {
       "id": "networking-tcp-udp",
       "difficulty": "easy",
-      "prompt": "How does TCP differ from UDP?",
+      "prompt": "This keeps starting arguments: how does TCP differ from UDP?",
       "answers": [
         {
           "id": "a",
-          "text": "TCP provides an ordered reliable byte stream.",
+          "text": "The practical answer is: TCP provides an ordered reliable byte stream.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. TCP provides an ordered reliable byte stream.",
-            "sus": "This answer is legitimate. TCP provides an ordered reliable byte stream."
+            "legit": "Yep, this one checks out. TCP provides an ordered reliable byte stream.",
+            "sus": "This one is legit. TCP provides an ordered reliable byte stream."
           }
         },
         {
           "id": "b",
-          "text": "UDP datagrams can be lost, duplicated, or reordered.",
+          "text": "My answer: UDP datagrams can be lost, duplicated, or reordered.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. UDP datagrams can be lost, duplicated, or reordered.",
-            "sus": "This answer is legitimate. UDP datagrams can be lost, duplicated, or reordered."
+            "legit": "Yep, this one checks out. UDP datagrams can be lost, duplicated, or reordered.",
+            "sus": "This one is legit. UDP datagrams can be lost, duplicated, or reordered."
           }
         },
         {
           "id": "c",
-          "text": "UDP avoids connection setup and lets applications choose their own reliability strategy.",
+          "text": "I'd phrase it like this: UDP avoids connection setup and lets applications choose their own reliability strategy.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. UDP avoids connection setup and lets applications choose their own reliability strategy.",
-            "sus": "This answer is legitimate. UDP avoids connection setup and lets applications choose their own reliability strategy."
+            "legit": "Yep, this one checks out. UDP avoids connection setup and lets applications choose their own reliability strategy.",
+            "sus": "This one is legit. UDP avoids connection setup and lets applications choose their own reliability strategy."
           }
         }
       ],
@@ -48,33 +48,33 @@
     {
       "id": "networking-dns",
       "difficulty": "easy",
-      "prompt": "What does DNS normally resolve?",
+      "prompt": "Settle a debate for me: what does DNS normally resolve?",
       "answers": [
         {
           "id": "a",
-          "text": "It encrypts every application connection automatically.",
+          "text": "Pretty sure this is the key: It encrypts every application connection automatically.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. DNS resolution and transport encryption are separate mechanisms.",
-            "sus": "Correct. DNS resolution and transport encryption are separate mechanisms."
+            "legit": "Not this one. DNS resolution and transport encryption are separate mechanisms.",
+            "sus": "Good catch. DNS resolution and transport encryption are separate mechanisms."
           }
         },
         {
           "id": "b",
-          "text": "Resolvers may cache answers until their time-to-live expires.",
+          "text": "From what I've seen, resolvers may cache answers until their time-to-live expires.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Resolvers may cache answers until their time-to-live expires.",
-            "sus": "This answer is legitimate. Resolvers may cache answers until their time-to-live expires."
+            "legit": "Yep, this one checks out. Resolvers may cache answers until their time-to-live expires.",
+            "sus": "This one is legit. Resolvers may cache answers until their time-to-live expires."
           }
         },
         {
           "id": "c",
-          "text": "Names such as hostnames into records including IP addresses.",
+          "text": "The practical answer is: names such as hostnames into records including IP addresses.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Names such as hostnames into records including IP addresses.",
-            "sus": "This answer is legitimate. Names such as hostnames into records including IP addresses."
+            "legit": "Yep, this one checks out. Names such as hostnames into records including IP addresses.",
+            "sus": "This one is legit. Names such as hostnames into records including IP addresses."
           }
         }
       ],
@@ -87,33 +87,33 @@
     {
       "id": "networking-http-idempotent",
       "difficulty": "easy",
-      "prompt": "What does idempotent mean for an HTTP method?",
+      "prompt": "Forum check: what does idempotent mean for an HTTP method?",
       "answers": [
         {
           "id": "a",
-          "text": "An idempotent request must return byte-for-byte identical responses every time.",
+          "text": "From what I've seen, an idempotent request must return byte-for-byte identical responses every time.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. Idempotency concerns the intended server effect; response content can change between requests.",
-            "sus": "Correct. Idempotency concerns the intended server effect; response content can change between requests."
+            "legit": "Not this one. Idempotency concerns the intended server effect; response content can change between requests.",
+            "sus": "Good catch. Idempotency concerns the intended server effect; response content can change between requests."
           }
         },
         {
           "id": "b",
-          "text": "Repeating the same request has the same intended effect as sending it once.",
+          "text": "The practical answer is: repeating the same request has the same intended effect as sending it once.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Repeating the same request has the same intended effect as sending it once.",
-            "sus": "This answer is legitimate. Repeating the same request has the same intended effect as sending it once."
+            "legit": "Yep, this one checks out. Repeating the same request has the same intended effect as sending it once.",
+            "sus": "This one is legit. Repeating the same request has the same intended effect as sending it once."
           }
         },
         {
           "id": "c",
-          "text": "The request has no side effects.",
+          "text": "My answer: The request has no side effects.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. An idempotent request can change state; repetition should not add further intended change.",
-            "sus": "Correct. An idempotent request can change state; repetition should not add further intended change."
+            "legit": "Not this one. An idempotent request can change state; repetition should not add further intended change.",
+            "sus": "Good catch. An idempotent request can change state; repetition should not add further intended change."
           }
         }
       ],
@@ -126,33 +126,33 @@
     {
       "id": "networking-tls-certificate",
       "difficulty": "medium",
-      "prompt": "What does a TLS server certificate help a client verify?",
+      "prompt": "I've seen mixed takes, so: what does a TLS server certificate help a client verify?",
       "answers": [
         {
           "id": "a",
-          "text": "That a trusted issuer bound a public key to the requested identity.",
+          "text": "I think the important part is this: that a trusted issuer bound a public key to the requested identity.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. That a trusted issuer bound a public key to the requested identity.",
-            "sus": "This answer is legitimate. That a trusted issuer bound a public key to the requested identity."
+            "legit": "Yep, this one checks out. That a trusted issuer bound a public key to the requested identity.",
+            "sus": "This one is legit. That a trusted issuer bound a public key to the requested identity."
           }
         },
         {
           "id": "b",
-          "text": "Certificates authenticate identity and keys, not application correctness.",
+          "text": "Unless I'm mixing things up, certificates authenticate identity and keys, not application correctness.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Certificates authenticate identity and keys, not application correctness.",
-            "sus": "This answer is legitimate. Certificates authenticate identity and keys, not application correctness."
+            "legit": "Yep, this one checks out. Certificates authenticate identity and keys, not application correctness.",
+            "sus": "This one is legit. Certificates authenticate identity and keys, not application correctness."
           }
         },
         {
           "id": "c",
-          "text": "The hostname and validity period are part of normal verification.",
+          "text": "This is what trips people up: The hostname and validity period are part of normal verification.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. The hostname and validity period are part of normal verification.",
-            "sus": "This answer is legitimate. The hostname and validity period are part of normal verification."
+            "legit": "Yep, this one checks out. The hostname and validity period are part of normal verification.",
+            "sus": "This one is legit. The hostname and validity period are part of normal verification."
           }
         }
       ],
@@ -165,33 +165,33 @@
     {
       "id": "networking-nat",
       "difficulty": "medium",
-      "prompt": "What does network address translation commonly do?",
+      "prompt": "Settle a debate for me: what does network address translation commonly do?",
       "answers": [
         {
           "id": "a",
-          "text": "Provide end-to-end encryption by itself.",
+          "text": "Pretty sure this is the key: Provide end-to-end encryption by itself.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. NAT changes addressing; encryption requires a protocol such as TLS or IPsec.",
-            "sus": "Correct. NAT changes addressing; encryption requires a protocol such as TLS or IPsec."
+            "legit": "Not this one. NAT changes addressing; encryption requires a protocol such as TLS or IPsec.",
+            "sus": "Good catch. NAT changes addressing; encryption requires a protocol such as TLS or IPsec."
           }
         },
         {
           "id": "b",
-          "text": "NAT is a complete firewall that makes separate traffic policy unnecessary.",
+          "text": "From what I've seen, nAT is a complete firewall that makes separate traffic policy unnecessary.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. Address translation is not a substitute for explicit firewall and access-control rules.",
-            "sus": "Correct. Address translation is not a substitute for explicit firewall and access-control rules."
+            "legit": "Not this one. Address translation is not a substitute for explicit firewall and access-control rules.",
+            "sus": "Good catch. Address translation is not a substitute for explicit firewall and access-control rules."
           }
         },
         {
           "id": "c",
-          "text": "Rewrite address and often port information between network realms.",
+          "text": "The practical answer is: rewrite address and often port information between network realms.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Rewrite address and often port information between network realms.",
-            "sus": "This answer is legitimate. Rewrite address and often port information between network realms."
+            "legit": "Yep, this one checks out. Rewrite address and often port information between network realms.",
+            "sus": "This one is legit. Rewrite address and often port information between network realms."
           }
         }
       ],
@@ -204,33 +204,33 @@
     {
       "id": "networking-subnet",
       "difficulty": "medium",
-      "prompt": "What does an IP subnet prefix length describe?",
+      "prompt": "Let's clear this one up: what does an IP subnet prefix length describe?",
       "answers": [
         {
           "id": "a",
-          "text": "A host can compare the destination with its on-link prefixes when making a routing decision.",
+          "text": "Short version: A host can compare the destination with its on-link prefixes when making a routing decision.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. A host can compare the destination with its on-link prefixes when making a routing decision.",
-            "sus": "This answer is legitimate. A host can compare the destination with its on-link prefixes when making a routing decision."
+            "legit": "Yep, this one checks out. A host can compare the destination with its on-link prefixes when making a routing decision.",
+            "sus": "This one is legit. A host can compare the destination with its on-link prefixes when making a routing decision."
           }
         },
         {
           "id": "b",
-          "text": "Which leading address bits identify the network prefix.",
+          "text": "I'd go with this: Which leading address bits identify the network prefix.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Which leading address bits identify the network prefix.",
-            "sus": "This answer is legitimate. Which leading address bits identify the network prefix."
+            "legit": "Yep, this one checks out. Which leading address bits identify the network prefix.",
+            "sus": "This one is legit. Which leading address bits identify the network prefix."
           }
         },
         {
           "id": "c",
-          "text": "The maximum TCP port number.",
+          "text": "I think the important part is this: the maximum TCP port number.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. Ports belong to the transport layer and are unrelated to the subnet prefix.",
-            "sus": "Correct. Ports belong to the transport layer and are unrelated to the subnet prefix."
+            "legit": "Not this one. Ports belong to the transport layer and are unrelated to the subnet prefix.",
+            "sus": "Good catch. Ports belong to the transport layer and are unrelated to the subnet prefix."
           }
         }
       ],
@@ -243,33 +243,33 @@
     {
       "id": "networking-arp",
       "difficulty": "medium",
-      "prompt": "What does ARP do on an IPv4 local network?",
+      "prompt": "Let's clear this one up: what does ARP do on an IPv4 local network?",
       "answers": [
         {
           "id": "a",
-          "text": "Map an IPv4 address to a link-layer address.",
+          "text": "Short version: Map an IPv4 address to a link-layer address.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Map an IPv4 address to a link-layer address.",
-            "sus": "This answer is legitimate. Map an IPv4 address to a link-layer address."
+            "legit": "Yep, this one checks out. Map an IPv4 address to a link-layer address.",
+            "sus": "This one is legit. Map an IPv4 address to a link-layer address."
           }
         },
         {
           "id": "b",
-          "text": "Resolve public domain names globally.",
+          "text": "I'd go with this: Resolve public domain names globally.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. DNS resolves names; ARP operates on a local link.",
-            "sus": "Correct. DNS resolves names; ARP operates on a local link."
+            "legit": "Not this one. DNS resolves names; ARP operates on a local link.",
+            "sus": "Good catch. DNS resolves names; ARP operates on a local link."
           }
         },
         {
           "id": "c",
-          "text": "ARP requests are normally broadcast on the local network segment.",
+          "text": "I think the important part is this: aRP requests are normally broadcast on the local network segment.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. ARP requests are normally broadcast on the local network segment.",
-            "sus": "This answer is legitimate. ARP requests are normally broadcast on the local network segment."
+            "legit": "Yep, this one checks out. ARP requests are normally broadcast on the local network segment.",
+            "sus": "This one is legit. ARP requests are normally broadcast on the local network segment."
           }
         }
       ],
@@ -282,33 +282,33 @@
     {
       "id": "networking-flow-congestion",
       "difficulty": "medium",
-      "prompt": "How do flow control and congestion control differ?",
+      "prompt": "Someone dropped this in the group chat: how do flow control and congestion control differ?",
       "answers": [
         {
           "id": "a",
-          "text": "Congestion control reacts to capacity and contention in the network.",
+          "text": "The way I understand it: congestion control reacts to capacity and contention in the network.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Congestion control reacts to capacity and contention in the network.",
-            "sus": "This answer is legitimate. Congestion control reacts to capacity and contention in the network."
+            "legit": "Yep, this one checks out. Congestion control reacts to capacity and contention in the network.",
+            "sus": "This one is legit. Congestion control reacts to capacity and contention in the network."
           }
         },
         {
           "id": "b",
-          "text": "They are two names for the same receiver buffer setting.",
+          "text": "Short version: They are two names for the same receiver buffer setting.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. They address different bottlenecks even though both can limit sending rate.",
-            "sus": "Correct. They address different bottlenecks even though both can limit sending rate."
+            "legit": "Not this one. They address different bottlenecks even though both can limit sending rate.",
+            "sus": "Good catch. They address different bottlenecks even though both can limit sending rate."
           }
         },
         {
           "id": "c",
-          "text": "Flow control protects the receiver from being overwhelmed.",
+          "text": "I'd go with this: Flow control protects the receiver from being overwhelmed.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Flow control protects the receiver from being overwhelmed.",
-            "sus": "This answer is legitimate. Flow control protects the receiver from being overwhelmed."
+            "legit": "Yep, this one checks out. Flow control protects the receiver from being overwhelmed.",
+            "sus": "This one is legit. Flow control protects the receiver from being overwhelmed."
           }
         }
       ],
@@ -321,33 +321,33 @@
     {
       "id": "networking-cors",
       "difficulty": "medium",
-      "prompt": "What does browser CORS enforcement control?",
+      "prompt": "This keeps starting arguments: what does browser CORS enforcement control?",
       "answers": [
         {
           "id": "a",
-          "text": "CORS by itself prevents cross-site request forgery against the server.",
+          "text": "The practical answer is: CORS by itself prevents cross-site request forgery against the server.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. CORS mainly controls browser access to responses; CSRF needs its own defenses.",
-            "sus": "Correct. CORS mainly controls browser access to responses; CSRF needs its own defenses."
+            "legit": "Not this one. CORS mainly controls browser access to responses; CSRF needs its own defenses.",
+            "sus": "Good catch. CORS mainly controls browser access to responses; CSRF needs its own defenses."
           }
         },
         {
           "id": "b",
-          "text": "Whether frontend code may read certain cross-origin responses.",
+          "text": "My answer: Whether frontend code may read certain cross-origin responses.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Whether frontend code may read certain cross-origin responses.",
-            "sus": "This answer is legitimate. Whether frontend code may read certain cross-origin responses."
+            "legit": "Yep, this one checks out. Whether frontend code may read certain cross-origin responses.",
+            "sus": "This one is legit. Whether frontend code may read certain cross-origin responses."
           }
         },
         {
           "id": "c",
-          "text": "Whether a non-browser client can send packets to the server.",
+          "text": "I'd phrase it like this: Whether a non-browser client can send packets to the server.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. CORS is a browser security policy, not a network firewall.",
-            "sus": "Correct. CORS is a browser security policy, not a network firewall."
+            "legit": "Not this one. CORS is a browser security policy, not a network firewall.",
+            "sus": "Good catch. CORS is a browser security policy, not a network firewall."
           }
         }
       ],
@@ -360,33 +360,33 @@
     {
       "id": "networking-quic",
       "difficulty": "hard",
-      "prompt": "Why does QUIC run over UDP?",
+      "prompt": "Quick gut check: why does QUIC run over UDP?",
       "answers": [
         {
           "id": "a",
-          "text": "It can implement transport features in user space while using UDP datagrams for network traversal.",
+          "text": "I'd go with this: It can implement transport features in user space while using UDP datagrams for network traversal.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. It can implement transport features in user space while using UDP datagrams for network traversal.",
-            "sus": "This answer is legitimate. It can implement transport features in user space while using UDP datagrams for network traversal."
+            "legit": "Yep, this one checks out. It can implement transport features in user space while using UDP datagrams for network traversal.",
+            "sus": "This one is legit. It can implement transport features in user space while using UDP datagrams for network traversal."
           }
         },
         {
           "id": "b",
-          "text": "It gives up reliable ordered streams entirely.",
+          "text": "I think the important part is this: it gives up reliable ordered streams entirely.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. QUIC implements reliability and multiple streams above UDP.",
-            "sus": "Correct. QUIC implements reliability and multiple streams above UDP."
+            "legit": "Not this one. QUIC implements reliability and multiple streams above UDP.",
+            "sus": "Good catch. QUIC implements reliability and multiple streams above UDP."
           }
         },
         {
           "id": "c",
-          "text": "Independent streams reduce transport-level head-of-line blocking between streams.",
+          "text": "Unless I'm mixing things up, independent streams reduce transport-level head-of-line blocking between streams.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Independent streams reduce transport-level head-of-line blocking between streams.",
-            "sus": "This answer is legitimate. Independent streams reduce transport-level head-of-line blocking between streams."
+            "legit": "Yep, this one checks out. Independent streams reduce transport-level head-of-line blocking between streams.",
+            "sus": "This one is legit. Independent streams reduce transport-level head-of-line blocking between streams."
           }
         }
       ],
@@ -399,33 +399,33 @@
     {
       "id": "networking-websocket",
       "difficulty": "hard",
-      "prompt": "What changes after an HTTP connection is upgraded to WebSocket?",
+      "prompt": "Settle a debate for me: what changes after an HTTP connection is upgraded to WebSocket?",
       "answers": [
         {
           "id": "a",
-          "text": "Every message becomes an independent HTTP request.",
+          "text": "Pretty sure this is the key: Every message becomes an independent HTTP request.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. WebSocket uses its own framing after the handshake.",
-            "sus": "Correct. WebSocket uses its own framing after the handshake."
+            "legit": "Not this one. WebSocket uses its own framing after the handshake.",
+            "sus": "Good catch. WebSocket uses its own framing after the handshake."
           }
         },
         {
           "id": "b",
-          "text": "The long-lived connection still needs failure detection and reconnection logic.",
+          "text": "From what I've seen, the long-lived connection still needs failure detection and reconnection logic.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. The long-lived connection still needs failure detection and reconnection logic.",
-            "sus": "This answer is legitimate. The long-lived connection still needs failure detection and reconnection logic."
+            "legit": "Yep, this one checks out. The long-lived connection still needs failure detection and reconnection logic.",
+            "sus": "This one is legit. The long-lived connection still needs failure detection and reconnection logic."
           }
         },
         {
           "id": "c",
-          "text": "Client and server can exchange framed messages in both directions.",
+          "text": "The practical answer is: client and server can exchange framed messages in both directions.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Client and server can exchange framed messages in both directions.",
-            "sus": "This answer is legitimate. Client and server can exchange framed messages in both directions."
+            "legit": "Yep, this one checks out. Client and server can exchange framed messages in both directions.",
+            "sus": "This one is legit. Client and server can exchange framed messages in both directions."
           }
         }
       ],
@@ -438,33 +438,33 @@
     {
       "id": "networking-pmtud",
       "difficulty": "hard",
-      "prompt": "What problem does path MTU discovery address?",
+      "prompt": "Tiny knowledge check: what problem does path MTU discovery address?",
       "answers": [
         {
           "id": "a",
-          "text": "Path MTU discovery matters only for IPv4 and never for IPv6.",
+          "text": "Unless I'm mixing things up, path MTU discovery matters only for IPv4 and never for IPv6.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. IPv6 also relies on path MTU discovery because routers do not fragment packets in transit.",
-            "sus": "Correct. IPv6 also relies on path MTU discovery because routers do not fragment packets in transit."
+            "legit": "Not this one. IPv6 also relies on path MTU discovery because routers do not fragment packets in transit.",
+            "sus": "Good catch. IPv6 also relies on path MTU discovery because routers do not fragment packets in transit."
           }
         },
         {
           "id": "b",
-          "text": "The largest MTU on any link is automatically safe for the whole path.",
+          "text": "This is what trips people up: The largest MTU on any link is automatically safe for the whole path.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. The path MTU is constrained by the smallest supported MTU along the route.",
-            "sus": "Correct. The path MTU is constrained by the smallest supported MTU along the route."
+            "legit": "Not this one. The path MTU is constrained by the smallest supported MTU along the route.",
+            "sus": "Good catch. The path MTU is constrained by the smallest supported MTU along the route."
           }
         },
         {
           "id": "c",
-          "text": "Choosing the fastest DNS resolver.",
+          "text": "This was the explanation that clicked for me: Choosing the fastest DNS resolver.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. Path MTU concerns packet size, not name resolution.",
-            "sus": "Correct. Path MTU concerns packet size, not name resolution."
+            "legit": "Not this one. Path MTU concerns packet size, not name resolution.",
+            "sus": "Good catch. Path MTU concerns packet size, not name resolution."
           }
         }
       ],

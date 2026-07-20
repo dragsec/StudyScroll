@@ -6,6 +6,60 @@ const L = (text) => ({ text, verdict: "legit" });
 const S = (text, correction) => ({ text, verdict: "sus", correction });
 const Q = (id, difficulty, prompt, answers) => ({ id, difficulty, prompt, answers });
 
+function stableHash(value) {
+  let hash = 2166136261;
+  for (const character of value) {
+    hash ^= character.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function lowerFirst(value) {
+  const protectedOpening = /^(AWS|S3|SQL|TCP|UDP|HTTP|CORS|QUIC|MVCC|EXPOSE|GROUP BY|LEFT JOIN|ConcurrentHashMap|CloudFront|DynamoDB|JavaScript|Java\b|Python|Docker|Linux|Spring Boot|WeakMap|Promise|Atomics|Optional|Bayes)/;
+  if (value.startsWith("`") || value.startsWith("@") || protectedOpening.test(value)) return value;
+  return value.charAt(0).toLowerCase() + value.slice(1);
+}
+
+const promptVoices = [
+  (prompt) => `Quick gut check: ${lowerFirst(prompt)}`,
+  (prompt) => `Settle a debate for me: ${lowerFirst(prompt)}`,
+  (prompt) => `Someone dropped this in the group chat: ${lowerFirst(prompt)}`,
+  (prompt) => `No searching: ${lowerFirst(prompt)}`,
+  (prompt) => `Curious where people land on this: ${lowerFirst(prompt)}`,
+  (prompt) => `I've seen mixed takes, so: ${lowerFirst(prompt)}`,
+  (prompt) => `Forum check: ${lowerFirst(prompt)}`,
+  (prompt) => `Let's clear this one up: ${lowerFirst(prompt)}`,
+  (prompt) => `A teammate asked me this: ${lowerFirst(prompt)}`,
+  (prompt) => `Before I confidently say the wrong thing: ${lowerFirst(prompt)}`,
+  (prompt) => `Tiny knowledge check: ${lowerFirst(prompt)}`,
+  (prompt) => `This keeps starting arguments: ${lowerFirst(prompt)}`
+];
+
+const answerVoices = [
+  (answer) => `I'd go with this: ${answer}`,
+  (answer) => `Pretty sure this is the key: ${answer}`,
+  (answer) => `The way I understand it: ${lowerFirst(answer)}`,
+  (answer) => `This is what trips people up: ${answer}`,
+  (answer) => `My answer: ${answer}`,
+  (answer) => `I think the important part is this: ${lowerFirst(answer)}`,
+  (answer) => `From what I've seen, ${lowerFirst(answer)}`,
+  (answer) => `Short version: ${answer}`,
+  (answer) => `This was the explanation that clicked for me: ${answer}`,
+  (answer) => `I'd phrase it like this: ${answer}`,
+  (answer) => `Unless I'm mixing things up, ${lowerFirst(answer)}`,
+  (answer) => `The practical answer is: ${lowerFirst(answer)}`
+];
+
+function socializePrompt(prompt, questionId) {
+  return promptVoices[stableHash(questionId) % promptVoices.length](prompt);
+}
+
+function socializeAnswer(answer, questionId, answerIndex) {
+  const voiceIndex = (stableHash(questionId) + answerIndex * 5) % answerVoices.length;
+  return answerVoices[voiceIndex](answer);
+}
+
 const banks = [
   {
     id: "javascript",
@@ -112,7 +166,7 @@ const banks = [
       Q("system-design-replication", "easy", "What does data replication provide?", [L("Additional copies that can improve availability or read capacity."), S("Automatic protection from every application bug.", "A bad write can be replicated to every copy."), L("Replication introduces consistency and failover decisions.")]),
       Q("system-design-sharding", "medium", "What does database sharding change?", [L("It partitions data across multiple database nodes."), S("It removes the need to choose a partition key.", "The partition key determines placement and strongly affects balance."), L("Cross-shard queries and transactions can become more complex.")]),
       Q("system-design-idempotency", "medium", "Why are idempotency keys useful for write APIs?", [L("They help repeated delivery avoid creating the same logical operation twice."), S("They make network retries unnecessary.", "Retries still occur; the key helps the server recognize duplicates."), L("The server must store or derive the result associated with a key.")]),
-      Q("system-design-queue", "medium", "What does a durable message queue help decouple?", [L("Producers from consumers in rate and availability."), S("It guarantees each message is processed exactly once without application logic.", "Many queues use at-least-once delivery, so consumers should handle duplicates."), L("Backlogs can absorb temporary traffic spikes.")]),
+      Q("system-design-queue", "medium", "What does a durable message queue help decouple?", [L("It lets producers and consumers operate at different rates and tolerate each other's temporary outages."), S("It guarantees each message is processed exactly once without application logic.", "Many queues use at-least-once delivery, so consumers should handle duplicates."), L("Backlogs can absorb temporary traffic spikes.")]),
       Q("system-design-circuit-breaker", "medium", "What is the purpose of a circuit breaker?", [L("Stop repeated calls to a failing dependency for a period."), S("Repair the dependency automatically.", "It limits cascading damage but does not fix the underlying service."), L("A half-open state can probe whether recovery has occurred.")]),
       Q("system-design-rate-limit", "medium", "What does rate limiting protect?", [L("Capacity and fairness by restricting request volume over time."), S("It guarantees low latency after every accepted request.", "Accepted work can still be slow for other reasons."), L("Distributed rate limits require a strategy for shared state or approximation.")]),
       Q("system-design-cdn", "medium", "Why serve static assets through a CDN?", [L("Edge locations can reduce latency and origin traffic."), S("A CDN makes cache invalidation unnecessary.", "Changed content still needs versioning, expiry, or invalidation."), L("Cache keys and headers influence which response is reused.")]),
@@ -422,18 +476,18 @@ for (const [bankIndex, bank] of banks.entries()) {
     return ({
     id: question.id,
     difficulty: question.difficulty,
-    prompt: question.prompt,
+    prompt: socializePrompt(question.prompt, question.id),
     answers: [...answers.slice(rotation), ...answers.slice(0, rotation)].map((answer, index) => ({
       id: ["a", "b", "c"][index],
-      text: answer.text,
+      text: socializeAnswer(answer.text, question.id, index),
       verdict: answer.verdict,
       feedback: {
         legit: answer.verdict === "legit"
-          ? `Correct. ${answer.text}`
-          : `Not quite. ${answer.correction}`,
+          ? `Yep, this one checks out. ${answer.text}`
+          : `Not this one. ${answer.correction}`,
         sus: answer.verdict === "sus"
-          ? `Correct. ${answer.correction}`
-          : `This answer is legitimate. ${answer.text}`
+          ? `Good catch. ${answer.correction}`
+          : `This one is legit. ${answer.text}`
       }
     })),
     reference: bank.reference,

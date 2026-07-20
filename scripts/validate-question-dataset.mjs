@@ -97,19 +97,19 @@ for (const file of files) {
         fail(file, `${question.id}/${answer.id}: Legit and Sus feedback must differ`);
       }
       if (answer.verdict === "legit") {
-        if (!answer.feedback?.legit?.startsWith("Correct.")) {
-          fail(file, `${question.id}/${answer.id}: a legitimate answer needs Correct feedback for a Legit vote`);
+        if (!answer.feedback?.legit?.startsWith("Yep, this one checks out.")) {
+          fail(file, `${question.id}/${answer.id}: a legitimate answer needs confirming feedback for a Legit vote`);
         }
-        if (!answer.feedback?.sus?.startsWith("This answer is legitimate.")) {
+        if (!answer.feedback?.sus?.startsWith("This one is legit.")) {
           fail(file, `${question.id}/${answer.id}: a legitimate answer needs a correction for a Sus vote`);
         }
       }
       if (answer.verdict === "sus") {
-        if (!answer.feedback?.legit?.startsWith("Not quite.")) {
-          fail(file, `${question.id}/${answer.id}: a suspicious answer needs Not quite feedback for a Legit vote`);
+        if (!answer.feedback?.legit?.startsWith("Not this one.")) {
+          fail(file, `${question.id}/${answer.id}: a suspicious answer needs corrective feedback for a Legit vote`);
         }
-        if (!answer.feedback?.sus?.startsWith("Correct.")) {
-          fail(file, `${question.id}/${answer.id}: a suspicious answer needs Correct feedback for a Sus vote`);
+        if (!answer.feedback?.sus?.startsWith("Good catch.")) {
+          fail(file, `${question.id}/${answer.id}: a suspicious answer needs confirming feedback for a Sus vote`);
         }
       }
       if (answer.feedback?.legit?.includes("undefined") || answer.feedback?.sus?.includes("undefined")) {

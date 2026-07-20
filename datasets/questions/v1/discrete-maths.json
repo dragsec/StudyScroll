@@ -9,33 +9,33 @@
     {
       "id": "discrete-implication",
       "difficulty": "easy",
-      "prompt": "When is the implication `P implies Q` false?",
+      "prompt": "Quick gut check: when is the implication `P implies Q` false?",
       "answers": [
         {
           "id": "a",
-          "text": "In classical logic an implication with a false premise is true.",
+          "text": "I'd go with this: In classical logic an implication with a false premise is true.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. In classical logic an implication with a false premise is true.",
-            "sus": "This answer is legitimate. In classical logic an implication with a false premise is true."
+            "legit": "Yep, this one checks out. In classical logic an implication with a false premise is true.",
+            "sus": "This one is legit. In classical logic an implication with a false premise is true."
           }
         },
         {
           "id": "b",
-          "text": "It is equivalent to `not P or Q`.",
+          "text": "I think the important part is this: it is equivalent to `not P or Q`.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. It is equivalent to `not P or Q`.",
-            "sus": "This answer is legitimate. It is equivalent to `not P or Q`."
+            "legit": "Yep, this one checks out. It is equivalent to `not P or Q`.",
+            "sus": "This one is legit. It is equivalent to `not P or Q`."
           }
         },
         {
           "id": "c",
-          "text": "When P is true and Q is false.",
+          "text": "Unless I'm mixing things up, when P is true and Q is false.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. When P is true and Q is false.",
-            "sus": "This answer is legitimate. When P is true and Q is false."
+            "legit": "Yep, this one checks out. When P is true and Q is false.",
+            "sus": "This one is legit. When P is true and Q is false."
           }
         }
       ],
@@ -48,33 +48,33 @@
     {
       "id": "discrete-set-union",
       "difficulty": "easy",
-      "prompt": "What does the union of two sets contain?",
+      "prompt": "Settle a debate for me: what does the union of two sets contain?",
       "answers": [
         {
           "id": "a",
-          "text": "Duplicate membership does not create duplicate set elements.",
+          "text": "Pretty sure this is the key: Duplicate membership does not create duplicate set elements.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Duplicate membership does not create duplicate set elements.",
-            "sus": "This answer is legitimate. Duplicate membership does not create duplicate set elements."
+            "legit": "Yep, this one checks out. Duplicate membership does not create duplicate set elements.",
+            "sus": "This one is legit. Duplicate membership does not create duplicate set elements."
           }
         },
         {
           "id": "b",
-          "text": "Every element that is in either set or both.",
+          "text": "From what I've seen, every element that is in either set or both.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Every element that is in either set or both.",
-            "sus": "This answer is legitimate. Every element that is in either set or both."
+            "legit": "Yep, this one checks out. Every element that is in either set or both.",
+            "sus": "This one is legit. Every element that is in either set or both."
           }
         },
         {
           "id": "c",
-          "text": "Only elements common to both sets.",
+          "text": "The practical answer is: only elements common to both sets.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. Common elements form the intersection.",
-            "sus": "Correct. Common elements form the intersection."
+            "legit": "Not this one. Common elements form the intersection.",
+            "sus": "Good catch. Common elements form the intersection."
           }
         }
       ],
@@ -87,33 +87,33 @@
     {
       "id": "discrete-tree",
       "difficulty": "easy",
-      "prompt": "What is true of a finite undirected tree with n greater than or equal to 1 vertices?",
+      "prompt": "I've seen mixed takes, so: what is true of a finite undirected tree with n greater than or equal to 1 vertices?",
       "answers": [
         {
           "id": "a",
-          "text": "It has n minus 1 edges.",
+          "text": "I think the important part is this: it has n minus 1 edges.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. It has n minus 1 edges.",
-            "sus": "This answer is legitimate. It has n minus 1 edges."
+            "legit": "Yep, this one checks out. It has n minus 1 edges.",
+            "sus": "This one is legit. It has n minus 1 edges."
           }
         },
         {
           "id": "b",
-          "text": "It contains at least one cycle.",
+          "text": "Unless I'm mixing things up, it contains at least one cycle.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. A tree is connected and acyclic.",
-            "sus": "Correct. A tree is connected and acyclic."
+            "legit": "Not this one. A tree is connected and acyclic.",
+            "sus": "Good catch. A tree is connected and acyclic."
           }
         },
         {
           "id": "c",
-          "text": "Every vertex in a tree has degree at least two.",
+          "text": "This is what trips people up: Every vertex in a tree has degree at least two.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. Trees with more than one vertex have leaves of degree one, and a one-vertex tree has degree zero.",
-            "sus": "Correct. Trees with more than one vertex have leaves of degree one, and a one-vertex tree has degree zero."
+            "legit": "Not this one. Trees with more than one vertex have leaves of degree one, and a one-vertex tree has degree zero.",
+            "sus": "Good catch. Trees with more than one vertex have leaves of degree one, and a one-vertex tree has degree zero."
           }
         }
       ],
@@ -126,33 +126,33 @@
     {
       "id": "discrete-de-morgan",
       "difficulty": "medium",
-      "prompt": "What is the negation of `P and Q`?",
+      "prompt": "Settle a debate for me: what is the negation of `P and Q`?",
       "answers": [
         {
           "id": "a",
-          "text": "De Morgan's law changes AND to OR when negating the expression.",
+          "text": "Pretty sure this is the key: De Morgan's law changes AND to OR when negating the expression.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. De Morgan's law changes AND to OR when negating the expression.",
-            "sus": "This answer is legitimate. De Morgan's law changes AND to OR when negating the expression."
+            "legit": "Yep, this one checks out. De Morgan's law changes AND to OR when negating the expression.",
+            "sus": "This one is legit. De Morgan's law changes AND to OR when negating the expression."
           }
         },
         {
           "id": "b",
-          "text": "The law has an analogous set-complement form.",
+          "text": "From what I've seen, the law has an analogous set-complement form.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. The law has an analogous set-complement form.",
-            "sus": "This answer is legitimate. The law has an analogous set-complement form."
+            "legit": "Yep, this one checks out. The law has an analogous set-complement form.",
+            "sus": "This one is legit. The law has an analogous set-complement form."
           }
         },
         {
           "id": "c",
-          "text": "`not P or not Q`.",
+          "text": "The practical answer is: `not P or not Q`.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. `not P or not Q`.",
-            "sus": "This answer is legitimate. `not P or not Q`."
+            "legit": "Yep, this one checks out. `not P or not Q`.",
+            "sus": "This one is legit. `not P or not Q`."
           }
         }
       ],
@@ -165,33 +165,33 @@
     {
       "id": "discrete-injective",
       "difficulty": "medium",
-      "prompt": "What makes a function injective?",
+      "prompt": "Someone dropped this in the group chat: what makes a function injective?",
       "answers": [
         {
           "id": "a",
-          "text": "Each output has at most one preimage.",
+          "text": "The way I understand it: each output has at most one preimage.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Each output has at most one preimage.",
-            "sus": "This answer is legitimate. Each output has at most one preimage."
+            "legit": "Yep, this one checks out. Each output has at most one preimage.",
+            "sus": "This one is legit. Each output has at most one preimage."
           }
         },
         {
           "id": "b",
-          "text": "Different inputs never map to the same output.",
+          "text": "Short version: Different inputs never map to the same output.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Different inputs never map to the same output.",
-            "sus": "This answer is legitimate. Different inputs never map to the same output."
+            "legit": "Yep, this one checks out. Different inputs never map to the same output.",
+            "sus": "This one is legit. Different inputs never map to the same output."
           }
         },
         {
           "id": "c",
-          "text": "Every element of the codomain must be reached.",
+          "text": "I'd go with this: Every element of the codomain must be reached.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. Reaching the whole codomain defines surjectivity.",
-            "sus": "Correct. Reaching the whole codomain defines surjectivity."
+            "legit": "Not this one. Reaching the whole codomain defines surjectivity.",
+            "sus": "Good catch. Reaching the whole codomain defines surjectivity."
           }
         }
       ],
@@ -204,33 +204,33 @@
     {
       "id": "discrete-surjective",
       "difficulty": "medium",
-      "prompt": "What makes a function surjective?",
+      "prompt": "No searching: what makes a function surjective?",
       "answers": [
         {
           "id": "a",
-          "text": "Every element of the codomain has at least one preimage.",
+          "text": "This is what trips people up: Every element of the codomain has at least one preimage.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Every element of the codomain has at least one preimage.",
-            "sus": "This answer is legitimate. Every element of the codomain has at least one preimage."
+            "legit": "Yep, this one checks out. Every element of the codomain has at least one preimage.",
+            "sus": "This one is legit. Every element of the codomain has at least one preimage."
           }
         },
         {
           "id": "b",
-          "text": "Every input maps to a different output.",
+          "text": "This was the explanation that clicked for me: Every input maps to a different output.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. That condition describes injectivity.",
-            "sus": "Correct. That condition describes injectivity."
+            "legit": "Not this one. That condition describes injectivity.",
+            "sus": "Good catch. That condition describes injectivity."
           }
         },
         {
           "id": "c",
-          "text": "Surjectivity prevents two different inputs from sharing an output.",
+          "text": "Pretty sure this is the key: Surjectivity prevents two different inputs from sharing an output.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. That restriction is injectivity; a surjective function may map multiple inputs to one output.",
-            "sus": "Correct. That restriction is injectivity; a surjective function may map multiple inputs to one output."
+            "legit": "Not this one. That restriction is injectivity; a surjective function may map multiple inputs to one output.",
+            "sus": "Good catch. That restriction is injectivity; a surjective function may map multiple inputs to one output."
           }
         }
       ],
@@ -243,33 +243,33 @@
     {
       "id": "discrete-permutation",
       "difficulty": "medium",
-      "prompt": "When does order matter: permutations or combinations?",
+      "prompt": "Let's clear this one up: when does order matter: permutations or combinations?",
       "answers": [
         {
           "id": "a",
-          "text": "Order matters only for combinations.",
+          "text": "Short version: Order matters only for combinations.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. Combinations select groups without order.",
-            "sus": "Correct. Combinations select groups without order."
+            "legit": "Not this one. Combinations select groups without order.",
+            "sus": "Good catch. Combinations select groups without order."
           }
         },
         {
           "id": "b",
-          "text": "Choosing a president and vice president is a permutation-style assignment.",
+          "text": "I'd go with this: Choosing a president and vice president is a permutation-style assignment.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Choosing a president and vice president is a permutation-style assignment.",
-            "sus": "This answer is legitimate. Choosing a president and vice president is a permutation-style assignment."
+            "legit": "Yep, this one checks out. Choosing a president and vice president is a permutation-style assignment.",
+            "sus": "This one is legit. Choosing a president and vice president is a permutation-style assignment."
           }
         },
         {
           "id": "c",
-          "text": "Order matters for permutations.",
+          "text": "I think the important part is this: order matters for permutations.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Order matters for permutations.",
-            "sus": "This answer is legitimate. Order matters for permutations."
+            "legit": "Yep, this one checks out. Order matters for permutations.",
+            "sus": "This one is legit. Order matters for permutations."
           }
         }
       ],
@@ -282,33 +282,33 @@
     {
       "id": "discrete-induction",
       "difficulty": "medium",
-      "prompt": "What are the core steps for proving a statement over consecutive integers by induction?",
+      "prompt": "A teammate asked me this: what are the core steps for proving a statement over consecutive integers by induction?",
       "answers": [
         {
           "id": "a",
-          "text": "Strong induction may assume all earlier cases in the inductive step.",
+          "text": "This was the explanation that clicked for me: Strong induction may assume all earlier cases in the inductive step.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Strong induction may assume all earlier cases in the inductive step.",
-            "sus": "This answer is legitimate. Strong induction may assume all earlier cases in the inductive step."
+            "legit": "Yep, this one checks out. Strong induction may assume all earlier cases in the inductive step.",
+            "sus": "This one is legit. Strong induction may assume all earlier cases in the inductive step."
           }
         },
         {
           "id": "b",
-          "text": "Prove a base case and prove that one case implies the next.",
+          "text": "Pretty sure this is the key: Prove a base case and prove that one case implies the next.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Prove a base case and prove that one case implies the next.",
-            "sus": "This answer is legitimate. Prove a base case and prove that one case implies the next."
+            "legit": "Yep, this one checks out. Prove a base case and prove that one case implies the next.",
+            "sus": "This one is legit. Prove a base case and prove that one case implies the next."
           }
         },
         {
           "id": "c",
-          "text": "Verify a large sample and assume the rest.",
+          "text": "From what I've seen, verify a large sample and assume the rest.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. Induction is a proof for all cases in the domain, not sampling.",
-            "sus": "Correct. Induction is a proof for all cases in the domain, not sampling."
+            "legit": "Not this one. Induction is a proof for all cases in the domain, not sampling.",
+            "sus": "Good catch. Induction is a proof for all cases in the domain, not sampling."
           }
         }
       ],
@@ -321,33 +321,33 @@
     {
       "id": "discrete-pigeonhole",
       "difficulty": "medium",
-      "prompt": "What does the pigeonhole principle guarantee?",
+      "prompt": "Settle a debate for me: what does the pigeonhole principle guarantee?",
       "answers": [
         {
           "id": "a",
-          "text": "If more objects than boxes are assigned, some box receives at least two objects.",
+          "text": "Pretty sure this is the key: If more objects than boxes are assigned, some box receives at least two objects.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. If more objects than boxes are assigned, some box receives at least two objects.",
-            "sus": "This answer is legitimate. If more objects than boxes are assigned, some box receives at least two objects."
+            "legit": "Yep, this one checks out. If more objects than boxes are assigned, some box receives at least two objects.",
+            "sus": "This one is legit. If more objects than boxes are assigned, some box receives at least two objects."
           }
         },
         {
           "id": "b",
-          "text": "Every box receives exactly the same number of objects.",
+          "text": "From what I've seen, every box receives exactly the same number of objects.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. The principle guarantees a collision, not equal distribution.",
-            "sus": "Correct. The principle guarantees a collision, not equal distribution."
+            "legit": "Not this one. The principle guarantees a collision, not equal distribution.",
+            "sus": "Good catch. The principle guarantees a collision, not equal distribution."
           }
         },
         {
           "id": "c",
-          "text": "The pigeonhole principle identifies exactly which box must contain the collision.",
+          "text": "The practical answer is: the pigeonhole principle identifies exactly which box must contain the collision.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. The principle guarantees that a collision exists without identifying a particular box.",
-            "sus": "Correct. The principle guarantees that a collision exists without identifying a particular box."
+            "legit": "Not this one. The principle guarantees that a collision exists without identifying a particular box.",
+            "sus": "Good catch. The principle guarantees that a collision exists without identifying a particular box."
           }
         }
       ],
@@ -360,33 +360,33 @@
     {
       "id": "discrete-equivalence",
       "difficulty": "hard",
-      "prompt": "What properties define an equivalence relation?",
+      "prompt": "No searching: what properties define an equivalence relation?",
       "answers": [
         {
           "id": "a",
-          "text": "Antisymmetry and total comparability.",
+          "text": "This is what trips people up: Antisymmetry and total comparability.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. Those properties belong to order relations, not equivalence relations.",
-            "sus": "Correct. Those properties belong to order relations, not equivalence relations."
+            "legit": "Not this one. Those properties belong to order relations, not equivalence relations.",
+            "sus": "Good catch. Those properties belong to order relations, not equivalence relations."
           }
         },
         {
           "id": "b",
-          "text": "Equivalence classes partition the underlying set.",
+          "text": "This was the explanation that clicked for me: Equivalence classes partition the underlying set.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Equivalence classes partition the underlying set.",
-            "sus": "This answer is legitimate. Equivalence classes partition the underlying set."
+            "legit": "Yep, this one checks out. Equivalence classes partition the underlying set.",
+            "sus": "This one is legit. Equivalence classes partition the underlying set."
           }
         },
         {
           "id": "c",
-          "text": "Reflexivity, symmetry, and transitivity.",
+          "text": "Pretty sure this is the key: Reflexivity, symmetry, and transitivity.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Reflexivity, symmetry, and transitivity.",
-            "sus": "This answer is legitimate. Reflexivity, symmetry, and transitivity."
+            "legit": "Yep, this one checks out. Reflexivity, symmetry, and transitivity.",
+            "sus": "This one is legit. Reflexivity, symmetry, and transitivity."
           }
         }
       ],
@@ -399,33 +399,33 @@
     {
       "id": "discrete-modular",
       "difficulty": "hard",
-      "prompt": "For a positive integer n, what does `a` congruent to `b` modulo `n` mean?",
+      "prompt": "I've seen mixed takes, so: for a positive integer n, what does `a` congruent to `b` modulo `n` mean?",
       "answers": [
         {
           "id": "a",
-          "text": "Congruence is preserved by addition and multiplication.",
+          "text": "I think the important part is this: congruence is preserved by addition and multiplication.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. Congruence is preserved by addition and multiplication.",
-            "sus": "This answer is legitimate. Congruence is preserved by addition and multiplication."
+            "legit": "Yep, this one checks out. Congruence is preserved by addition and multiplication.",
+            "sus": "This one is legit. Congruence is preserved by addition and multiplication."
           }
         },
         {
           "id": "b",
-          "text": "`n` divides `a - b`.",
+          "text": "Unless I'm mixing things up, `n` divides `a - b`.",
           "verdict": "legit",
           "feedback": {
-            "legit": "Correct. `n` divides `a - b`.",
-            "sus": "This answer is legitimate. `n` divides `a - b`."
+            "legit": "Yep, this one checks out. `n` divides `a - b`.",
+            "sus": "This one is legit. `n` divides `a - b`."
           }
         },
         {
           "id": "c",
-          "text": "`a` and `b` must be equal as integers.",
+          "text": "This is what trips people up: `a` and `b` must be equal as integers.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. Different integers can have the same remainder modulo n.",
-            "sus": "Correct. Different integers can have the same remainder modulo n."
+            "legit": "Not this one. Different integers can have the same remainder modulo n.",
+            "sus": "Good catch. Different integers can have the same remainder modulo n."
           }
         }
       ],
@@ -438,33 +438,33 @@
     {
       "id": "discrete-bayes",
       "difficulty": "hard",
-      "prompt": "What does Bayes' theorem relate?",
+      "prompt": "Let's clear this one up: what does Bayes' theorem relate?",
       "answers": [
         {
           "id": "a",
-          "text": "Bayes' theorem requires the two events to be independent.",
+          "text": "Short version: Bayes' theorem requires the two events to be independent.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. Bayes' theorem is useful precisely for relating conditional probabilities and does not require independence.",
-            "sus": "Correct. Bayes' theorem is useful precisely for relating conditional probabilities and does not require independence."
+            "legit": "Not this one. Bayes' theorem is useful precisely for relating conditional probabilities and does not require independence.",
+            "sus": "Good catch. Bayes' theorem is useful precisely for relating conditional probabilities and does not require independence."
           }
         },
         {
           "id": "b",
-          "text": "It allows base rates to be ignored.",
+          "text": "I'd go with this: It allows base rates to be ignored.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. The prior probabilities are essential terms in Bayes' theorem.",
-            "sus": "Correct. The prior probabilities are essential terms in Bayes' theorem."
+            "legit": "Not this one. The prior probabilities are essential terms in Bayes' theorem.",
+            "sus": "Good catch. The prior probabilities are essential terms in Bayes' theorem."
           }
         },
         {
           "id": "c",
-          "text": "Bayes' theorem says `P(A given B)` always equals `P(B given A)`.",
+          "text": "I think the important part is this: Bayes' theorem says `P(A given B)` always equals `P(B given A)`.",
           "verdict": "sus",
           "feedback": {
-            "legit": "Not quite. The reverse conditionals are related through priors and the probability of the evidence, but are not generally equal.",
-            "sus": "Correct. The reverse conditionals are related through priors and the probability of the evidence, but are not generally equal."
+            "legit": "Not this one. The reverse conditionals are related through priors and the probability of the evidence, but are not generally equal.",
+            "sus": "Good catch. The reverse conditionals are related through priors and the probability of the evidence, but are not generally equal."
           }
         }
       ],

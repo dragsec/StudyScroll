@@ -12,6 +12,8 @@ The requested "normal" band is stored as `medium` to match the difficulty name a
 
 Every question contains three answers. Every answer stores its ground-truth verdict and separate feedback for a learner who selects `legit` or `sus`. Questions deliberately vary from zero to three Sus statements, so learners cannot infer an answer pattern from the other cards.
 
+The generated v1 copy uses a restrained social-feed voice. Prompts sound like discussion starters, and answers read like replies from different community members. The generator applies that voice deterministically while keeping the underlying claims and corrections separate and reviewable.
+
 ## Review status
 
 All v1 records have `review_status: "approved"` after a complete technical and editorial pass. The coverage, review method, source policy, and automated gates are documented in [QA-v1.md](./QA-v1.md).
