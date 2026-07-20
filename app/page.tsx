@@ -194,12 +194,13 @@ export default function LandingPage() {
       <section className="landing-section cost-section" aria-labelledby="cost-title">
         <div className="section-content">
           <div className="cost-heading">
-            <h2 id="cost-title">Costs $0</h2>
-            <p>Free. Actually free.</p>
-            <span>No paywall. No premium tier. No credit card.</span>
+            <h2 id="cost-title">The core app is free forever.</h2>
+            <p>Learn every topic. Build your streak. Climb every rank.</p>
+            <span>Personalized practice. Mistakes come back automatically.</span>
           </div>
           <div className="plans">
             <article>
+              <span className="plan-kicker">JUMP RIGHT IN</span>
               <h3>without account</h3>
               <ul>
                 <li>10 posts/day</li>
@@ -208,13 +209,24 @@ export default function LandingPage() {
               </ul>
             </article>
             <article className="featured-plan">
-              <span className="plan-label">FULL EXPERIENCE</span>
+              <span className="plan-label">CORE EXPERIENCE</span>
               <h3>free account</h3>
               <ul>
                 <li>100 posts/day</li>
                 <li>Personalized feed</li>
-                <li>Spaced repetition</li>
+                <li>Mistakes come back</li>
                 <li>Streaks and ranks</li>
+              </ul>
+            </article>
+            <article className="premium-plan">
+              <span className="plan-label premium-label">OPTIONAL UPGRADE</span>
+              <span className="plan-kicker">MAKE IT YOURS</span>
+              <h3>premium account</h3>
+              <p className="plan-summary">Turn exactly what you want to learn into a custom StudyScroll feed.</p>
+              <ul>
+                <li>Everything in the free account</li>
+                <li>Generate questions with AI</li>
+                <li>Build from your own specific prompt</li>
               </ul>
             </article>
           </div>

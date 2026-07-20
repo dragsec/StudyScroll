@@ -8,9 +8,11 @@ import {
   Bookmark,
   CircleHelp,
   Flame,
+  LockKeyhole,
   Search,
   Share2,
   Skull,
+  Sparkles,
   ThumbsUp,
   UserRound,
   X,
@@ -33,6 +35,7 @@ import {
   topics,
 } from "@/data/questions";
 import {
+  Fragment,
   useCallback,
   useEffect,
   useMemo,
@@ -112,6 +115,7 @@ function readSaved(): string[] {
 }
 
 export function StudyApp() {
+  const isRegistered = false;
   const [tab, setTab] = useState<Tab>("scroll");
   const [sheet, setSheet] = useState<Sheet>(null);
   const [activeQuestion, setActiveQuestion] = useState<Question | null>(null);
@@ -334,6 +338,7 @@ export function StudyApp() {
           {tab === "progress" && (
             <ProgressView
               dailyPerfect={dailyPerfect}
+              isRegistered={isRegistered}
               perfectByTopic={perfectByTopic}
               onOpenRules={() => setSheet("rankRules")}
             />
@@ -612,10 +617,12 @@ function getRankProgress(correct: number) {
 
 function ProgressView({
   dailyPerfect,
+  isRegistered,
   perfectByTopic,
   onOpenRules,
 }: {
   dailyPerfect: Record<string, number>;
+  isRegistered: boolean;
   perfectByTopic: Record<string, number>;
   onOpenRules: () => void;
 }) {
@@ -626,7 +633,19 @@ function ProgressView({
     (subject) => (perfectByTopic[subject] ?? 0) >= rankTiers[1].threshold,
   );
   return (
-    <section className="tab-page progress-page" aria-labelledby="progress-title">
+    <section
+      className={`tab-page progress-page${isRegistered ? "" : " progress-locked"}`}
+      aria-labelledby="progress-title"
+    >
+      {!isRegistered && (
+        <aside className="account-feature-note" aria-label="Registered users only">
+          <LockKeyhole aria-hidden="true" size={17} />
+          <p>
+            <strong>Registered users only</strong>
+            Create a free account to keep your streak and subject ranks.
+          </p>
+        </aside>
+      )}
       <div className="streak-stage">
         <div className="streak-kicker">
           <Flame aria-hidden="true" size={22} />
@@ -942,16 +961,34 @@ function TopicSheet({
               ? questions.length
               : questions.filter((question) => question.topic === topic).length;
           return (
-            <button
-              key={topic}
-              type="button"
-              role="option"
-              aria-selected={selected === topic}
-              className={selected === topic ? "selected" : ""}
-              onClick={() => onSelect(topic)}
-            >
-              <span>{topic}</span><span>{count}</span>
-            </button>
+            <Fragment key={topic}>
+              <button
+                type="button"
+                role="option"
+                aria-selected={selected === topic}
+                className={selected === topic ? "selected" : ""}
+                onClick={() => onSelect(topic)}
+              >
+                <span>{topic}</span><span>{count}</span>
+              </button>
+              {topic === "All" && query.trim() === "" && (
+                <button
+                  type="button"
+                  className="ai-topic-option"
+                  aria-label="Create your own with AI, premium users only"
+                  disabled
+                >
+                  <span className="ai-topic-copy">
+                    <Sparkles aria-hidden="true" size={16} />
+                    <strong>Create your own with AI</strong>
+                  </span>
+                  <span className="ai-topic-lock">
+                    <small>Premium</small>
+                    <LockKeyhole aria-hidden="true" size={15} />
+                  </span>
+                </button>
+              )}
+            </Fragment>
           );
         })}
         {filteredTopics.length === 0 && <p className="no-results">No topics found.</p>}
