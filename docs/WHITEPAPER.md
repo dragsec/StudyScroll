@@ -91,7 +91,7 @@ The product follows four constraints:
 3. **No pay-to-preserve mechanics.** Progress should never depend on spending money.
 4. **No social humiliation.** Topic ranks describe personal progression, not public status.
 
-The system should be evaluated on whether it supports voluntary, consistent practice—not on time spent in the app.
+The system should be evaluated on whether it supports voluntary, consistent practice, not on time spent in the app.
 
 ## 7. Possible next steps
 
@@ -144,7 +144,7 @@ A credible evaluation would use delayed tests and compare StudyScroll with passi
 
 StudyScroll is an early product. Its scientific foundations support retrieval, feedback, and distributed practice broadly; they do not validate the complete interface as a package.
 
-Binary labels can oversimplify questions whose answer depends on assumptions. AI-assisted content can contain errors. A social-feed format may distract some learners. Personalization signals can be misread. Technical knowledge also requires construction, debugging, explanation, and open-ended problem solving—skills that Legit/Sus judgments cannot fully train.
+Binary labels can oversimplify questions whose answer depends on assumptions. AI-assisted content can contain errors. A social-feed format may distract some learners. Personalization signals can be misread. Technical knowledge also requires construction, debugging, explanation, and open-ended problem solving, which Legit/Sus judgments cannot fully train.
 
 StudyScroll should complement deeper study and practical work, not claim to replace them.
 

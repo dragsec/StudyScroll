@@ -6,7 +6,6 @@ import {
   ArrowLeft,
   ArrowRight,
   Bookmark,
-  Check,
   CircleHelp,
   Flame,
   Search,
@@ -16,6 +15,16 @@ import {
   UserRound,
   X,
 } from "lucide-react";
+import {
+  MdBookmark,
+  MdHome,
+  MdOutlineBookmark,
+  MdOutlineHome,
+  MdOutlinePerson,
+  MdOutlineWhatshot,
+  MdPerson,
+  MdWhatshot,
+} from "react-icons/md";
 import {
   type Difficulty,
   type Question,
@@ -229,7 +238,7 @@ export function StudyApp() {
         await navigator.share(shareData);
       } else {
         await navigator.clipboard.writeText(
-          question.prompt + " — " + window.location.href,
+          question.prompt + ": " + window.location.href,
         );
         setToast("Challenge copied");
       }
@@ -613,6 +622,9 @@ function ProgressView({
   const todayPerfect = dailyPerfect[localDateKey()] ?? 0;
   const todayProgress = Math.min(todayPerfect, DAILY_GOAL);
   const streak = calculateStreak(dailyPerfect);
+  const earnedSubjects = rankSubjects.filter(
+    (subject) => (perfectByTopic[subject] ?? 0) >= rankTiers[1].threshold,
+  );
   return (
     <section className="tab-page progress-page" aria-labelledby="progress-title">
       <div className="streak-stage">
@@ -656,34 +668,44 @@ function ProgressView({
           </button>
         </div>
 
-        <div className="rank-list">
-          {rankSubjects.map((subject) => {
-            const correct = perfectByTopic[subject] ?? 0;
-            const rank = getRankProgress(correct);
-            return (
-              <article className="rank-row" data-tier={rank.currentIndex} key={subject}>
-                <div className="rank-row-heading">
-                  <div>
-                    <h3>{subject}</h3>
-                    <span className="rank-badge">{rank.current.name}</span>
+        {earnedSubjects.length > 0 ? (
+          <div className="rank-list">
+            {earnedSubjects.map((subject) => {
+              const correct = perfectByTopic[subject] ?? 0;
+              const rank = getRankProgress(correct);
+              return (
+                <article className="rank-row" data-tier={rank.currentIndex} key={subject}>
+                  <div className="rank-row-heading">
+                    <div>
+                      <h3>{subject}</h3>
+                      <span className="rank-badge">{rank.current.name}</span>
+                    </div>
+                    <strong>{correct} correct</strong>
                   </div>
-                  <strong>{correct} correct</strong>
-                </div>
-                <div
-                  className="rank-track"
-                  role="progressbar"
-                  aria-label={`${subject}: ${rank.message}`}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                  aria-valuenow={Math.round(rank.percent * 100)}
-                >
-                  <span style={{ transform: `scaleX(${rank.percent})` }} />
-                </div>
-                <p>{rank.message}</p>
-              </article>
-            );
-          })}
-        </div>
+                  <div
+                    className="rank-track"
+                    role="progressbar"
+                    aria-label={`${subject}: ${rank.message}`}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-valuenow={Math.round(rank.percent * 100)}
+                  >
+                    <span style={{ transform: `scaleX(${rank.percent})` }} />
+                  </div>
+                  <p>{rank.message}</p>
+                </article>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="ranks-empty">
+            <span aria-hidden="true">5</span>
+            <p>
+              <strong>Unlock Junior Scroller</strong>
+              Complete 5 perfect questions in one subject.
+            </p>
+          </div>
+        )}
       </section>
     </section>
   );
@@ -709,45 +731,16 @@ function ProfileView() {
   );
 }
 
-function NavIcon({ id }: { id: Tab }) {
-  const shared = {
-    className: "nav-icon",
-    viewBox: "0 0 24 24",
-    "aria-hidden": true,
-  } as const;
+function NavIcon({ id, active }: { id: Tab; active: boolean }) {
+  const icons = {
+    scroll: active ? MdHome : MdOutlineHome,
+    saved: active ? MdBookmark : MdOutlineBookmark,
+    progress: active ? MdWhatshot : MdOutlineWhatshot,
+    profile: active ? MdPerson : MdOutlinePerson,
+  };
+  const Icon = icons[id];
 
-  if (id === "scroll") {
-    return (
-      <svg {...shared}>
-        <path className="nav-icon-shape" d="M3.5 10.2 12 3l8.5 7.2v10.3h-17Z" />
-        <path className="nav-icon-cutout" d="M9.25 20.5v-7h5.5v7Z" />
-      </svg>
-    );
-  }
-
-  if (id === "saved") {
-    return (
-      <svg {...shared}>
-        <path className="nav-icon-shape" d="M5.5 3.5h13v17l-6.5-3.8-6.5 3.8Z" />
-      </svg>
-    );
-  }
-
-  if (id === "progress") {
-    return (
-      <svg {...shared}>
-        <path className="nav-icon-shape" d="M12 2c1 4-3 5-3 9 0 1.5.7 2.5 1.8 3.3-.2-2 1.2-3.4 2.4-4.4.2 2.1 2.5 3.4 2.5 6.1A5.3 5.3 0 0 1 5.5 16C5.5 11 9.5 9 12 2Z" />
-        <path className="nav-icon-cutout" d="M12.3 12.1c1.4 1.2 2.2 2.3 2.2 3.6a2.3 2.3 0 0 1-4.6 0c0-1.1.6-1.9 1.4-2.7.5-.4.8-.7 1-1Z" />
-      </svg>
-    );
-  }
-
-  return (
-    <svg {...shared}>
-      <circle className="nav-icon-shape" cx="12" cy="7" r="3.25" />
-      <path className="nav-icon-shape" d="M4.5 20.5v-1.7c0-3.1 3.1-5.3 7.5-5.3s7.5 2.2 7.5 5.3v1.7Z" />
-    </svg>
-  );
+  return <Icon className="nav-icon" aria-hidden="true" />;
 }
 
 function BottomNav({ tab, onChange }: { tab: Tab; onChange: (tab: Tab) => void }) {
@@ -759,18 +752,21 @@ function BottomNav({ tab, onChange }: { tab: Tab; onChange: (tab: Tab) => void }
   ];
   return (
     <nav className="bottom-nav" aria-label="App navigation">
-      {items.map(({ id, label }) => (
-        <button
-          key={id}
-          type="button"
-          className={tab === id ? "active" : ""}
-          aria-current={tab === id ? "page" : undefined}
-          onClick={() => onChange(id)}
-        >
-          <span><NavIcon id={id} /></span>
-          {label}
-        </button>
-      ))}
+      {items.map(({ id, label }) => {
+        const active = tab === id;
+        return (
+          <button
+            key={id}
+            type="button"
+            className={active ? "active" : ""}
+            aria-current={active ? "page" : undefined}
+            onClick={() => onChange(id)}
+          >
+            <span><NavIcon id={id} active={active} /></span>
+            {label}
+          </button>
+        );
+      })}
     </nav>
   );
 }
@@ -1007,30 +1003,14 @@ function RankRulesSheet({ onClose }: { onClose: () => void }) {
           <h2>Rank rules</h2>
         </div>
 
-        <div className="perfect-rule">
-          <Check aria-hidden="true" size={20} />
-          <p>
-            <strong>One question counts</strong>
-            only when all three of your Legit/Sus judgments are correct.
-          </p>
-        </div>
-
         <ol className="rank-ladder">
           {rankTiers.slice(1).map((tier) => (
             <li key={tier.name}>
               <span>{tier.threshold}</span>
-              <div>
-                <strong>{tier.name}</strong>
-                <p>{tier.threshold} total perfect questions in one subject</p>
-              </div>
+              <strong>{tier.name}</strong>
             </li>
           ))}
         </ol>
-
-        <div className="rules-notes">
-          <p><strong>Ranks are subject-specific.</strong> Five perfect JavaScript questions unlock Junior Scroller in JavaScript, not everywhere.</p>
-          <p>Mistakes never remove rank progress. Retry, learn why, and earn the point when all three judgments are right.</p>
-        </div>
       </div>
       <button type="button" className="sheet-done" onClick={onClose}>Got it</button>
     </BottomSheet>

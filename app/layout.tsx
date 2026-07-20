@@ -23,7 +23,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StudyScroll — Learn by scrolling",
+  title: "StudyScroll: Learn by scrolling",
   description: "Train your judgment with quick technical challenges.",
 };
 
