@@ -30,6 +30,7 @@ The experience combines retrieval practice, immediate feedback, spaced repetitio
 - Accessible bottom sheets, keyboard controls, focus states, and reduced-motion support
 - Responsive desktop presentation of the mobile product
 - 168 source-backed questions across 14 technical and mathematical topics
+- Backend question API with mock and PostgreSQL data modes
 
 A question is considered perfect only when all three judgments are correct. Five perfect questions in one subject unlock the first rank.
 
@@ -71,6 +72,7 @@ More detail is available in [`DESIGN.md`](DESIGN.md) and [`PRODUCT.md`](PRODUCT.
 - Lucide and Material icon libraries
 - Browser local storage for MVP progress persistence
 - Versioned JSON question data with schema and quality validation
+- PostgreSQL, Prisma ORM 7, migrations, and an idempotent dataset seed
 - A disabled, server-only AI question-generation pipeline using the OpenAI Responses API, Structured Outputs, moderation, factual review, and bounded repair
 
 ## Run locally
@@ -82,33 +84,42 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000). The landing page is `/` and the learning app is `/learn`.
 
+By default the backend API serves the local reviewed dataset. PostgreSQL setup, migration, seeding, deployment, and verification are documented in [`docs/DATABASE.md`](docs/DATABASE.md).
+
 ## Validation
 
 ```bash
 npm run typecheck
 npm run validate:dataset
+npm run db:validate
+npm run test:security
 npm run test:ai
 npm run build
+npm run check:client-bundle
 ```
+
+The current threat model, VAPT findings, implemented controls, and production security checklist are documented in [`docs/SECURITY.md`](docs/SECURITY.md).
 
 The future premium AI workflow is documented in [`lib/ai-question-generation/README.md`](lib/ai-question-generation/README.md). Developers can follow the concise [`AI activation guide`](lib/ai-question-generation/ACTIVATION.md) when the product is ready for a premium beta. Its API route is scaffolded but deliberately fails closed until authentication, premium entitlements, distributed rate limiting, durable jobs, and background execution exist.
 
 ## How we collaborated with Codex
 
-StudyScroll was built through an iterative collaboration between the founder and Codex, powered by GPT-5.6.
+StudyScroll was not built from one giant prompt. It came together through a lot of small, fast conversations between the founder and Codex, powered by GPT-5.6.
 
-The founder supplied the original concept, research whitepaper, product constraints, and detailed feedback throughout development. The key product decisions also came from the founder: making the experience mobile-first, separating the guest landing page from the main app, using three judgments per question, counting only perfect questions toward progress, setting the daily goal and rank thresholds, keeping the core learning loop free, and introducing premium AI-generated questions from a learner's specific prompt. The visual direction came from the supplied Figma work, with continuous human review of spacing, colors, icons, copy, and interaction details.
+The founder brought the idea, the research whitepaper, the Figma design, and a very specific opinion about how the product should feel. That meant making it mobile-first, keeping the feed familiar without turning learning into a sterile quiz, counting only perfect questions toward progress, and keeping the core experience free. Even details such as rank names, icon weight, difficulty colors, and lines of copy were discussed while looking at the running app.
 
-Codex accelerated the workflow by translating those inputs into a working Next.js prototype directly in the repository. It helped scaffold and refine the application, implement the responsive feed and bottom sheets, connect filters and answer states, add local progress persistence, build the streak and ranking experience, reproduce the navigation icon states, and keep the landing page aligned with evolving product decisions. It also shortened the feedback loop by repeatedly running TypeScript and production builds, inspecting the app in a local browser, and correcting visual or interaction issues immediately.
+The working rhythm was simple: describe an idea, build it, open it locally, notice what felt wrong, and iterate. Codex turned rough notes into React and Next.js code directly in the repository, then helped refine the feed, filters, answer sheets, responsive navigation, saved state, streaks, ranks, and landing page. Because it could inspect the code and the live result in the same loop, changes that would normally become a backlog were often tested a few minutes after they were suggested.
 
-GPT-5.6 contributed reasoning across product, engineering, and design implementation. It helped turn rough notes into coherent interface behavior, suggested clear information hierarchy for new screens, identified inconsistencies between the design and the running app, and implemented approved changes. Codex acted as a fast engineering and design partner, while the founder remained responsible for the idea, priorities, final product choices, and approval of the experience.
+Codex also took care of much of the engineering work behind the visible prototype. It helped structure and validate the 168-question dataset, move the questions behind server APIs, design the Prisma and PostgreSQL content model, add server-side grading, audit the client bundle for leaked answers, run security tests, and scaffold the future premium AI workflow so that it stays disabled until authentication and the other production controls exist.
 
-This collaboration made it possible to move quickly without treating AI output as the product decision itself. Each iteration started from human intent and was checked against the research, Figma design, and live prototype.
+GPT-5.6 was especially useful when a loose product idea crossed several disciplines at once. It could reason about the UX, trace the change through the frontend and backend, and then verify the result with type checks, tests, and production builds. The founder still made the calls: what belonged in StudyScroll, what sounded wrong, what looked off, and when an iteration was good enough to keep. Codex made those decisions much faster to explore and much cheaper to revise.
+
+That back-and-forth is the real role AI played in StudyScroll. It was not a replacement for the product vision or the design process. It was a very fast collaborator that helped turn both into a working, testable MVP.
 
 ## Next steps
 
 - Add authentication and account synchronization
-- Migrate the versioned question dataset to PostgreSQL-backed content
+- Add authenticated user persistence for saved questions, attempts, streaks, and ranks
 - Connect authentication, premium entitlements, rate limiting, and background jobs to the scaffolded AI question-generation pipeline
 - Implement personalized ranking, feed selection, and spaced repetition on the backend
 - Containerize local services with Docker
@@ -116,4 +127,4 @@ This collaboration made it possible to move quickly without treating AI output a
 
 ## Project status
 
-StudyScroll is an interactive hackathon MVP. The learning flow, filters, saved state, streaks, ranks, and product presentation are functional. The production-oriented AI pipeline is scaffolded but disabled; authentication, database persistence, payments, distributed rate limiting, and background execution are still required before it can launch.
+StudyScroll is an interactive hackathon MVP. The learning flow, filters, saved state, streaks, ranks, product presentation, backend question API, and PostgreSQL content layer are functional. The production-oriented AI pipeline is scaffolded but disabled; authentication, user-progress persistence, payments, distributed rate limiting, and background execution are still required before it can launch.

@@ -9,6 +9,8 @@
 3. The server creates a durable generation job and returns its ID immediately.
 4. A background worker moderates the topic, generates 20 questions, validates them, reviews every claim, and repairs rejected questions.
 5. The worker publishes the set only if all 20 questions pass.
+
+Browser mutation requests must include `Content-Type: application/json`, `X-StudyScroll-Request: 1`, and the browser-provided same-origin headers. Set `APP_ORIGIN` to the canonical deployed HTTPS origin before enabling the endpoint.
 6. The app polls the job and shows `queued`, `generating`, `reviewing`, `ready`, or `failed`.
 
 The present `pipeline.ts` implements steps 4 and 5 synchronously as a proof of concept. Replace the direct pipeline call in the POST route with a database-backed job before enabling the feature in production.

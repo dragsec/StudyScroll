@@ -6,6 +6,11 @@ import { AiGenerationError } from "@/lib/ai-question-generation/errors";
 import { generateQuestionSet } from "@/lib/ai-question-generation/pipeline";
 import { consumeAiGenerationQuota } from "@/lib/ai-question-generation/rate-limit";
 import { AiGenerationRequestSchema } from "@/lib/ai-question-generation/schemas";
+import {
+  assertTrustedMutation,
+  readLimitedJson,
+  RequestSecurityError,
+} from "@/lib/security/request";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,9 +27,13 @@ function errorResponse(code: string, message: string, status: number, requestId:
 export async function POST(request: Request) {
   const requestId = randomUUID();
 
-  const origin = request.headers.get("origin");
-  if (origin && origin !== new URL(request.url).origin) {
-    return errorResponse("invalid_request", "Cross-origin generation requests are not allowed.", 403, requestId);
+  try {
+    assertTrustedMutation(request);
+  } catch (error) {
+    if (error instanceof RequestSecurityError) {
+      return errorResponse(error.code, error.message, error.status, requestId);
+    }
+    return errorResponse("invalid_request", "Request verification failed.", 403, requestId);
   }
 
   if (!aiGenerationConfig.enabled) {
@@ -43,22 +52,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const contentType = request.headers.get("content-type") ?? "";
-    if (!contentType.toLowerCase().startsWith("application/json")) {
-      return errorResponse("invalid_request", "Send a JSON request body.", 415, requestId);
-    }
-
-    const rawBody = await request.text();
-    if (new TextEncoder().encode(rawBody).byteLength > MAX_REQUEST_BYTES) {
-      return errorResponse("invalid_request", "Request body is too large.", 413, requestId);
-    }
-
-    let json: unknown;
-    try {
-      json = JSON.parse(rawBody);
-    } catch {
-      return errorResponse("invalid_request", "Request body is not valid JSON.", 400, requestId);
-    }
+    const json = await readLimitedJson(request, MAX_REQUEST_BYTES);
 
     const parsed = AiGenerationRequestSchema.safeParse(json);
     if (!parsed.success) {
@@ -76,6 +70,9 @@ export async function POST(request: Request) {
       { status: 201, headers: { "Cache-Control": "no-store" } },
     );
   } catch (error) {
+    if (error instanceof RequestSecurityError) {
+      return errorResponse(error.code, error.message, error.status, requestId);
+    }
     if (error instanceof AiGenerationError) {
       return errorResponse(error.code, error.message, error.status, requestId);
     }

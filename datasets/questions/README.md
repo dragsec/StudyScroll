@@ -28,12 +28,12 @@ npm run validate:dataset
 
 The validator checks file structure, IDs, duplicate content, question counts, difficulty distribution, answer counts, verdict distribution, feedback consistency, review state, placeholders, and references.
 
-## Suggested database mapping
+## Database mapping
 
 - `topics`: one row per topic object
+- `question_sets`: the curated release or a future reviewed AI-generated set
 - `questions`: one row per question
-- `answers`: three rows per question
-- `answer_feedback`: two rows per answer, keyed by the learner's selected verdict
+- `answers`: three rows per question, including both vote-specific feedback branches
 - `question_references`: one row per question reference
 
-String IDs are stable import keys and can coexist with database-generated UUID primary keys.
+String IDs are stable import keys and coexist with database-generated UUID primary keys. The implemented Prisma schema and seed are documented in [`docs/DATABASE.md`](../../docs/DATABASE.md).

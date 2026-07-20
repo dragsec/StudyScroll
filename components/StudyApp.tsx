@@ -33,11 +33,11 @@ import {
 } from "react-icons/md";
 import {
   type Difficulty,
-  type Question,
+  type PublicQuestion,
+  type QuestionGrade,
   type Verdict,
-  questions,
   topics,
-} from "@/data/questions";
+} from "@/data/question-types";
 import {
   Fragment,
   useCallback,
@@ -61,7 +61,45 @@ const rankTiers = [
   { name: "Principal Scroller", threshold: 65 },
   { name: "CEO of Scrolling", threshold: 120 },
 ] as const;
-const rankSubjects = Array.from(new Set(questions.map((question) => question.topic)));
+
+type QuestionApiResponse = {
+  questions: PublicQuestion[];
+};
+
+function isQuestionGrade(value: unknown): value is QuestionGrade {
+  if (!value || typeof value !== "object") return false;
+  const grade = value as Partial<QuestionGrade>;
+  return (
+    typeof grade.questionId === "string" &&
+    Number.isInteger(grade.score) &&
+    grade.score! >= 0 &&
+    grade.score! <= 3 &&
+    grade.total === 3 &&
+    Boolean(grade.answers) &&
+    typeof grade.answers === "object"
+  );
+}
+
+function isQuestionApiResponse(value: unknown): value is QuestionApiResponse {
+  if (!value || typeof value !== "object" || !("questions" in value)) return false;
+  const candidate = value as { questions?: unknown };
+  return (
+    Array.isArray(candidate.questions) &&
+    candidate.questions.length > 0 &&
+    candidate.questions.every(
+      (question) =>
+        question &&
+        typeof question === "object" &&
+        "id" in question &&
+        typeof question.id === "string" &&
+        "prompt" in question &&
+        typeof question.prompt === "string" &&
+        "answers" in question &&
+        Array.isArray(question.answers) &&
+        question.answers.length === 3,
+    )
+  );
+}
 
 type StoredProgress = {
   attemptedQuestionIds: string[];
@@ -122,7 +160,7 @@ export function StudyApp() {
   const isRegistered = false;
   const [tab, setTab] = useState<Tab>("scroll");
   const [sheet, setSheet] = useState<Sheet>(null);
-  const [activeQuestion, setActiveQuestion] = useState<Question | null>(null);
+  const [activeQuestion, setActiveQuestion] = useState<PublicQuestion | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<(typeof topics)[number]>("All");
   const [levels, setLevels] = useState<Set<Difficulty>>(
     () => new Set<Difficulty>(difficultyLabels),
@@ -130,12 +168,15 @@ export function StudyApp() {
   const [saved, setSaved] = useState<Set<string>>(() => new Set());
   const [decisions, setDecisions] = useState<Decisions>({});
   const [revealed, setRevealed] = useState(false);
+  const [gradeResult, setGradeResult] = useState<QuestionGrade | null>(null);
+  const [isGrading, setIsGrading] = useState(false);
   const [completed, setCompleted] = useState<Set<string>>(() => new Set());
   const [perfectQuestions, setPerfectQuestions] = useState<Set<string>>(() => new Set());
   const [correctJudgments, setCorrectJudgments] = useState(0);
   const [perfectByTopic, setPerfectByTopic] = useState<Record<string, number>>({});
   const [dailyPerfect, setDailyPerfect] = useState<Record<string, number>>({});
   const [progressReady, setProgressReady] = useState(false);
+  const [questionBank, setQuestionBank] = useState<PublicQuestion[]>([]);
   const [visibleCount, setVisibleCount] = useState(6);
   const [toast, setToast] = useState("");
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -159,6 +200,29 @@ export function StudyApp() {
   }, [saved]);
 
   useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadQuestionBank() {
+      try {
+        const response = await fetch("/api/questions", {
+          headers: { Accept: "application/json" },
+          signal: controller.signal,
+        });
+        if (!response.ok) return;
+        const payload: unknown = await response.json();
+        if (isQuestionApiResponse(payload)) setQuestionBank(payload.questions);
+      } catch (error) {
+        if (!(error instanceof DOMException && error.name === "AbortError")) {
+          console.warn("The question API is unavailable.");
+        }
+      }
+    }
+
+    void loadQuestionBank();
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
     if (!progressReady) return;
     const progress: StoredProgress = {
       attemptedQuestionIds: Array.from(completed),
@@ -177,12 +241,12 @@ export function StudyApp() {
   }, [toast]);
 
   const filteredQuestions = useMemo(() => {
-    return questions.filter((question) => {
+    return questionBank.filter((question) => {
       const topicMatches =
         selectedTopic === "All" || question.topic === selectedTopic;
       return topicMatches && levels.has(question.difficulty);
     });
-  }, [levels, selectedTopic]);
+  }, [levels, questionBank, selectedTopic]);
 
   const feedItems = useMemo(() => {
     if (filteredQuestions.length === 0) return [];
@@ -207,9 +271,10 @@ export function StudyApp() {
     return () => observer.disconnect();
   }, [filteredQuestions.length, tab]);
 
-  const openQuestion = useCallback((question: Question) => {
+  const openQuestion = useCallback((question: PublicQuestion) => {
     setActiveQuestion(question);
     setDecisions({});
+    setGradeResult(null);
     setRevealed(false);
     setSheet("question");
   }, []);
@@ -218,6 +283,7 @@ export function StudyApp() {
     setSheet(null);
     setActiveQuestion(null);
     setDecisions({});
+    setGradeResult(null);
     setRevealed(false);
   }, []);
 
@@ -235,7 +301,7 @@ export function StudyApp() {
     });
   }
 
-  async function shareQuestion(question: Question) {
+  async function shareQuestion(question: PublicQuestion) {
     const shareData = {
       title: "StudyScroll challenge",
       text: question.prompt,
@@ -255,28 +321,51 @@ export function StudyApp() {
     }
   }
 
-  function commitJudgments() {
-    if (!activeQuestion || revealed) return;
-    const count = activeQuestion.answers.reduce((score, answer) => {
-      return score + (decisions[answer.id] === answer.verdict ? 1 : 0);
-    }, 0);
-    if (!completed.has(activeQuestion.id)) {
-      setCorrectJudgments((total) => total + count);
-      setCompleted((current) => new Set(current).add(activeQuestion.id));
+  async function commitJudgments() {
+    if (!activeQuestion || revealed || isGrading) return;
+    setIsGrading(true);
+    try {
+      const response = await fetch(
+        `/api/questions/${encodeURIComponent(activeQuestion.id)}/grade`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-StudyScroll-Request": "1",
+          },
+          body: JSON.stringify({ decisions }),
+        },
+      );
+      if (!response.ok) throw new Error("grading_failed");
+      const payload: unknown = await response.json();
+      if (!isQuestionGrade(payload) || payload.questionId !== activeQuestion.id) {
+        throw new Error("invalid_grading_response");
+      }
+
+      const count = payload.score;
+      setGradeResult(payload);
+      if (!completed.has(activeQuestion.id)) {
+        setCorrectJudgments((total) => total + count);
+        setCompleted((current) => new Set(current).add(activeQuestion.id));
+      }
+      if (count === 3 && !perfectQuestions.has(activeQuestion.id)) {
+        const today = localDateKey();
+        setPerfectQuestions((current) => new Set(current).add(activeQuestion.id));
+        setPerfectByTopic((current) => ({
+          ...current,
+          [activeQuestion.topic]: (current[activeQuestion.topic] ?? 0) + 1,
+        }));
+        setDailyPerfect((current) => ({
+          ...current,
+          [today]: (current[today] ?? 0) + 1,
+        }));
+      }
+      setRevealed(true);
+    } catch {
+      setToast("Could not check this question. Try again.");
+    } finally {
+      setIsGrading(false);
     }
-    if (count === 3 && !perfectQuestions.has(activeQuestion.id)) {
-      const today = localDateKey();
-      setPerfectQuestions((current) => new Set(current).add(activeQuestion.id));
-      setPerfectByTopic((current) => ({
-        ...current,
-        [activeQuestion.topic]: (current[activeQuestion.topic] ?? 0) + 1,
-      }));
-      setDailyPerfect((current) => ({
-        ...current,
-        [today]: (current[today] ?? 0) + 1,
-      }));
-    }
-    setRevealed(true);
   }
 
   function nextQuestion() {
@@ -290,19 +379,19 @@ export function StudyApp() {
     const next = filteredQuestions[(index + 1) % filteredQuestions.length];
     setActiveQuestion(next);
     setDecisions({});
+    setGradeResult(null);
     setRevealed(false);
   }
 
-  const savedQuestions = questions.filter((question) => saved.has(question.id));
+  const savedQuestions = questionBank.filter((question) => saved.has(question.id));
+  const rankSubjects = useMemo(
+    () => Array.from(new Set(questionBank.map((question) => question.topic))),
+    [questionBank],
+  );
   const judgedCount = activeQuestion ? Object.keys(decisions).length : 0;
   const allJudged =
     activeQuestion !== null && judgedCount === activeQuestion.answers.length;
-  const currentScore =
-    activeQuestion?.answers.reduce(
-      (score, answer) =>
-        score + (decisions[answer.id] === answer.verdict ? 1 : 0),
-      0,
-    ) ?? 0;
+  const currentScore = gradeResult?.score ?? 0;
 
   return (
     <main id="main-content" className="app-stage">
@@ -344,6 +433,7 @@ export function StudyApp() {
               dailyPerfect={dailyPerfect}
               isRegistered={isRegistered}
               perfectByTopic={perfectByTopic}
+              rankSubjects={rankSubjects}
               onOpenRules={() => setSheet("rankRules")}
             />
           )}
@@ -361,6 +451,8 @@ export function StudyApp() {
           <QuestionSheet
             allJudged={allJudged}
             decisions={decisions}
+            gradeResult={gradeResult}
+            isGrading={isGrading}
             judgedCount={judgedCount}
             onClose={closeSheet}
             onCommit={commitJudgments}
@@ -379,6 +471,7 @@ export function StudyApp() {
 
         {sheet === "topics" && (
           <TopicSheet
+            questionBank={questionBank}
             selected={selectedTopic}
             onClose={() => setSheet(null)}
             onSelect={(topic) => {
@@ -417,7 +510,7 @@ export function StudyApp() {
   );
 }
 
-type FeedItem = { question: Question; instance: number };
+type FeedItem = { question: PublicQuestion; instance: number };
 
 function FeedView({
   feedItems,
@@ -438,11 +531,11 @@ function FeedView({
   selectedTopic: string;
   saved: Set<string>;
   sentinelRef: React.RefObject<HTMLDivElement | null>;
-  onOpen: (question: Question) => void;
+  onOpen: (question: PublicQuestion) => void;
   onOpenLevels: () => void;
   onOpenTopics: () => void;
   onSave: (id: string) => void;
-  onShare: (question: Question) => void;
+  onShare: (question: PublicQuestion) => void;
 }) {
   return (
     <>
@@ -488,7 +581,7 @@ function QuestionCard({
   onSave,
   onShare,
 }: {
-  question: Question;
+  question: PublicQuestion;
   saved: boolean;
   onOpen: () => void;
   onSave: () => void;
@@ -550,11 +643,11 @@ function SavedView({
   onShare,
   onExplore,
 }: {
-  questions: Question[];
+  questions: PublicQuestion[];
   saved: Set<string>;
-  onOpen: (question: Question) => void;
+  onOpen: (question: PublicQuestion) => void;
   onSave: (id: string) => void;
-  onShare: (question: Question) => void;
+  onShare: (question: PublicQuestion) => void;
   onExplore: () => void;
 }) {
   return (
@@ -628,11 +721,13 @@ function ProgressView({
   dailyPerfect,
   isRegistered,
   perfectByTopic,
+  rankSubjects,
   onOpenRules,
 }: {
   dailyPerfect: Record<string, number>;
   isRegistered: boolean;
   perfectByTopic: Record<string, number>;
+  rankSubjects: string[];
   onOpenRules: () => void;
 }) {
   const todayPerfect = dailyPerfect[localDateKey()] ?? 0;
@@ -885,6 +980,8 @@ function BottomSheet({
 function QuestionSheet({
   question,
   decisions,
+  gradeResult,
+  isGrading,
   judgedCount,
   allJudged,
   revealed,
@@ -894,8 +991,10 @@ function QuestionSheet({
   onNext,
   onClose,
 }: {
-  question: Question;
+  question: PublicQuestion;
   decisions: Decisions;
+  gradeResult: QuestionGrade | null;
+  isGrading: boolean;
   judgedCount: number;
   allJudged: boolean;
   revealed: boolean;
@@ -915,7 +1014,7 @@ function QuestionSheet({
             className="question-reference"
             href={question.source}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             Source: {question.clue} <ExternalLink aria-hidden="true" size={14} />
           </a>
@@ -923,7 +1022,8 @@ function QuestionSheet({
         <div className="answers-list">
           {question.answers.map((answer) => {
             const choice = decisions[answer.id];
-            const correct = choice === answer.verdict;
+            const result = gradeResult?.answers[answer.id];
+            const correct = result?.correct ?? false;
             const stateClass = revealed ? (correct ? " answer-correct" : " answer-wrong") : "";
             return (
               <article key={answer.id} className={"answer-card" + stateClass}>
@@ -937,7 +1037,7 @@ function QuestionSheet({
                     type="button"
                     className={choice === "legit" ? "selected" : ""}
                     aria-pressed={choice === "legit"}
-                    disabled={revealed}
+                    disabled={revealed || isGrading}
                     onClick={() => onDecision(answer.id, "legit")}
                   >
                     <ThumbsUp aria-hidden="true" size={20} />legit
@@ -946,7 +1046,7 @@ function QuestionSheet({
                     type="button"
                     className={choice === "sus" ? "selected" : ""}
                     aria-pressed={choice === "sus"}
-                    disabled={revealed}
+                    disabled={revealed || isGrading}
                     onClick={() => onDecision(answer.id, "sus")}
                   >
                     <Skull aria-hidden="true" size={20} />sus
@@ -955,7 +1055,7 @@ function QuestionSheet({
                 {revealed && (
                   <div className="answer-feedback">
                     <strong>{correct ? "Correct!" : "Careful."}</strong>
-                    <p>{answer.feedback[choice ?? answer.verdict]}</p>
+                    <p>{result?.feedback}</p>
                   </div>
                 )}
               </article>
@@ -967,8 +1067,8 @@ function QuestionSheet({
         {!revealed ? (
           <>
             <p><strong>{judgedCount}/3</strong> judgments made</p>
-            <button type="button" className="button button-primary" disabled={!allJudged} onClick={onCommit}>
-              Check my judgments
+            <button type="button" className="button button-primary" disabled={!allJudged || isGrading} onClick={onCommit}>
+              {isGrading ? "Checking..." : "Check my judgments"}
             </button>
           </>
         ) : (
@@ -984,10 +1084,12 @@ function QuestionSheet({
 }
 
 function TopicSheet({
+  questionBank,
   selected,
   onSelect,
   onClose,
 }: {
+  questionBank: PublicQuestion[];
   selected: (typeof topics)[number];
   onSelect: (topic: (typeof topics)[number]) => void;
   onClose: () => void;
@@ -1017,8 +1119,8 @@ function TopicSheet({
         {filteredTopics.map((topic) => {
           const count =
             topic === "All"
-              ? questions.length
-              : questions.filter((question) => question.topic === topic).length;
+              ? questionBank.length
+              : questionBank.filter((question) => question.topic === topic).length;
           return (
             <Fragment key={topic}>
               <button

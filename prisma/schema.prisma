@@ -1,0 +1,131 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../lib/generated/prisma"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum QuestionSetOrigin {
+  CURATED      @map("curated")
+  AI_GENERATED @map("ai_generated")
+
+  @@map("question_set_origin")
+}
+
+enum PublishStatus {
+  DRAFT     @map("draft")
+  REVIEWING @map("reviewing")
+  PUBLISHED @map("published")
+  ARCHIVED  @map("archived")
+
+  @@map("publish_status")
+}
+
+enum Difficulty {
+  EASY   @map("easy")
+  MEDIUM @map("medium")
+  HARD   @map("hard")
+
+  @@map("difficulty")
+}
+
+enum Verdict {
+  LEGIT @map("legit")
+  SUS   @map("sus")
+
+  @@map("verdict")
+}
+
+enum ReviewStatus {
+  DRAFT    @map("draft")
+  APPROVED @map("approved")
+  REJECTED @map("rejected")
+
+  @@map("review_status")
+}
+
+model Topic {
+  id        String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug      String     @unique @db.VarChar(80)
+  name      String     @unique @db.VarChar(120)
+  isActive  Boolean    @default(true) @map("is_active")
+  questions Question[]
+  createdAt DateTime   @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime   @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("topics")
+}
+
+model QuestionSet {
+  id             String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  key            String            @unique @db.VarChar(120)
+  title          String            @db.VarChar(160)
+  schemaVersion  String            @map("schema_version") @db.VarChar(20)
+  datasetVersion String?           @map("dataset_version") @db.VarChar(40)
+  origin         QuestionSetOrigin
+  status         PublishStatus     @default(DRAFT)
+  topicPrompt    String?           @map("topic_prompt") @db.VarChar(160)
+  publishedAt    DateTime?         @map("published_at") @db.Timestamptz(3)
+  questions      Question[]
+  createdAt      DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@index([status, origin])
+  @@map("question_sets")
+}
+
+model Question {
+  id            String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  key           String             @unique @db.VarChar(160)
+  questionSetId String             @map("question_set_id") @db.Uuid
+  topicId       String             @map("topic_id") @db.Uuid
+  difficulty    Difficulty
+  prompt        String             @db.Text
+  context       String?            @db.Text
+  position      Int
+  reviewStatus  ReviewStatus       @default(DRAFT) @map("review_status")
+  isActive      Boolean            @default(true) @map("is_active")
+  questionSet   QuestionSet        @relation(fields: [questionSetId], references: [id], onDelete: Cascade)
+  topic         Topic              @relation(fields: [topicId], references: [id], onDelete: Restrict)
+  answers       Answer[]
+  reference     QuestionReference?
+  createdAt     DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([questionSetId, topicId, position])
+  @@index([topicId, difficulty, isActive])
+  @@index([questionSetId, reviewStatus])
+  @@map("questions")
+}
+
+model Answer {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  questionId    String   @map("question_id") @db.Uuid
+  key           String   @db.VarChar(20)
+  position      Int
+  text          String   @db.Text
+  verdict       Verdict
+  feedbackLegit String   @map("feedback_legit") @db.Text
+  feedbackSus   String   @map("feedback_sus") @db.Text
+  question      Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@unique([questionId, key])
+  @@unique([questionId, position])
+  @@map("answers")
+}
+
+model QuestionReference {
+  questionId String   @id @map("question_id") @db.Uuid
+  title      String   @db.VarChar(240)
+  url        String   @db.VarChar(2048)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("question_references")
+}
