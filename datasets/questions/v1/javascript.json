@@ -1,0 +1,478 @@
+{
+  "schema_version": "1.0",
+  "dataset_version": "v1",
+  "topic": {
+    "id": "javascript",
+    "name": "Javascript"
+  },
+  "questions": [
+    {
+      "id": "javascript-typeof-null",
+      "difficulty": "easy",
+      "prompt": "What does `typeof null` tell you in JavaScript?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "It returns `\"object\"` because of a historical compatibility quirk.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It returns `\"object\"` because of a historical compatibility quirk.",
+            "sus": "This answer is legitimate. It returns `\"object\"` because of a historical compatibility quirk."
+          }
+        },
+        {
+          "id": "b",
+          "text": "The operator returns `\"object\"`, even though null is a primitive value.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The operator returns `\"object\"`, even though null is a primitive value.",
+            "sus": "This answer is legitimate. The operator returns `\"object\"`, even though null is a primitive value."
+          }
+        },
+        {
+          "id": "c",
+          "text": "The result does not mean that null behaves like a normal object.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The result does not mean that null behaves like a normal object.",
+            "sus": "This answer is legitimate. The result does not mean that null behaves like a normal object."
+          }
+        }
+      ],
+      "reference": {
+        "title": "ECMAScript Language Specification",
+        "url": "https://tc39.es/ecma262/multipage/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "javascript-const-object",
+      "difficulty": "easy",
+      "prompt": "What does `const` prevent when it holds an object?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "It makes every property of the object immutable.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Object properties can still change unless the object is frozen or otherwise protected.",
+            "sus": "Correct. Object properties can still change unless the object is frozen or otherwise protected."
+          }
+        },
+        {
+          "id": "b",
+          "text": "The object can still be mutated through the const binding.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The object can still be mutated through the const binding.",
+            "sus": "This answer is legitimate. The object can still be mutated through the const binding."
+          }
+        },
+        {
+          "id": "c",
+          "text": "It prevents assigning a different value to that variable.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It prevents assigning a different value to that variable.",
+            "sus": "This answer is legitimate. It prevents assigning a different value to that variable."
+          }
+        }
+      ],
+      "reference": {
+        "title": "ECMAScript Language Specification",
+        "url": "https://tc39.es/ecma262/multipage/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "javascript-default-sort",
+      "difficulty": "easy",
+      "prompt": "How does `Array.prototype.sort()` compare values when no comparator is supplied?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "It returns a new sorted array and leaves the original unchanged.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. The sort method rearranges the original array in place and returns that same array reference.",
+            "sus": "Correct. The sort method rearranges the original array in place and returns that same array reference."
+          }
+        },
+        {
+          "id": "b",
+          "text": "It converts elements to strings and compares their UTF-16 code unit sequences.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It converts elements to strings and compares their UTF-16 code unit sequences.",
+            "sus": "This answer is legitimate. It converts elements to strings and compares their UTF-16 code unit sequences."
+          }
+        },
+        {
+          "id": "c",
+          "text": "It always sorts numbers from smallest to largest.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Numeric order requires a comparator such as `(a, b) => a - b`.",
+            "sus": "Correct. Numeric order requires a comparator such as `(a, b) => a - b`."
+          }
+        }
+      ],
+      "reference": {
+        "title": "ECMAScript Language Specification",
+        "url": "https://tc39.es/ecma262/multipage/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "javascript-closure",
+      "difficulty": "medium",
+      "prompt": "What does a JavaScript closure retain?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "It retains access to bindings from its surrounding lexical environment.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It retains access to bindings from its surrounding lexical environment.",
+            "sus": "This answer is legitimate. It retains access to bindings from its surrounding lexical environment."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Closures capture bindings, so they can observe later updates to those bindings.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Closures capture bindings, so they can observe later updates to those bindings.",
+            "sus": "This answer is legitimate. Closures capture bindings, so they can observe later updates to those bindings."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A closure can outlive the function call that created its environment.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A closure can outlive the function call that created its environment.",
+            "sus": "This answer is legitimate. A closure can outlive the function call that created its environment."
+          }
+        }
+      ],
+      "reference": {
+        "title": "ECMAScript Language Specification",
+        "url": "https://tc39.es/ecma262/multipage/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "javascript-microtasks",
+      "difficulty": "medium",
+      "prompt": "When do resolved Promise callbacks normally run?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "They run synchronously inside the call to `then`.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Promise reactions are queued rather than executed synchronously.",
+            "sus": "Correct. Promise reactions are queued rather than executed synchronously."
+          }
+        },
+        {
+          "id": "b",
+          "text": "They normally run before the next timer task such as `setTimeout(..., 0)`.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. They normally run before the next timer task such as `setTimeout(..., 0)`.",
+            "sus": "This answer is legitimate. They normally run before the next timer task such as `setTimeout(..., 0)`."
+          }
+        },
+        {
+          "id": "c",
+          "text": "They run as microtasks after the current call stack finishes.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. They run as microtasks after the current call stack finishes.",
+            "sus": "This answer is legitimate. They run as microtasks after the current call stack finishes."
+          }
+        }
+      ],
+      "reference": {
+        "title": "ECMAScript Language Specification",
+        "url": "https://tc39.es/ecma262/multipage/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "javascript-arrow-this",
+      "difficulty": "medium",
+      "prompt": "How does `this` work inside an arrow function?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Calling an arrow function with `call` or `apply` changes its `this` value.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Arrow functions use lexical `this`; `call`, `apply`, and `bind` cannot replace it.",
+            "sus": "Correct. Arrow functions use lexical `this`; `call`, `apply`, and `bind` cannot replace it."
+          }
+        },
+        {
+          "id": "b",
+          "text": "An arrow function uses `this` from its surrounding lexical scope.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. An arrow function uses `this` from its surrounding lexical scope.",
+            "sus": "This answer is legitimate. An arrow function uses `this` from its surrounding lexical scope."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Calling it with `new` creates a fresh `this` value.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Arrow functions are not constructors and cannot be called with `new`.",
+            "sus": "Correct. Arrow functions are not constructors and cannot be called with `new`."
+          }
+        }
+      ],
+      "reference": {
+        "title": "ECMAScript Language Specification",
+        "url": "https://tc39.es/ecma262/multipage/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "javascript-promise-all",
+      "difficulty": "medium",
+      "prompt": "What happens when one input to `Promise.all` rejects?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "The returned promise rejects with that rejection reason.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The returned promise rejects with that rejection reason.",
+            "sus": "This answer is legitimate. The returned promise rejects with that rejection reason."
+          }
+        },
+        {
+          "id": "b",
+          "text": "The other asynchronous operations are automatically cancelled.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Promise.all does not cancel work that has already started.",
+            "sus": "Correct. Promise.all does not cancel work that has already started."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Other inputs may continue running even though the aggregate has rejected.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Other inputs may continue running even though the aggregate has rejected.",
+            "sus": "This answer is legitimate. Other inputs may continue running even though the aggregate has rejected."
+          }
+        }
+      ],
+      "reference": {
+        "title": "ECMAScript Language Specification",
+        "url": "https://tc39.es/ecma262/multipage/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "javascript-map-async",
+      "difficulty": "medium",
+      "prompt": "What does `array.map(async item => ...)` return?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "It waits for every callback and returns resolved values.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Use `await Promise.all(...)` when all mapped promises must resolve.",
+            "sus": "Correct. Use `await Promise.all(...)` when all mapped promises must resolve."
+          }
+        },
+        {
+          "id": "b",
+          "text": "The `map` method itself remains synchronous.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The `map` method itself remains synchronous.",
+            "sus": "This answer is legitimate. The `map` method itself remains synchronous."
+          }
+        },
+        {
+          "id": "c",
+          "text": "It returns an array of promises.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It returns an array of promises.",
+            "sus": "This answer is legitimate. It returns an array of promises."
+          }
+        }
+      ],
+      "reference": {
+        "title": "ECMAScript Language Specification",
+        "url": "https://tc39.es/ecma262/multipage/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "javascript-module-bindings",
+      "difficulty": "medium",
+      "prompt": "Are imported ES module bindings live?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "The importing module may assign a new value directly to an imported binding.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Imported bindings are live but read-only from the importing module.",
+            "sus": "Correct. Imported bindings are live but read-only from the importing module."
+          }
+        },
+        {
+          "id": "b",
+          "text": "An importer observes updates made to an exported binding by its module.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. An importer observes updates made to an exported binding by its module.",
+            "sus": "This answer is legitimate. An importer observes updates made to an exported binding by its module."
+          }
+        },
+        {
+          "id": "c",
+          "text": "An importer receives an unrelated copy that never changes.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. ES module imports are live read-only views of exported bindings.",
+            "sus": "Correct. ES module imports are live read-only views of exported bindings."
+          }
+        }
+      ],
+      "reference": {
+        "title": "ECMAScript Language Specification",
+        "url": "https://tc39.es/ecma262/multipage/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "javascript-weakmap",
+      "difficulty": "hard",
+      "prompt": "Why can WeakMap keys help avoid retaining objects?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "WeakMap does not keep its object keys alive by itself.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. WeakMap does not keep its object keys alive by itself.",
+            "sus": "This answer is legitimate. WeakMap does not keep its object keys alive by itself."
+          }
+        },
+        {
+          "id": "b",
+          "text": "WeakMap accepts strings as weakly held keys.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. WeakMap keys must be objects or non-registered symbols, not ordinary strings.",
+            "sus": "Correct. WeakMap keys must be objects or non-registered symbols, not ordinary strings."
+          }
+        },
+        {
+          "id": "c",
+          "text": "WeakMap keys cannot be enumerated because their lifetime is not observable that way.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. WeakMap keys cannot be enumerated because their lifetime is not observable that way.",
+            "sus": "This answer is legitimate. WeakMap keys cannot be enumerated because their lifetime is not observable that way."
+          }
+        }
+      ],
+      "reference": {
+        "title": "ECMAScript Language Specification",
+        "url": "https://tc39.es/ecma262/multipage/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "javascript-proxy-invariants",
+      "difficulty": "hard",
+      "prompt": "Can every JavaScript Proxy trap return arbitrary results?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Violating a Proxy invariant can cause a TypeError.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Violating a Proxy invariant can cause a TypeError.",
+            "sus": "This answer is legitimate. Violating a Proxy invariant can cause a TypeError."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A trap cannot report some impossible states for a non-extensible target.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A trap cannot report some impossible states for a non-extensible target.",
+            "sus": "This answer is legitimate. A trap cannot report some impossible states for a non-extensible target."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Yes. Proxy traps completely replace the language's object rules.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Proxy traps must respect invariants, including rules for non-configurable properties.",
+            "sus": "Correct. Proxy traps must respect invariants, including rules for non-configurable properties."
+          }
+        }
+      ],
+      "reference": {
+        "title": "ECMAScript Language Specification",
+        "url": "https://tc39.es/ecma262/multipage/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "javascript-atomics",
+      "difficulty": "hard",
+      "prompt": "When are JavaScript Atomics operations relevant?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Atomics operations work on any ordinary JavaScript array.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Atomics require a supported integer typed array backed by SharedArrayBuffer.",
+            "sus": "Correct. Atomics require a supported integer typed array backed by SharedArrayBuffer."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Atomics operations guarantee that concurrent code never blocks.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Atomics provide synchronization primitives, and operations such as Atomics.wait can block an eligible agent.",
+            "sus": "Correct. Atomics provide synchronization primitives, and operations such as Atomics.wait can block an eligible agent."
+          }
+        },
+        {
+          "id": "c",
+          "text": "They make ordinary object property updates thread-safe.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Atomics only operate on supported typed arrays over shared memory.",
+            "sus": "Correct. Atomics only operate on supported typed arrays over shared memory."
+          }
+        }
+      ],
+      "reference": {
+        "title": "ECMAScript Language Specification",
+        "url": "https://tc39.es/ecma262/multipage/"
+      },
+      "review_status": "approved"
+    }
+  ]
+}

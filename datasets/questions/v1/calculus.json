@@ -1,0 +1,478 @@
+{
+  "schema_version": "1.0",
+  "dataset_version": "v1",
+  "topic": {
+    "id": "calculus",
+    "name": "Calculus"
+  },
+  "questions": [
+    {
+      "id": "calculus-derivative",
+      "difficulty": "easy",
+      "prompt": "For a real-valued function of one real variable, what does its derivative represent at a point?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Geometrically it is the slope of the tangent line.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Geometrically it is the slope of the tangent line.",
+            "sus": "This answer is legitimate. Geometrically it is the slope of the tangent line."
+          }
+        },
+        {
+          "id": "b",
+          "text": "The instantaneous rate of change when the derivative exists.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The instantaneous rate of change when the derivative exists.",
+            "sus": "This answer is legitimate. The instantaneous rate of change when the derivative exists."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Definite integration, not differentiation, describes accumulated signed area.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Definite integration, not differentiation, describes accumulated signed area.",
+            "sus": "This answer is legitimate. Definite integration, not differentiation, describes accumulated signed area."
+          }
+        }
+      ],
+      "reference": {
+        "title": "OpenStax Calculus Volume 1",
+        "url": "https://openstax.org/details/books/calculus-volume-1"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "calculus-power-rule",
+      "difficulty": "easy",
+      "prompt": "For a positive integer n, what is the derivative of `x^n`?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "`n x^(n-1)`.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. `n x^(n-1)`.",
+            "sus": "This answer is legitimate. `n x^(n-1)`."
+          }
+        },
+        {
+          "id": "b",
+          "text": "`x^(n+1)/(n+1)`.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. That expression is an antiderivative, not the derivative.",
+            "sus": "Correct. That expression is an antiderivative, not the derivative."
+          }
+        },
+        {
+          "id": "c",
+          "text": "The exponent decreases by one and multiplies the result.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The exponent decreases by one and multiplies the result.",
+            "sus": "This answer is legitimate. The exponent decreases by one and multiplies the result."
+          }
+        }
+      ],
+      "reference": {
+        "title": "OpenStax Calculus Volume 1",
+        "url": "https://openstax.org/details/books/calculus-volume-1"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "calculus-integral-area",
+      "difficulty": "easy",
+      "prompt": "Does a definite integral always equal ordinary geometric area?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "It represents accumulated signed change.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It represents accumulated signed change.",
+            "sus": "This answer is legitimate. It represents accumulated signed change."
+          }
+        },
+        {
+          "id": "b",
+          "text": "If a definite integral is zero, the function must be zero everywhere on the interval.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Positive and negative contributions can cancel, so a zero integral does not force the function to vanish.",
+            "sus": "Correct. Positive and negative contributions can cancel, so a zero integral does not force the function to vanish."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Yes, it is always nonnegative.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A definite integral is signed; regions below the axis contribute negatively.",
+            "sus": "Correct. A definite integral is signed; regions below the axis contribute negatively."
+          }
+        }
+      ],
+      "reference": {
+        "title": "OpenStax Calculus Volume 1",
+        "url": "https://openstax.org/details/books/calculus-volume-1"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "calculus-chain-rule",
+      "difficulty": "medium",
+      "prompt": "When is the chain rule used?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "The outer derivative is multiplied by the derivative of the inner function.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The outer derivative is multiplied by the derivative of the inner function.",
+            "sus": "This answer is legitimate. The outer derivative is multiplied by the derivative of the inner function."
+          }
+        },
+        {
+          "id": "b",
+          "text": "When differentiating a composition of functions.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. When differentiating a composition of functions.",
+            "sus": "This answer is legitimate. When differentiating a composition of functions."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Products use the product rule; compositions use the chain rule.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Products use the product rule; compositions use the chain rule.",
+            "sus": "This answer is legitimate. Products use the product rule; compositions use the chain rule."
+          }
+        }
+      ],
+      "reference": {
+        "title": "OpenStax Calculus Volume 1",
+        "url": "https://openstax.org/details/books/calculus-volume-1"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "calculus-product-rule",
+      "difficulty": "medium",
+      "prompt": "What is the derivative of a product `f(x)g(x)`?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "`f'(x)g(x) + f(x)g'(x)`.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. `f'(x)g(x) + f(x)g'(x)`.",
+            "sus": "This answer is legitimate. `f'(x)g(x) + f(x)g'(x)`."
+          }
+        },
+        {
+          "id": "b",
+          "text": "`f'(x)g'(x)`.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Differentiating each factor and multiplying omits two required terms.",
+            "sus": "Correct. Differentiating each factor and multiplying omits two required terms."
+          }
+        },
+        {
+          "id": "c",
+          "text": "If one factor is constant, the derivative of the whole product must be zero.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A constant factor remains and multiplies the derivative of the other factor.",
+            "sus": "Correct. A constant factor remains and multiplies the derivative of the other factor."
+          }
+        }
+      ],
+      "reference": {
+        "title": "OpenStax Calculus Volume 1",
+        "url": "https://openstax.org/details/books/calculus-volume-1"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "calculus-ftc",
+      "difficulty": "medium",
+      "prompt": "What connection does the Fundamental Theorem of Calculus make?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "It says every discontinuous function has an elementary antiderivative.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. The theorem has hypotheses and does not guarantee elementary formulas.",
+            "sus": "Correct. The theorem has hypotheses and does not guarantee elementary formulas."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Under suitable conditions, differentiating an integral with a variable upper limit recovers the integrand.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Under suitable conditions, differentiating an integral with a variable upper limit recovers the integrand.",
+            "sus": "This answer is legitimate. Under suitable conditions, differentiating an integral with a variable upper limit recovers the integrand."
+          }
+        },
+        {
+          "id": "c",
+          "text": "It connects accumulation by integration with antiderivatives.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It connects accumulation by integration with antiderivatives.",
+            "sus": "This answer is legitimate. It connects accumulation by integration with antiderivatives."
+          }
+        }
+      ],
+      "reference": {
+        "title": "OpenStax Calculus Volume 1",
+        "url": "https://openstax.org/details/books/calculus-volume-1"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "calculus-continuity",
+      "difficulty": "medium",
+      "prompt": "Does continuity at a point guarantee differentiability there?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "The absolute-value function is continuous but not differentiable at zero.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The absolute-value function is continuous but not differentiable at zero.",
+            "sus": "This answer is legitimate. The absolute-value function is continuous but not differentiable at zero."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Yes, every continuous graph has a tangent slope.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A continuous function can have a corner or cusp and fail to be differentiable.",
+            "sus": "Correct. A continuous function can have a corner or cusp and fail to be differentiable."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Differentiability implies continuity at that point.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Differentiability implies continuity at that point.",
+            "sus": "This answer is legitimate. Differentiability implies continuity at that point."
+          }
+        }
+      ],
+      "reference": {
+        "title": "OpenStax Calculus Volume 1",
+        "url": "https://openstax.org/details/books/calculus-volume-1"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "calculus-critical-point",
+      "difficulty": "medium",
+      "prompt": "Does `f'(c) = 0` guarantee a local maximum or minimum?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Yes, every stationary point is an extremum.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A stationary point can be neither, as with `x^3` at zero.",
+            "sus": "Correct. A stationary point can be neither, as with `x^3` at zero."
+          }
+        },
+        {
+          "id": "b",
+          "text": "It identifies a critical point that needs further analysis.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It identifies a critical point that needs further analysis.",
+            "sus": "This answer is legitimate. It identifies a critical point that needs further analysis."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Sign changes or higher-derivative information can help classify the point.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Sign changes or higher-derivative information can help classify the point.",
+            "sus": "This answer is legitimate. Sign changes or higher-derivative information can help classify the point."
+          }
+        }
+      ],
+      "reference": {
+        "title": "OpenStax Calculus Volume 1",
+        "url": "https://openstax.org/details/books/calculus-volume-1"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "calculus-substitution",
+      "difficulty": "medium",
+      "prompt": "What is substitution in integration designed to reverse?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "The quotient rule only.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Substitution broadly handles compositions paired with an inner derivative.",
+            "sus": "Correct. Substitution broadly handles compositions paired with an inner derivative."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A valid substitution never requires changing the bounds of a definite integral.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. For a definite integral, either transform the bounds to the new variable or return to the original variable before evaluating.",
+            "sus": "Correct. For a definite integral, either transform the bounds to the new variable or return to the original variable before evaluating."
+          }
+        },
+        {
+          "id": "c",
+          "text": "The chain rule.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The chain rule.",
+            "sus": "This answer is legitimate. The chain rule."
+          }
+        }
+      ],
+      "reference": {
+        "title": "OpenStax Calculus Volume 1",
+        "url": "https://openstax.org/details/books/calculus-volume-1"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "calculus-partial",
+      "difficulty": "hard",
+      "prompt": "What does a partial derivative hold fixed?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Partial derivatives describe coordinate-direction rates of change.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Partial derivatives describe coordinate-direction rates of change.",
+            "sus": "This answer is legitimate. Partial derivatives describe coordinate-direction rates of change."
+          }
+        },
+        {
+          "id": "b",
+          "text": "The other independent variables while one variable changes.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The other independent variables while one variable changes.",
+            "sus": "This answer is legitimate. The other independent variables while one variable changes."
+          }
+        },
+        {
+          "id": "c",
+          "text": "The function value itself.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. The function value generally changes as the selected variable changes.",
+            "sus": "Correct. The function value generally changes as the selected variable changes."
+          }
+        }
+      ],
+      "reference": {
+        "title": "OpenStax Calculus Volume 1",
+        "url": "https://openstax.org/details/books/calculus-volume-1"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "calculus-gradient",
+      "difficulty": "hard",
+      "prompt": "In Euclidean space, what does the gradient of a differentiable scalar field indicate?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "The direction of steepest local increase when the gradient is nonzero.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The direction of steepest local increase when the gradient is nonzero.",
+            "sus": "This answer is legitimate. The direction of steepest local increase when the gradient is nonzero."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A direction tangent to every regular level surface.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. The gradient is normal to a regular level surface.",
+            "sus": "Correct. The gradient is normal to a regular level surface."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Its magnitude is the maximum directional derivative over unit directions at that point.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Its magnitude is the maximum directional derivative over unit directions at that point.",
+            "sus": "This answer is legitimate. Its magnitude is the maximum directional derivative over unit directions at that point."
+          }
+        }
+      ],
+      "reference": {
+        "title": "OpenStax Calculus Volume 1",
+        "url": "https://openstax.org/details/books/calculus-volume-1"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "calculus-taylor",
+      "difficulty": "hard",
+      "prompt": "Does a function always equal its Taylor series wherever all derivatives exist?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Every Taylor series has an infinite radius of convergence.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A Taylor series can have a finite or even zero radius of convergence.",
+            "sus": "Correct. A Taylor series can have a finite or even zero radius of convergence."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Adding more Taylor terms always improves the approximation at every input.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Improvement depends on the input, convergence region, and remainder; more terms do not give a universal guarantee.",
+            "sus": "Correct. Improvement depends on the input, convergence region, and remainder; more terms do not give a universal guarantee."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Yes, infinite differentiability guarantees equality.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Some smooth functions have Taylor series that do not equal the function away from the expansion point.",
+            "sus": "Correct. Some smooth functions have Taylor series that do not equal the function away from the expansion point."
+          }
+        }
+      ],
+      "reference": {
+        "title": "OpenStax Calculus Volume 1",
+        "url": "https://openstax.org/details/books/calculus-volume-1"
+      },
+      "review_status": "approved"
+    }
+  ]
+}

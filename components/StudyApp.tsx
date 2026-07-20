@@ -348,7 +348,8 @@ export function StudyApp() {
           )}
           {tab === "profile" && (
             <ProfileView
-              onAccountAction={() => setToast("Register to manage your account")}
+              isRegistered={isRegistered}
+              onNotice={setToast}
             />
           )}
         </div>
@@ -737,7 +738,13 @@ function ProgressView({
   );
 }
 
-function ProfileView({ onAccountAction }: { onAccountAction: () => void }) {
+function ProfileView({
+  isRegistered,
+  onNotice,
+}: {
+  isRegistered: boolean;
+  onNotice: (message: string) => void;
+}) {
   return (
     <section className="tab-page profile-page" aria-labelledby="profile-title">
       <div className="tab-heading">
@@ -748,33 +755,46 @@ function ProfileView({ onAccountAction }: { onAccountAction: () => void }) {
       <div className="profile-summary">
         <span className="profile-avatar"><UserRound aria-hidden="true" size={34} /></span>
         <div>
-          <strong>Guest learner</strong>
-          <span>Register to sync your account</span>
+          <strong>{isRegistered ? "StudyScroller" : "Guest learner"}</strong>
+          <span>{isRegistered ? "Your StudyScroll account" : "Register to sync your account"}</span>
         </div>
       </div>
 
-      <section className="account-settings" aria-labelledby="account-settings-title">
-        <h2 id="account-settings-title">Account settings</h2>
-        <button type="button" className="account-setting-row" onClick={onAccountAction}>
-          <Mail aria-hidden="true" size={19} />
-          <span>
-            <strong>Edit email</strong>
-            <small>Change your sign-in email</small>
-          </span>
-          <ChevronRight aria-hidden="true" size={18} />
-        </button>
-        <button type="button" className="account-setting-row" onClick={onAccountAction}>
-          <KeyRound aria-hidden="true" size={19} />
-          <span>
-            <strong>Edit password</strong>
-            <small>Choose a new password</small>
-          </span>
-          <ChevronRight aria-hidden="true" size={18} />
-        </button>
-        <button type="button" className="delete-account" onClick={onAccountAction}>
-          Delete account
-        </button>
-      </section>
+      {isRegistered ? (
+        <section className="account-settings" aria-labelledby="account-settings-title">
+          <h2 id="account-settings-title">Account settings</h2>
+          <button type="button" className="account-setting-row" onClick={() => onNotice("Email editing is coming soon")}>
+            <Mail aria-hidden="true" size={19} />
+            <span>
+              <strong>Edit email</strong>
+              <small>Change your sign-in email</small>
+            </span>
+            <ChevronRight aria-hidden="true" size={18} />
+          </button>
+          <button type="button" className="account-setting-row" onClick={() => onNotice("Password editing is coming soon")}>
+            <KeyRound aria-hidden="true" size={19} />
+            <span>
+              <strong>Edit password</strong>
+              <small>Choose a new password</small>
+            </span>
+            <ChevronRight aria-hidden="true" size={18} />
+          </button>
+          <button type="button" className="delete-account" onClick={() => onNotice("Account deletion is coming soon")}>
+            Delete account
+          </button>
+        </section>
+      ) : (
+        <section className="guest-account-card" aria-labelledby="guest-account-title">
+          <h2 id="guest-account-title">Keep your progress</h2>
+          <p>Create a free account to save your streak, ranks, and personalized feed.</p>
+          <button type="button" className="button button-primary" onClick={() => onNotice("Account creation is coming soon")}>
+            Create free account
+          </button>
+          <button type="button" className="guest-sign-in" onClick={() => onNotice("Sign in is coming soon")}>
+            Already registered? Sign in
+          </button>
+        </section>
+      )}
 
       <Link href="/" className="back-link"><ArrowLeft aria-hidden="true" size={18} />Back to homepage</Link>
     </section>

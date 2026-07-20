@@ -1,0 +1,478 @@
+{
+  "schema_version": "1.0",
+  "dataset_version": "v1",
+  "topic": {
+    "id": "linux",
+    "name": "Linux"
+  },
+  "questions": [
+    {
+      "id": "linux-permissions",
+      "difficulty": "easy",
+      "prompt": "How are traditional Linux read, write, and execute mode bits grouped?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Mode bits apply broadly to filesystem objects.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Mode bits apply broadly to filesystem objects.",
+            "sus": "This answer is legitimate. Mode bits apply broadly to filesystem objects."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Execute permission on a directory controls traversal rather than running the directory.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Execute permission on a directory controls traversal rather than running the directory.",
+            "sus": "This answer is legitimate. Execute permission on a directory controls traversal rather than running the directory."
+          }
+        },
+        {
+          "id": "c",
+          "text": "They are grouped for the owning user, owning group, and others.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. They are grouped for the owning user, owning group, and others.",
+            "sus": "This answer is legitimate. They are grouped for the owning user, owning group, and others."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Linux man-pages project",
+        "url": "https://man7.org/linux/man-pages/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "linux-process",
+      "difficulty": "easy",
+      "prompt": "What is a Linux process?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Each process has an identifier and a virtual address space.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Each process has an identifier and a virtual address space.",
+            "sus": "This answer is legitimate. Each process has an identifier and a virtual address space."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A running program instance with execution state and resources.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A running program instance with execution state and resources.",
+            "sus": "This answer is legitimate. A running program instance with execution state and resources."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A file that can never have more than one running instance.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. The same executable can be used by many processes.",
+            "sus": "Correct. The same executable can be used by many processes."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Linux man-pages project",
+        "url": "https://man7.org/linux/man-pages/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "linux-pipe",
+      "difficulty": "easy",
+      "prompt": "What does a shell pipeline such as `a | b` connect?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "The standard output of `a` to the standard input of `b`.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The standard output of `a` to the standard input of `b`.",
+            "sus": "This answer is legitimate. The standard output of `a` to the standard input of `b`."
+          }
+        },
+        {
+          "id": "b",
+          "text": "The filesystems of two machines automatically.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A shell pipe carries a byte stream between local processes unless other tools add networking.",
+            "sus": "Correct. A shell pipe carries a byte stream between local processes unless other tools add networking."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A pipe preserves application-level message or record boundaries.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A normal pipe is a byte stream; applications must define their own framing when needed.",
+            "sus": "Correct. A normal pipe is a byte stream; applications must define their own framing when needed."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Linux man-pages project",
+        "url": "https://man7.org/linux/man-pages/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "linux-fork",
+      "difficulty": "medium",
+      "prompt": "What does `fork()` create?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "The child is a separate process with its own PID.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The child is a separate process with its own PID.",
+            "sus": "This answer is legitimate. The child is a separate process with its own PID."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Copy-on-write commonly delays copying memory pages until one process writes.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Copy-on-write commonly delays copying memory pages until one process writes.",
+            "sus": "This answer is legitimate. Copy-on-write commonly delays copying memory pages until one process writes."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A child process initially based on the calling process.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A child process initially based on the calling process.",
+            "sus": "This answer is legitimate. A child process initially based on the calling process."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Linux man-pages project",
+        "url": "https://man7.org/linux/man-pages/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "linux-signal",
+      "difficulty": "medium",
+      "prompt": "What is a Unix signal?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Some signals can be handled or blocked, while SIGKILL cannot be caught.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Some signals can be handled or blocked, while SIGKILL cannot be caught.",
+            "sus": "This answer is legitimate. Some signals can be handled or blocked, while SIGKILL cannot be caught."
+          }
+        },
+        {
+          "id": "b",
+          "text": "An asynchronous notification delivered to a process or thread.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. An asynchronous notification delivered to a process or thread.",
+            "sus": "This answer is legitimate. An asynchronous notification delivered to a process or thread."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A guaranteed queue that preserves unlimited repeated notifications.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Standard signals can coalesce and are not an unlimited message queue.",
+            "sus": "Correct. Standard signals can coalesce and are not an unlimited message queue."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Linux man-pages project",
+        "url": "https://man7.org/linux/man-pages/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "linux-symlink",
+      "difficulty": "medium",
+      "prompt": "How does a symbolic link differ from a hard link?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A symbolic link stores a path to another filesystem object.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A symbolic link stores a path to another filesystem object.",
+            "sus": "This answer is legitimate. A symbolic link stores a path to another filesystem object."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A symbolic link must stay on the same filesystem as its target.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Symbolic links can point across filesystem boundaries.",
+            "sus": "Correct. Symbolic links can point across filesystem boundaries."
+          }
+        },
+        {
+          "id": "c",
+          "text": "The target must exist before a symbolic link can be created.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A symbolic link can be created for a nonexistent path and will then be dangling.",
+            "sus": "Correct. A symbolic link can be created for a nonexistent path and will then be dangling."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Linux man-pages project",
+        "url": "https://man7.org/linux/man-pages/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "linux-hard-link",
+      "difficulty": "medium",
+      "prompt": "What does a hard link reference?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A pathname that is followed dynamically each time.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. That describes a symbolic link; a hard link is another name for the inode.",
+            "sus": "Correct. That describes a symbolic link; a hard link is another name for the inode."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Removing one hard link does not remove the data while another link remains.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Removing one hard link does not remove the data while another link remains.",
+            "sus": "This answer is legitimate. Removing one hard link does not remove the data while another link remains."
+          }
+        },
+        {
+          "id": "c",
+          "text": "The same inode and underlying file data as another directory entry.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The same inode and underlying file data as another directory entry.",
+            "sus": "This answer is legitimate. The same inode and underlying file data as another directory entry."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Linux man-pages project",
+        "url": "https://man7.org/linux/man-pages/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "linux-load-average",
+      "difficulty": "medium",
+      "prompt": "Does Linux load average equal CPU utilization percentage?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "The three values summarize different time windows.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The three values summarize different time windows.",
+            "sus": "This answer is legitimate. The three values summarize different time windows."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Yes, a load of 1.0 always means 100 percent CPU use on every machine.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Load average counts runnable and certain uninterruptible tasks and must be interpreted with CPU count.",
+            "sus": "Correct. Load average counts runnable and certain uninterruptible tasks and must be interpreted with CPU count."
+          }
+        },
+        {
+          "id": "c",
+          "text": "I/O-waiting tasks can contribute to load average.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. I/O-waiting tasks can contribute to load average.",
+            "sus": "This answer is legitimate. I/O-waiting tasks can contribute to load average."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Linux man-pages project",
+        "url": "https://man7.org/linux/man-pages/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "linux-cgroup",
+      "difficulty": "medium",
+      "prompt": "What do Linux control groups provide?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Resource accounting and limits for groups of processes.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Resource accounting and limits for groups of processes.",
+            "sus": "This answer is legitimate. Resource accounting and limits for groups of processes."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A replacement for all filesystem permissions.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Cgroups manage resources, while permissions remain a separate security control.",
+            "sus": "Correct. Cgroups manage resources, while permissions remain a separate security control."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Control groups give processes separate views of process IDs and network interfaces.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Namespaces isolate resource views; cgroups primarily account for and control resource usage.",
+            "sus": "Correct. Namespaces isolate resource views; cgroups primarily account for and control resource usage."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Linux man-pages project",
+        "url": "https://man7.org/linux/man-pages/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "linux-namespace",
+      "difficulty": "hard",
+      "prompt": "What do Linux namespaces isolate?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "They automatically encrypt all data between processes.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Namespaces isolate views; encryption is a separate feature.",
+            "sus": "Correct. Namespaces isolate views; encryption is a separate feature."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Containers combine multiple namespace types with other controls.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Containers combine multiple namespace types with other controls.",
+            "sus": "This answer is legitimate. Containers combine multiple namespace types with other controls."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Selected views of system resources such as process IDs, mounts, or networks.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Selected views of system resources such as process IDs, mounts, or networks.",
+            "sus": "This answer is legitimate. Selected views of system resources such as process IDs, mounts, or networks."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Linux man-pages project",
+        "url": "https://man7.org/linux/man-pages/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "linux-epoll",
+      "difficulty": "hard",
+      "prompt": "Why use epoll for many file descriptors?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Edge-triggered use requires draining readiness carefully to avoid missed progress.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Edge-triggered use requires draining readiness carefully to avoid missed progress.",
+            "sus": "This answer is legitimate. Edge-triggered use requires draining readiness carefully to avoid missed progress."
+          }
+        },
+        {
+          "id": "b",
+          "text": "It can report readiness changes without scanning every descriptor on each wait.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It can report readiness changes without scanning every descriptor on each wait.",
+            "sus": "This answer is legitimate. It can report readiness changes without scanning every descriptor on each wait."
+          }
+        },
+        {
+          "id": "c",
+          "text": "It turns blocking file operations into CPU-parallel work automatically.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Epoll reports readiness; the application still performs the I/O.",
+            "sus": "Correct. Epoll reports readiness; the application still performs the I/O."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Linux man-pages project",
+        "url": "https://man7.org/linux/man-pages/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "linux-oom",
+      "difficulty": "hard",
+      "prompt": "What can happen when Linux cannot satisfy memory demand?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "An out-of-memory event can occur only when swap is disabled.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. OOM can occur with or without swap when the relevant memory domain cannot satisfy an allocation.",
+            "sus": "Correct. OOM can occur with or without swap when the relevant memory domain cannot satisfy an allocation."
+          }
+        },
+        {
+          "id": "b",
+          "text": "The kernel always adds physical RAM automatically.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Memory is finite; reclaim, swap, and termination are possible responses.",
+            "sus": "Correct. Memory is finite; reclaim, swap, and termination are possible responses."
+          }
+        },
+        {
+          "id": "c",
+          "text": "The OOM killer always terminates the process using the most memory.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. The kernel uses an OOM scoring policy, so raw memory use alone does not determine the victim.",
+            "sus": "Correct. The kernel uses an OOM scoring policy, so raw memory use alone does not determine the victim."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Linux man-pages project",
+        "url": "https://man7.org/linux/man-pages/"
+      },
+      "review_status": "approved"
+    }
+  ]
+}

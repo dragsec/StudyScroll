@@ -1,0 +1,478 @@
+{
+  "schema_version": "1.0",
+  "dataset_version": "v1",
+  "topic": {
+    "id": "docker",
+    "name": "Docker"
+  },
+  "questions": [
+    {
+      "id": "docker-image-container",
+      "difficulty": "easy",
+      "prompt": "How does a Docker image differ from a container?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Multiple containers can be created from one image.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Multiple containers can be created from one image.",
+            "sus": "This answer is legitimate. Multiple containers can be created from one image."
+          }
+        },
+        {
+          "id": "b",
+          "text": "An image is an immutable template used to create containers.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. An image is an immutable template used to create containers.",
+            "sus": "This answer is legitimate. An image is an immutable template used to create containers."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A container is a runtime instance created from an image.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A container is a runtime instance created from an image.",
+            "sus": "This answer is legitimate. A container is a runtime instance created from an image."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Docker Documentation",
+        "url": "https://docs.docker.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "docker-volume",
+      "difficulty": "easy",
+      "prompt": "Why use a Docker volume?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "To persist data outside a container's writable layer.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. To persist data outside a container's writable layer.",
+            "sus": "This answer is legitimate. To persist data outside a container's writable layer."
+          }
+        },
+        {
+          "id": "b",
+          "text": "To bake source code permanently into an image.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Image build instructions add files to images; volumes hold runtime data.",
+            "sus": "Correct. Image build instructions add files to images; volumes hold runtime data."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A volume can survive deletion of the container that used it.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A volume can survive deletion of the container that used it.",
+            "sus": "This answer is legitimate. A volume can survive deletion of the container that used it."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Docker Documentation",
+        "url": "https://docs.docker.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "docker-port",
+      "difficulty": "easy",
+      "prompt": "Does exposing a port in a Dockerfile publish it to the host?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "`docker run -p` can map a host port to a container port.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. `docker run -p` can map a host port to a container port.",
+            "sus": "This answer is legitimate. `docker run -p` can map a host port to a container port."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A port must appear in EXPOSE before `docker run -p` can publish it.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Runtime port publishing can map a container port even when the Dockerfile does not declare EXPOSE.",
+            "sus": "Correct. Runtime port publishing can map a container port even when the Dockerfile does not declare EXPOSE."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Yes, EXPOSE automatically creates a host mapping.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Publishing requires a runtime port mapping; EXPOSE is metadata/documentation.",
+            "sus": "Correct. Publishing requires a runtime port mapping; EXPOSE is metadata/documentation."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Docker Documentation",
+        "url": "https://docs.docker.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "docker-layer-cache",
+      "difficulty": "medium",
+      "prompt": "Why copy dependency manifests before application source in many Dockerfiles?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A change to an earlier layer invalidates reuse of later layers.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A change to an earlier layer invalidates reuse of later layers.",
+            "sus": "This answer is legitimate. A change to an earlier layer invalidates reuse of later layers."
+          }
+        },
+        {
+          "id": "b",
+          "text": "The dependency-install layer can remain cached when only source files change.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The dependency-install layer can remain cached when only source files change.",
+            "sus": "This answer is legitimate. The dependency-install layer can remain cached when only source files change."
+          }
+        },
+        {
+          "id": "c",
+          "text": "The ordering is a cache optimization, not a network rule.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The ordering is a cache optimization, not a network rule.",
+            "sus": "This answer is legitimate. The ordering is a cache optimization, not a network rule."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Docker Documentation",
+        "url": "https://docs.docker.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "docker-bind-mount",
+      "difficulty": "medium",
+      "prompt": "How does a bind mount differ from a named volume?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A bind mount maps a specific host path into the container.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A bind mount maps a specific host path into the container.",
+            "sus": "This answer is legitimate. A bind mount maps a specific host path into the container."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A bind mount is stored only inside the image.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Bind mounts reference host filesystem paths at runtime.",
+            "sus": "Correct. Bind mounts reference host filesystem paths at runtime."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Named volumes are managed through Docker's volume storage.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Named volumes are managed through Docker's volume storage.",
+            "sus": "This answer is legitimate. Named volumes are managed through Docker's volume storage."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Docker Documentation",
+        "url": "https://docs.docker.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "docker-multistage",
+      "difficulty": "medium",
+      "prompt": "Why use a multi-stage Docker build?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Every stage runs as a separate production container.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Stages are build phases; only selected outputs need to reach the final image.",
+            "sus": "Correct. Stages are build phases; only selected outputs need to reach the final image."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A multi-stage build automatically updates every base image to its newest version.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Base-image selection and update policy remain explicit build concerns.",
+            "sus": "Correct. Base-image selection and update policy remain explicit build concerns."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Build tools can stay in an earlier stage while only runtime artifacts enter the final image.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Build tools can stay in an earlier stage while only runtime artifacts enter the final image.",
+            "sus": "This answer is legitimate. Build tools can stay in an earlier stage while only runtime artifacts enter the final image."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Docker Documentation",
+        "url": "https://docs.docker.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "docker-pid1",
+      "difficulty": "medium",
+      "prompt": "Why does PID 1 behavior matter inside a container?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "An init process can help with signal forwarding and zombie reaping.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. An init process can help with signal forwarding and zombie reaping.",
+            "sus": "This answer is legitimate. An init process can help with signal forwarding and zombie reaping."
+          }
+        },
+        {
+          "id": "b",
+          "text": "The main process needs correct signal handling and must reap child processes when it creates them.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The main process needs correct signal handling and must reap child processes when it creates them.",
+            "sus": "This answer is legitimate. The main process needs correct signal handling and must reap child processes when it creates them."
+          }
+        },
+        {
+          "id": "c",
+          "text": "PID 1 cannot receive termination signals.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. PID 1 can receive signals, but the process and entrypoint must forward or handle them correctly.",
+            "sus": "Correct. PID 1 can receive signals, but the process and entrypoint must forward or handle them correctly."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Docker Documentation",
+        "url": "https://docs.docker.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "docker-secrets",
+      "difficulty": "medium",
+      "prompt": "Is an image environment variable a safe place for a permanent secret?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Yes, image configuration is invisible to anyone who pulls it.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Image metadata and layers can expose embedded values.",
+            "sus": "Correct. Image metadata and layers can expose embedded values."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Secrets should be injected through an appropriate runtime secret mechanism.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Secrets should be injected through an appropriate runtime secret mechanism.",
+            "sus": "This answer is legitimate. Secrets should be injected through an appropriate runtime secret mechanism."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Removing a secret in a later layer may not remove it from earlier image history.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Removing a secret in a later layer may not remove it from earlier image history.",
+            "sus": "This answer is legitimate. Removing a secret in a later layer may not remove it from earlier image history."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Docker Documentation",
+        "url": "https://docs.docker.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "docker-healthcheck",
+      "difficulty": "medium",
+      "prompt": "What does a Docker health check indicate?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "That every downstream dependency is permanently available.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A health command only tests what it was designed to observe.",
+            "sus": "Correct. A health command only tests what it was designed to observe."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A Docker health check by itself always restarts an unhealthy container.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A health check reports status; restart behavior requires an orchestrator or other policy.",
+            "sus": "Correct. A health check reports status; restart behavior requires an orchestrator or other policy."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Whether a configured command considers the container healthy.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Whether a configured command considers the container healthy.",
+            "sus": "This answer is legitimate. Whether a configured command considers the container healthy."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Docker Documentation",
+        "url": "https://docs.docker.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "docker-compose-depends",
+      "difficulty": "hard",
+      "prompt": "Does basic Compose `depends_on` prove a dependency is ready to serve requests?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Health-based conditions can improve orchestration when supported and configured.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Health-based conditions can improve orchestration when supported and configured.",
+            "sus": "This answer is legitimate. Health-based conditions can improve orchestration when supported and configured."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Yes, process start order guarantees application readiness.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A started container may still be initializing; readiness needs a health condition or retry logic.",
+            "sus": "Correct. A started container may still be initializing; readiness needs a health condition or retry logic."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Applications should tolerate dependency startup delays.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Applications should tolerate dependency startup delays.",
+            "sus": "This answer is legitimate. Applications should tolerate dependency startup delays."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Docker Documentation",
+        "url": "https://docs.docker.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "docker-network",
+      "difficulty": "hard",
+      "prompt": "How do containers discover each other on a user-defined Docker network?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "They can use Docker-provided name resolution for container or service names.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. They can use Docker-provided name resolution for container or service names.",
+            "sus": "This answer is legitimate. They can use Docker-provided name resolution for container or service names."
+          }
+        },
+        {
+          "id": "b",
+          "text": "They must all publish ports to the public host interface.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Publishing is unnecessary for container-to-container traffic on the shared network.",
+            "sus": "Correct. Publishing is unnecessary for container-to-container traffic on the shared network."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Network isolation controls which containers can communicate directly.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Network isolation controls which containers can communicate directly.",
+            "sus": "This answer is legitimate. Network isolation controls which containers can communicate directly."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Docker Documentation",
+        "url": "https://docs.docker.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "docker-non-root",
+      "difficulty": "hard",
+      "prompt": "Why run a container process as a non-root user?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "It makes host kernel vulnerabilities impossible.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Least privilege reduces impact but does not eliminate container escape risks.",
+            "sus": "Correct. Least privilege reduces impact but does not eliminate container escape risks."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A non-root process cannot listen on any network port.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Non-root processes can listen on unprivileged ports and may receive narrowly configured capabilities when needed.",
+            "sus": "Correct. Non-root processes can listen on unprivileged ports and may receive narrowly configured capabilities when needed."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A Dockerfile USER instruction automatically changes ownership of files copied earlier.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. USER selects the account for later instructions and runtime; file ownership must be set separately, such as with COPY --chown.",
+            "sus": "Correct. USER selects the account for later instructions and runtime; file ownership must be set separately, such as with COPY --chown."
+          }
+        }
+      ],
+      "reference": {
+        "title": "Docker Documentation",
+        "url": "https://docs.docker.com/"
+      },
+      "review_status": "approved"
+    }
+  ]
+}

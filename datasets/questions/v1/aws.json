@@ -1,0 +1,478 @@
+{
+  "schema_version": "1.0",
+  "dataset_version": "v1",
+  "topic": {
+    "id": "aws",
+    "name": "AWS"
+  },
+  "questions": [
+    {
+      "id": "aws-region-az",
+      "difficulty": "easy",
+      "prompt": "How do AWS Regions and Availability Zones relate?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A Region contains multiple isolated Availability Zones.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A Region contains multiple isolated Availability Zones.",
+            "sus": "This answer is legitimate. A Region contains multiple isolated Availability Zones."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Regions are the larger geographic units.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Regions are the larger geographic units.",
+            "sus": "This answer is legitimate. Regions are the larger geographic units."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Deploying across zones can reduce some single-location failure risks.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Deploying across zones can reduce some single-location failure risks.",
+            "sus": "This answer is legitimate. Deploying across zones can reduce some single-location failure risks."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Documentation",
+        "url": "https://docs.aws.amazon.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "aws-iam-least-privilege",
+      "difficulty": "easy",
+      "prompt": "What does least privilege mean in AWS IAM?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Give every application administrator access and rely on logs.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Broad permissions increase the impact of mistakes and compromise.",
+            "sus": "Correct. Broad permissions increase the impact of mistakes and compromise."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Permissions should be reviewed as requirements change.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Permissions should be reviewed as requirements change.",
+            "sus": "This answer is legitimate. Permissions should be reviewed as requirements change."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Grant only the permissions needed for the intended task.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Grant only the permissions needed for the intended task.",
+            "sus": "This answer is legitimate. Grant only the permissions needed for the intended task."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Documentation",
+        "url": "https://docs.aws.amazon.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "aws-s3",
+      "difficulty": "easy",
+      "prompt": "What kind of service is Amazon S3?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "S3 folders are real filesystem directories that contain objects.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. S3 is a flat object store; folder-like views are derived from key prefixes.",
+            "sus": "Correct. S3 is a flat object store; folder-like views are derived from key prefixes."
+          }
+        },
+        {
+          "id": "b",
+          "text": "An object storage service.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. An object storage service.",
+            "sus": "This answer is legitimate. An object storage service."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A block device mounted directly by every EC2 instance.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. S3 exposes object APIs rather than acting as a normal block device.",
+            "sus": "Correct. S3 exposes object APIs rather than acting as a normal block device."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Documentation",
+        "url": "https://docs.aws.amazon.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "aws-security-group",
+      "difficulty": "medium",
+      "prompt": "How do EC2 security groups treat response traffic?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "They are stateful, so allowed inbound traffic permits its response.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. They are stateful, so allowed inbound traffic permits its response.",
+            "sus": "This answer is legitimate. They are stateful, so allowed inbound traffic permits its response."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Stateful connection tracking permits return traffic.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Stateful connection tracking permits return traffic.",
+            "sus": "This answer is legitimate. Stateful connection tracking permits return traffic."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Rules allow traffic; security groups do not contain explicit deny rules.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Rules allow traffic; security groups do not contain explicit deny rules.",
+            "sus": "This answer is legitimate. Rules allow traffic; security groups do not contain explicit deny rules."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Documentation",
+        "url": "https://docs.aws.amazon.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "aws-nacl",
+      "difficulty": "medium",
+      "prompt": "How do network ACLs differ from security groups?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Network ACLs are attached only to individual IAM users.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. They filter traffic at subnet boundaries.",
+            "sus": "Correct. They filter traffic at subnet boundaries."
+          }
+        },
+        {
+          "id": "b",
+          "text": "They can contain both allow and deny rules.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. They can contain both allow and deny rules.",
+            "sus": "This answer is legitimate. They can contain both allow and deny rules."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Network ACLs are stateless subnet-level controls.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Network ACLs are stateless subnet-level controls.",
+            "sus": "This answer is legitimate. Network ACLs are stateless subnet-level controls."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Documentation",
+        "url": "https://docs.aws.amazon.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "aws-lambda",
+      "difficulty": "medium",
+      "prompt": "Does AWS Lambda remove every operational concern?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "The platform manages servers while the customer manages function code and configuration.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The platform manages servers while the customer manages function code and configuration.",
+            "sus": "This answer is legitimate. The platform manages servers while the customer manages function code and configuration."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Yes, serverless means there are no limits or failures to design for.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Functions still have quotas, timeouts, dependencies, and failure modes.",
+            "sus": "Correct. Functions still have quotas, timeouts, dependencies, and failure modes."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Cold starts can affect latency for some workloads.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Cold starts can affect latency for some workloads.",
+            "sus": "This answer is legitimate. Cold starts can affect latency for some workloads."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Documentation",
+        "url": "https://docs.aws.amazon.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "aws-rds-multi-az",
+      "difficulty": "medium",
+      "prompt": "What is the main purpose of a traditional RDS Multi-AZ DB instance deployment?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Improve availability through a standby and managed failover.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Improve availability through a standby and managed failover.",
+            "sus": "This answer is legitimate. Improve availability through a standby and managed failover."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Automatically scale read traffic across the standby.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A Multi-AZ DB instance standby is for availability and does not serve read traffic.",
+            "sus": "Correct. A Multi-AZ DB instance standby is for availability and does not serve read traffic."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A Multi-AZ failover is guaranteed to cause zero application interruption.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Failover can interrupt connections, so applications need retry and recovery behavior.",
+            "sus": "Correct. Failover can interrupt connections, so applications need retry and recovery behavior."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Documentation",
+        "url": "https://docs.aws.amazon.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "aws-dynamodb-key",
+      "difficulty": "medium",
+      "prompt": "Why does DynamoDB partition-key design matter?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A constant partition key maximizes horizontal scaling.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Concentrating traffic on one key can create a hot partition.",
+            "sus": "Correct. Concentrating traffic on one key can create a hot partition."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Access patterns should guide primary-key and index design.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Access patterns should guide primary-key and index design.",
+            "sus": "This answer is legitimate. Access patterns should guide primary-key and index design."
+          }
+        },
+        {
+          "id": "c",
+          "text": "It influences how data and traffic are distributed across partitions.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It influences how data and traffic are distributed across partitions.",
+            "sus": "This answer is legitimate. It influences how data and traffic are distributed across partitions."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Documentation",
+        "url": "https://docs.aws.amazon.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "aws-cloudfront",
+      "difficulty": "medium",
+      "prompt": "What does Amazon CloudFront provide?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "CloudFront can deliver only static files and cannot proxy dynamic requests.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. CloudFront can forward dynamic requests to origins as well as cache eligible content.",
+            "sus": "Correct. CloudFront can forward dynamic requests to origins as well as cache eligible content."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A content delivery network with edge caching.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A content delivery network with edge caching.",
+            "sus": "This answer is legitimate. A content delivery network with edge caching."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A replacement for IAM authorization in every application.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. CloudFront distributes content; application authorization remains a separate concern.",
+            "sus": "Correct. CloudFront distributes content; application authorization remains a separate concern."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Documentation",
+        "url": "https://docs.aws.amazon.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "aws-sqs-delivery",
+      "difficulty": "hard",
+      "prompt": "Should an Amazon SQS Standard queue consumer handle duplicate messages?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Yes, consumers should be idempotent because messages can be delivered more than once.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Yes, consumers should be idempotent because messages can be delivered more than once.",
+            "sus": "This answer is legitimate. Yes, consumers should be idempotent because messages can be delivered more than once."
+          }
+        },
+        {
+          "id": "b",
+          "text": "No, Standard queues guarantee exactly-once processing.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Standard queues use at-least-once delivery, so duplicate delivery is possible.",
+            "sus": "Correct. Standard queues use at-least-once delivery, so duplicate delivery is possible."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A visibility timeout is not the same as deleting a successfully processed message.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A visibility timeout is not the same as deleting a successfully processed message.",
+            "sus": "This answer is legitimate. A visibility timeout is not the same as deleting a successfully processed message."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Documentation",
+        "url": "https://docs.aws.amazon.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "aws-shared-responsibility",
+      "difficulty": "hard",
+      "prompt": "What does the AWS shared responsibility model divide?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "AWS is responsible for all customer data classification and IAM policy choices.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Customers retain responsibility for their data and access configuration.",
+            "sus": "Correct. Customers retain responsibility for their data and access configuration."
+          }
+        },
+        {
+          "id": "b",
+          "text": "The exact division changes with the type of managed service.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The exact division changes with the type of managed service.",
+            "sus": "This answer is legitimate. The exact division changes with the type of managed service."
+          }
+        },
+        {
+          "id": "c",
+          "text": "AWS secures the cloud infrastructure while customers secure their workloads and configurations.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. AWS secures the cloud infrastructure while customers secure their workloads and configurations.",
+            "sus": "This answer is legitimate. AWS secures the cloud infrastructure while customers secure their workloads and configurations."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Documentation",
+        "url": "https://docs.aws.amazon.com/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "aws-auto-scaling",
+      "difficulty": "hard",
+      "prompt": "Can automatic scaling alone guarantee application availability?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Automatic scaling creates new healthy capacity instantly when traffic rises.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Detection, instance launch, and health checks take time, so scaling is not instantaneous.",
+            "sus": "Correct. Detection, instance launch, and health checks take time, so scaling is not instantaneous."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Yes, adding instances fixes every failure mode.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Scaling does not repair bad dependencies, unhealthy code, or flawed routing.",
+            "sus": "Correct. Scaling does not repair bad dependencies, unhealthy code, or flawed routing."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Scaling an EC2 group automatically scales every database dependency as well.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Each dependency needs its own capacity and scaling design; scaling one tier does not scale the others.",
+            "sus": "Correct. Each dependency needs its own capacity and scaling design; scaling one tier does not scale the others."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Documentation",
+        "url": "https://docs.aws.amazon.com/"
+      },
+      "review_status": "approved"
+    }
+  ]
+}

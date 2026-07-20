@@ -1033,7 +1033,7 @@ button:disabled {
 }
 
 .progress-page {
-  padding: 0 1.25rem 2rem;
+  padding: 0.75rem 1.25rem 2rem;
 }
 
 .account-feature-note {
@@ -1344,8 +1344,8 @@ button:disabled {
   color: var(--primary);
 }
 
-.profile-summary strong,
-.profile-summary span {
+.profile-summary div > strong,
+.profile-summary div > span {
   display: block;
 }
 
@@ -1358,6 +1358,43 @@ button:disabled {
   margin-top: 0.25rem;
   color: var(--text-secondary);
   font-size: 0.75rem;
+}
+
+.guest-account-card {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border: 1px solid #343744;
+  border-radius: 1rem;
+  background: #191a21;
+}
+
+.guest-account-card h2 {
+  margin: 0;
+  font-family: var(--font-sora), system-ui, sans-serif;
+  font-size: 1rem;
+}
+
+.guest-account-card p {
+  margin: 0.5rem 0 1rem;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.guest-account-card .button {
+  width: 100%;
+}
+
+.guest-sign-in {
+  width: 100%;
+  min-height: 2.75rem;
+  margin-top: 0.35rem;
+  border: 0;
+  background: transparent;
+  color: var(--primary-pale);
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 0.6875rem;
+  cursor: pointer;
 }
 
 .account-settings {
@@ -1933,6 +1970,10 @@ button:disabled {
 
   .filter-row {
     padding: 1.25rem 1.5rem 1rem;
+  }
+
+  .progress-page {
+    padding-top: 2rem;
   }
 
   .feed {

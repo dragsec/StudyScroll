@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://studyscroll.app/schemas/question-topic-file.json",
+  "title": "StudyScroll topic question file",
+  "type": "object",
+  "required": ["schema_version", "dataset_version", "topic", "questions"],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "dataset_version": { "type": "string", "minLength": 1 },
+    "topic": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "name": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "questions": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "required": ["id", "difficulty", "prompt", "answers", "reference", "review_status"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "difficulty": { "enum": ["easy", "medium", "hard"] },
+          "prompt": { "type": "string", "minLength": 10 },
+          "context": { "type": "string" },
+          "answers": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "required": ["id", "text", "verdict", "feedback"],
+              "properties": {
+                "id": { "enum": ["a", "b", "c"] },
+                "text": { "type": "string", "minLength": 5 },
+                "verdict": { "enum": ["legit", "sus"] },
+                "feedback": {
+                  "type": "object",
+                  "required": ["legit", "sus"],
+                  "properties": {
+                    "legit": { "type": "string", "minLength": 5 },
+                    "sus": { "type": "string", "minLength": 5 }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "reference": {
+            "type": "object",
+            "required": ["title", "url"],
+            "properties": {
+              "title": { "type": "string", "minLength": 3 },
+              "url": { "type": "string", "format": "uri" }
+            },
+            "additionalProperties": false
+          },
+          "review_status": { "enum": ["draft", "approved", "rejected"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

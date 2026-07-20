@@ -1,0 +1,478 @@
+{
+  "schema_version": "1.0",
+  "dataset_version": "v1",
+  "topic": {
+    "id": "sql",
+    "name": "SQL"
+  },
+  "questions": [
+    {
+      "id": "sql-left-join",
+      "difficulty": "easy",
+      "prompt": "What happens to unmatched left-side rows in a LEFT JOIN?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A LEFT JOIN preserves every row from its left input.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A LEFT JOIN preserves every row from its left input.",
+            "sus": "This answer is legitimate. A LEFT JOIN preserves every row from its left input."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A later WHERE condition on a right-side column can still filter them out.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A later WHERE condition on a right-side column can still filter them out.",
+            "sus": "This answer is legitimate. A later WHERE condition on a right-side column can still filter them out."
+          }
+        },
+        {
+          "id": "c",
+          "text": "They remain in the result with nulls for missing right-side columns.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. They remain in the result with nulls for missing right-side columns.",
+            "sus": "This answer is legitimate. They remain in the result with nulls for missing right-side columns."
+          }
+        }
+      ],
+      "reference": {
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "sql-null-comparison",
+      "difficulty": "easy",
+      "prompt": "How should SQL test whether a value is null?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Null represents an unknown or missing value, not an ordinary comparable value.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Null represents an unknown or missing value, not an ordinary comparable value.",
+            "sus": "This answer is legitimate. Null represents an unknown or missing value, not an ordinary comparable value."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Use `IS NULL` or `IS NOT NULL`.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Use `IS NULL` or `IS NOT NULL`.",
+            "sus": "This answer is legitimate. Use `IS NULL` or `IS NOT NULL`."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Use `= NULL`.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Comparisons with null evaluate to unknown rather than true.",
+            "sus": "Correct. Comparisons with null evaluate to unknown rather than true."
+          }
+        }
+      ],
+      "reference": {
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "sql-count",
+      "difficulty": "easy",
+      "prompt": "What is the difference between `COUNT(*)` and `COUNT(column)`?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "`COUNT(*)` counts rows.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. `COUNT(*)` counts rows.",
+            "sus": "This answer is legitimate. `COUNT(*)` counts rows."
+          }
+        },
+        {
+          "id": "b",
+          "text": "`COUNT(column)` treats each null as a zero and counts it.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. COUNT(column) excludes rows where the counted expression is null.",
+            "sus": "Correct. COUNT(column) excludes rows where the counted expression is null."
+          }
+        },
+        {
+          "id": "c",
+          "text": "They always return the same number.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Nullable expressions can make `COUNT(column)` smaller than `COUNT(*)`.",
+            "sus": "Correct. Nullable expressions can make `COUNT(column)` smaller than `COUNT(*)`."
+          }
+        }
+      ],
+      "reference": {
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "sql-group-by",
+      "difficulty": "medium",
+      "prompt": "What does GROUP BY do before aggregate results are produced?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Only ORDER BY guarantees presentation order.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Only ORDER BY guarantees presentation order.",
+            "sus": "This answer is legitimate. Only ORDER BY guarantees presentation order."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Each group produces one aggregate result row unless further grouping features are used.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Each group produces one aggregate result row unless further grouping features are used.",
+            "sus": "This answer is legitimate. Each group produces one aggregate result row unless further grouping features are used."
+          }
+        },
+        {
+          "id": "c",
+          "text": "It partitions input rows into groups with equal grouping expressions.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It partitions input rows into groups with equal grouping expressions.",
+            "sus": "This answer is legitimate. It partitions input rows into groups with equal grouping expressions."
+          }
+        }
+      ],
+      "reference": {
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "sql-index-write-cost",
+      "difficulty": "medium",
+      "prompt": "Can adding an index make every workload faster?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "The optimizer may ignore an index when another plan is cheaper.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The optimizer may ignore an index when another plan is cheaper.",
+            "sus": "This answer is legitimate. The optimizer may ignore an index when another plan is cheaper."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Yes, indexes have no write or storage cost.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Indexes consume storage and must be maintained during writes.",
+            "sus": "Correct. Indexes consume storage and must be maintained during writes."
+          }
+        },
+        {
+          "id": "c",
+          "text": "An index can speed selected reads while slowing inserts and updates.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. An index can speed selected reads while slowing inserts and updates.",
+            "sus": "This answer is legitimate. An index can speed selected reads while slowing inserts and updates."
+          }
+        }
+      ],
+      "reference": {
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "sql-transaction-atomicity",
+      "difficulty": "medium",
+      "prompt": "What does transaction atomicity promise?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "The transaction's changes commit as a unit or are rolled back as a unit.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The transaction's changes commit as a unit or are rolled back as a unit.",
+            "sus": "This answer is legitimate. The transaction's changes commit as a unit or are rolled back as a unit."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Other transactions can never run concurrently.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Concurrency is controlled by isolation, not atomicity alone.",
+            "sus": "Correct. Concurrency is controlled by isolation, not atomicity alone."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Atomicity alone guarantees that committed data survives a system crash.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Survival of committed data is the durability property, not atomicity by itself.",
+            "sus": "Correct. Survival of committed data is the durability property, not atomicity by itself."
+          }
+        }
+      ],
+      "reference": {
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "sql-isolation",
+      "difficulty": "medium",
+      "prompt": "Do all SQL isolation levels prevent every read anomaly?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Serializable aims to produce outcomes consistent with some serial order.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Serializable aims to produce outcomes consistent with some serial order.",
+            "sus": "This answer is legitimate. Serializable aims to produce outcomes consistent with some serial order."
+          }
+        },
+        {
+          "id": "b",
+          "text": "The exact behavior can depend on the database implementation.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The exact behavior can depend on the database implementation.",
+            "sus": "This answer is legitimate. The exact behavior can depend on the database implementation."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Yes, every level behaves like serial execution.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Lower isolation levels allow specific anomalies.",
+            "sus": "Correct. Lower isolation levels allow specific anomalies."
+          }
+        }
+      ],
+      "reference": {
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "sql-window-function",
+      "difficulty": "medium",
+      "prompt": "How does a window function differ from GROUP BY aggregation?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A partition defines which rows participate in each window calculation.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A partition defines which rows participate in each window calculation.",
+            "sus": "This answer is legitimate. A partition defines which rows participate in each window calculation."
+          }
+        },
+        {
+          "id": "b",
+          "text": "It can compute across related rows without collapsing them into one row per group.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It can compute across related rows without collapsing them into one row per group.",
+            "sus": "This answer is legitimate. It can compute across related rows without collapsing them into one row per group."
+          }
+        },
+        {
+          "id": "c",
+          "text": "It can only be used without an ORDER BY clause.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Many window calculations use ordering inside the window specification.",
+            "sus": "Correct. Many window calculations use ordering inside the window specification."
+          }
+        }
+      ],
+      "reference": {
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "sql-foreign-key",
+      "difficulty": "medium",
+      "prompt": "What does a foreign key enforce?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Referenced values must satisfy the declared referential relationship.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Referenced values must satisfy the declared referential relationship.",
+            "sus": "This answer is legitimate. Referenced values must satisfy the declared referential relationship."
+          }
+        },
+        {
+          "id": "b",
+          "text": "It automatically creates every useful index on the referencing table.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Index creation behavior varies and referencing columns may need an explicit index.",
+            "sus": "Correct. Index creation behavior varies and referencing columns may need an explicit index."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A foreign key proves that every referenced row is valid under all business rules.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A foreign key enforces the declared relationship only; other business rules need separate constraints or logic.",
+            "sus": "Correct. A foreign key enforces the declared relationship only; other business rules need separate constraints or logic."
+          }
+        }
+      ],
+      "reference": {
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "sql-mvcc",
+      "difficulty": "hard",
+      "prompt": "Why do MVCC databases keep multiple row versions?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Old versions are always retained forever.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Obsolete versions are eventually reclaimed by database maintenance.",
+            "sus": "Correct. Obsolete versions are eventually reclaimed by database maintenance."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Visibility rules decide which version a transaction can see.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Visibility rules decide which version a transaction can see.",
+            "sus": "This answer is legitimate. Visibility rules decide which version a transaction can see."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Readers can observe a consistent snapshot while concurrent changes proceed.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Readers can observe a consistent snapshot while concurrent changes proceed.",
+            "sus": "This answer is legitimate. Readers can observe a consistent snapshot while concurrent changes proceed."
+          }
+        }
+      ],
+      "reference": {
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "sql-upsert-race",
+      "difficulty": "hard",
+      "prompt": "Why is a database-native upsert safer than a separate SELECT followed by INSERT?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A unique constraint normally defines the conflict being handled.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A unique constraint normally defines the conflict being handled.",
+            "sus": "This answer is legitimate. A unique constraint normally defines the conflict being handled."
+          }
+        },
+        {
+          "id": "b",
+          "text": "It can resolve the conflict atomically under the database's concurrency rules.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It can resolve the conflict atomically under the database's concurrency rules.",
+            "sus": "This answer is legitimate. It can resolve the conflict atomically under the database's concurrency rules."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A prior SELECT permanently locks the absence of a row.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Another transaction can insert between a separate check and insert.",
+            "sus": "Correct. Another transaction can insert between a separate check and insert."
+          }
+        }
+      ],
+      "reference": {
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "sql-recursive-cte",
+      "difficulty": "hard",
+      "prompt": "What can a recursive common table expression express?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Recursive CTEs can traverse only trees, never graphs.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Recursive CTEs can traverse graphs too, provided the query handles termination and cycles appropriately.",
+            "sus": "Correct. Recursive CTEs can traverse graphs too, provided the query handles termination and cycles appropriately."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Only calculations that finish in one non-recursive query step.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A recursive term repeatedly consumes rows produced by earlier iterations.",
+            "sus": "Correct. A recursive term repeatedly consumes rows produced by earlier iterations."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A recursive CTE always detects and stops cycles automatically.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Cycle handling depends on the query and database features; recursion needs an explicit safe stopping strategy.",
+            "sus": "Correct. Cycle handling depends on the query and database features; recursion needs an explicit safe stopping strategy."
+          }
+        }
+      ],
+      "reference": {
+        "title": "PostgreSQL Documentation",
+        "url": "https://www.postgresql.org/docs/current/"
+      },
+      "review_status": "approved"
+    }
+  ]
+}

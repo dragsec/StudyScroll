@@ -1,0 +1,478 @@
+{
+  "schema_version": "1.0",
+  "dataset_version": "v1",
+  "topic": {
+    "id": "system-design",
+    "name": "System Design"
+  },
+  "questions": [
+    {
+      "id": "system-design-load-balancer",
+      "difficulty": "easy",
+      "prompt": "What is a common role of a load balancer?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Health checks can prevent routing to unhealthy instances.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Health checks can prevent routing to unhealthy instances.",
+            "sus": "This answer is legitimate. Health checks can prevent routing to unhealthy instances."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Distribute incoming requests across healthy service instances.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Distribute incoming requests across healthy service instances.",
+            "sus": "This answer is legitimate. Distribute incoming requests across healthy service instances."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A load balancer routes traffic; it is not the primary database.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A load balancer routes traffic; it is not the primary database.",
+            "sus": "This answer is legitimate. A load balancer routes traffic; it is not the primary database."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "system-design-cache",
+      "difficulty": "easy",
+      "prompt": "Why is a cache placed in front of a slower data source?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "To serve repeated reads with lower latency and less backend load.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. To serve repeated reads with lower latency and less backend load.",
+            "sus": "This answer is legitimate. To serve repeated reads with lower latency and less backend load."
+          }
+        },
+        {
+          "id": "b",
+          "text": "To guarantee that data can never become stale.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Caches need an explicit freshness and invalidation strategy.",
+            "sus": "Correct. Caches need an explicit freshness and invalidation strategy."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A cache miss still requires access to the underlying source.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A cache miss still requires access to the underlying source.",
+            "sus": "This answer is legitimate. A cache miss still requires access to the underlying source."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "system-design-replication",
+      "difficulty": "easy",
+      "prompt": "What does data replication provide?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Automatic protection from every application bug.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A bad write can be replicated to every copy.",
+            "sus": "Correct. A bad write can be replicated to every copy."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A live replica is a complete substitute for an independent backup.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Replication can copy deletion or corruption, so recovery still needs an appropriate backup strategy.",
+            "sus": "Correct. Replication can copy deletion or corruption, so recovery still needs an appropriate backup strategy."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Additional copies that can improve availability or read capacity.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Additional copies that can improve availability or read capacity.",
+            "sus": "This answer is legitimate. Additional copies that can improve availability or read capacity."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "system-design-sharding",
+      "difficulty": "medium",
+      "prompt": "What does database sharding change?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Cross-shard queries and transactions can become more complex.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Cross-shard queries and transactions can become more complex.",
+            "sus": "This answer is legitimate. Cross-shard queries and transactions can become more complex."
+          }
+        },
+        {
+          "id": "b",
+          "text": "It partitions data across multiple database nodes.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. It partitions data across multiple database nodes.",
+            "sus": "This answer is legitimate. It partitions data across multiple database nodes."
+          }
+        },
+        {
+          "id": "c",
+          "text": "The partition key determines placement and strongly affects balance.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The partition key determines placement and strongly affects balance.",
+            "sus": "This answer is legitimate. The partition key determines placement and strongly affects balance."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "system-design-idempotency",
+      "difficulty": "medium",
+      "prompt": "Why are idempotency keys useful for write APIs?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "They help repeated delivery avoid creating the same logical operation twice.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. They help repeated delivery avoid creating the same logical operation twice.",
+            "sus": "This answer is legitimate. They help repeated delivery avoid creating the same logical operation twice."
+          }
+        },
+        {
+          "id": "b",
+          "text": "They make network retries unnecessary.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Retries still occur; the key helps the server recognize duplicates.",
+            "sus": "Correct. Retries still occur; the key helps the server recognize duplicates."
+          }
+        },
+        {
+          "id": "c",
+          "text": "The server must store or derive the result associated with a key.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. The server must store or derive the result associated with a key.",
+            "sus": "This answer is legitimate. The server must store or derive the result associated with a key."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "system-design-queue",
+      "difficulty": "medium",
+      "prompt": "What does a durable message queue help decouple?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "It guarantees each message is processed exactly once without application logic.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Many queues use at-least-once delivery, so consumers should handle duplicates.",
+            "sus": "Correct. Many queues use at-least-once delivery, so consumers should handle duplicates."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A queue always preserves one global message order across all consumers.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Ordering guarantees depend on the queue type, partitioning, and consumer design.",
+            "sus": "Correct. Ordering guarantees depend on the queue type, partitioning, and consumer design."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Producers from consumers in rate and availability.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Producers from consumers in rate and availability.",
+            "sus": "This answer is legitimate. Producers from consumers in rate and availability."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "system-design-circuit-breaker",
+      "difficulty": "medium",
+      "prompt": "What is the purpose of a circuit breaker?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A half-open state can probe whether recovery has occurred.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A half-open state can probe whether recovery has occurred.",
+            "sus": "This answer is legitimate. A half-open state can probe whether recovery has occurred."
+          }
+        },
+        {
+          "id": "b",
+          "text": "Stop repeated calls to a failing dependency for a period.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Stop repeated calls to a failing dependency for a period.",
+            "sus": "This answer is legitimate. Stop repeated calls to a failing dependency for a period."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Repair the dependency automatically.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. It limits cascading damage but does not fix the underlying service.",
+            "sus": "Correct. It limits cascading damage but does not fix the underlying service."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "system-design-rate-limit",
+      "difficulty": "medium",
+      "prompt": "What does rate limiting protect?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Capacity and fairness by restricting request volume over time.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Capacity and fairness by restricting request volume over time.",
+            "sus": "This answer is legitimate. Capacity and fairness by restricting request volume over time."
+          }
+        },
+        {
+          "id": "b",
+          "text": "It guarantees low latency after every accepted request.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Accepted work can still be slow for other reasons.",
+            "sus": "Correct. Accepted work can still be slow for other reasons."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Distributed rate limits require a strategy for shared state or approximation.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Distributed rate limits require a strategy for shared state or approximation.",
+            "sus": "This answer is legitimate. Distributed rate limits require a strategy for shared state or approximation."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "system-design-cdn",
+      "difficulty": "medium",
+      "prompt": "Why serve static assets through a CDN?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A CDN makes cache invalidation unnecessary.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Changed content still needs versioning, expiry, or invalidation.",
+            "sus": "Correct. Changed content still needs versioning, expiry, or invalidation."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A CDN safely caches every origin response by default.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Cacheability depends on method, headers, status, and CDN configuration; private responses need particular care.",
+            "sus": "Correct. Cacheability depends on method, headers, status, and CDN configuration; private responses need particular care."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Edge locations can reduce latency and origin traffic.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Edge locations can reduce latency and origin traffic.",
+            "sus": "This answer is legitimate. Edge locations can reduce latency and origin traffic."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "system-design-cap",
+      "difficulty": "hard",
+      "prompt": "What choice does the CAP theorem highlight during a network partition?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "Different operations can make different tradeoffs.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Different operations can make different tradeoffs.",
+            "sus": "This answer is legitimate. Different operations can make different tradeoffs."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A distributed system cannot guarantee both linearizable consistency and availability for every request while the partition persists.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A distributed system cannot guarantee both linearizable consistency and availability for every request while the partition persists.",
+            "sus": "This answer is legitimate. A distributed system cannot guarantee both linearizable consistency and availability for every request while the partition persists."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A system must permanently choose only two of three properties even without failures.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. The tradeoff concerns behavior while a partition prevents communication.",
+            "sus": "Correct. The tradeoff concerns behavior while a partition prevents communication."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "system-design-backpressure",
+      "difficulty": "hard",
+      "prompt": "What is backpressure in a data-processing system?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A way for slower consumers to limit or signal upstream production.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. A way for slower consumers to limit or signal upstream production.",
+            "sus": "This answer is legitimate. A way for slower consumers to limit or signal upstream production."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A requirement to buffer unlimited work in memory.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Unlimited buffering delays failure and can exhaust resources.",
+            "sus": "Correct. Unlimited buffering delays failure and can exhaust resources."
+          }
+        },
+        {
+          "id": "c",
+          "text": "Dropping, batching, blocking, or shedding work are possible policies.",
+          "verdict": "legit",
+          "feedback": {
+            "legit": "Correct. Dropping, batching, blocking, or shedding work are possible policies.",
+            "sus": "This answer is legitimate. Dropping, batching, blocking, or shedding work are possible policies."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      },
+      "review_status": "approved"
+    },
+    {
+      "id": "system-design-saga",
+      "difficulty": "hard",
+      "prompt": "What does a saga coordinate?",
+      "answers": [
+        {
+          "id": "a",
+          "text": "A single ACID transaction that locks every service database.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Sagas avoid one global database transaction across services.",
+            "sus": "Correct. Sagas avoid one global database transaction across services."
+          }
+        },
+        {
+          "id": "b",
+          "text": "A compensating action automatically rewinds database history as if the earlier step never happened.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. Compensation is new business logic and may not perfectly reverse every prior effect.",
+            "sus": "Correct. Compensation is new business logic and may not perfectly reverse every prior effect."
+          }
+        },
+        {
+          "id": "c",
+          "text": "A saga guarantees globally serializable isolation across every participating service.",
+          "verdict": "sus",
+          "feedback": {
+            "legit": "Not quite. A saga coordinates local transactions but does not by itself provide one globally serializable transaction.",
+            "sus": "Correct. A saga coordinates local transactions but does not by itself provide one globally serializable transaction."
+          }
+        }
+      ],
+      "reference": {
+        "title": "AWS Well-Architected Framework",
+        "url": "https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html"
+      },
+      "review_status": "approved"
+    }
+  ]
+}
