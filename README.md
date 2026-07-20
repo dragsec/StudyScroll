@@ -4,6 +4,12 @@ StudyScroll is a mobile-first learning app that redirects the habit of scrolling
 
 The MVP is designed for quick sessions, low friction, and deliberate practice. It currently runs with mocked technical questions so the complete product loop can be tested before authentication, AI generation, and a production database are introduced.
 
+## Mobile-first by design
+
+StudyScroll is designed for phones first because its core interaction is short, thumb-friendly learning inside a scrolling feed. Mobile is the primary product experience and the main design target for every screen, control, bottom sheet, and navigation decision.
+
+The desktop version is a responsive adaptation rather than a separate interface. It keeps the learning feed compact and centered while moving navigation into an Instagram-style left sidebar. This preserves the mobile rhythm without stretching cards or weakening the focused scrolling experience on larger screens.
+
 ## Why StudyScroll
 
 Most learning tools ask users to create a new habit. StudyScroll starts from one they already have.

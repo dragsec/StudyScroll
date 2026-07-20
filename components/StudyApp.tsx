@@ -6,9 +6,12 @@ import {
   ArrowLeft,
   ArrowRight,
   Bookmark,
+  ChevronRight,
   CircleHelp,
   Flame,
+  KeyRound,
   LockKeyhole,
+  Mail,
   Search,
   Share2,
   Skull,
@@ -343,7 +346,11 @@ export function StudyApp() {
               onOpenRules={() => setSheet("rankRules")}
             />
           )}
-          {tab === "profile" && <ProfileView />}
+          {tab === "profile" && (
+            <ProfileView
+              onAccountAction={() => setToast("Register to manage your account")}
+            />
+          )}
         </div>
 
         <BottomNav tab={tab} onChange={setTab} />
@@ -730,21 +737,45 @@ function ProgressView({
   );
 }
 
-function ProfileView() {
+function ProfileView({ onAccountAction }: { onAccountAction: () => void }) {
   return (
-    <section className="tab-page" aria-labelledby="profile-title">
+    <section className="tab-page profile-page" aria-labelledby="profile-title">
       <div className="tab-heading">
         <p>ACCOUNT</p>
-        <h1 id="profile-title">Guest learner</h1>
+        <h1 id="profile-title">Profile</h1>
       </div>
-      <div className="profile-card">
+
+      <div className="profile-summary">
         <span className="profile-avatar"><UserRound aria-hidden="true" size={34} /></span>
-        <h2>Your practice stays on this device</h2>
-        <p>You can explore every topic without registering. Account sync and personalized review come later.</p>
-        <button type="button" className="button button-secondary" disabled>
-          Account creation coming soon
-        </button>
+        <div>
+          <strong>Guest learner</strong>
+          <span>Register to sync your account</span>
+        </div>
       </div>
+
+      <section className="account-settings" aria-labelledby="account-settings-title">
+        <h2 id="account-settings-title">Account settings</h2>
+        <button type="button" className="account-setting-row" onClick={onAccountAction}>
+          <Mail aria-hidden="true" size={19} />
+          <span>
+            <strong>Edit email</strong>
+            <small>Change your sign-in email</small>
+          </span>
+          <ChevronRight aria-hidden="true" size={18} />
+        </button>
+        <button type="button" className="account-setting-row" onClick={onAccountAction}>
+          <KeyRound aria-hidden="true" size={19} />
+          <span>
+            <strong>Edit password</strong>
+            <small>Choose a new password</small>
+          </span>
+          <ChevronRight aria-hidden="true" size={18} />
+        </button>
+        <button type="button" className="delete-account" onClick={onAccountAction}>
+          Delete account
+        </button>
+      </section>
+
       <Link href="/" className="back-link"><ArrowLeft aria-hidden="true" size={18} />Back to homepage</Link>
     </section>
   );
