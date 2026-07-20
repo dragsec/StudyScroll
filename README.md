@@ -2,7 +2,7 @@
 
 StudyScroll is a mobile-first learning app that redirects the habit of scrolling into active study. Instead of passively consuming a feed, learners inspect short technical questions, judge three plausible answers as **Legit** or **Sus**, and receive immediate explanations.
 
-The MVP is designed for quick sessions, low friction, and deliberate practice. It currently runs with mocked technical questions so the complete product loop can be tested before authentication, AI generation, and a production database are introduced.
+The MVP is designed for quick sessions, low friction, and deliberate practice. Its versioned local dataset contains 168 reviewed technical questions, so the complete product loop can be tested before authentication, AI generation, and a production database are introduced.
 
 ## Mobile-first by design
 
@@ -29,6 +29,7 @@ The experience combines retrieval practice, immediate feedback, spaced repetitio
 - Subject ranks from Junior Scroller to CEO of Scrolling
 - Accessible bottom sheets, keyboard controls, focus states, and reduced-motion support
 - Responsive desktop presentation of the mobile product
+- 168 source-backed questions across 14 technical and mathematical topics
 
 A question is considered perfect only when all three judgments are correct. Five perfect questions in one subject unlock the first rank.
 
@@ -69,7 +70,8 @@ More detail is available in [`DESIGN.md`](DESIGN.md) and [`PRODUCT.md`](PRODUCT.
 - CSS with reusable design tokens and responsive layouts
 - Lucide and Material icon libraries
 - Browser local storage for MVP progress persistence
-- Mocked question data for the current prototype
+- Versioned JSON question data with schema and quality validation
+- A disabled, server-only AI question-generation pipeline using the OpenAI Responses API, Structured Outputs, moderation, factual review, and bounded repair
 
 ## Run locally
 
@@ -84,8 +86,12 @@ Open [http://localhost:3000](http://localhost:3000). The landing page is `/` and
 
 ```bash
 npm run typecheck
+npm run validate:dataset
+npm run test:ai
 npm run build
 ```
+
+The future premium AI workflow is documented in [`lib/ai-question-generation/README.md`](lib/ai-question-generation/README.md). Developers can follow the concise [`AI activation guide`](lib/ai-question-generation/ACTIVATION.md) when the product is ready for a premium beta. Its API route is scaffolded but deliberately fails closed until authentication, premium entitlements, distributed rate limiting, durable jobs, and background execution exist.
 
 ## How we collaborated with Codex
 
@@ -102,13 +108,12 @@ This collaboration made it possible to move quickly without treating AI output a
 ## Next steps
 
 - Add authentication and account synchronization
-- Replace mocked questions with PostgreSQL-backed content
-- Generate custom premium questions with AI
-- Add validation and moderation for generated learning content
+- Migrate the versioned question dataset to PostgreSQL-backed content
+- Connect authentication, premium entitlements, rate limiting, and background jobs to the scaffolded AI question-generation pipeline
 - Implement personalized ranking, feed selection, and spaced repetition on the backend
 - Containerize local services with Docker
 - Deploy the MVP to Vercel, with a possible later migration to AWS
 
 ## Project status
 
-StudyScroll is an interactive hackathon MVP. The learning flow, filters, saved state, streaks, ranks, and product presentation are functional. Authentication, database persistence, production AI generation, and payments are planned but not yet implemented.
+StudyScroll is an interactive hackathon MVP. The learning flow, filters, saved state, streaks, ranks, and product presentation are functional. The production-oriented AI pipeline is scaffolded but disabled; authentication, database persistence, payments, distributed rate limiting, and background execution are still required before it can launch.
