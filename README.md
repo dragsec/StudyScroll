@@ -2,7 +2,7 @@
 
 StudyScroll is a mobile-first learning app that redirects the habit of scrolling into active study. Instead of passively consuming a feed, learners inspect short technical questions, judge three plausible answers as **Legit** or **Sus**, and receive immediate explanations.
 
-The MVP is designed for quick sessions, low friction, and deliberate practice. Its versioned local dataset contains 168 reviewed technical questions, so the complete product loop can be tested before authentication, AI generation, and a production database are introduced.
+The MVP is designed for quick sessions, low friction, and deliberate practice. Its versioned local dataset contains 168 reviewed technical questions, while optional Supabase Auth and PostgreSQL persistence support real learner accounts without breaking the guest demo.
 
 ## Mobile-first by design
 
@@ -25,7 +25,9 @@ The experience combines retrieval practice, immediate feedback, spaced repetitio
 - Immediate scoring and answer explanations
 - Saved questions and share controls
 - Daily goal of five perfect questions
-- Persistent streak and progress data stored locally
+- Guest progress stored locally, with synchronized saves, attempts, streaks, and ranks for registered learners
+- Email/password accounts, Google sign-in, password recovery, account settings, and account deletion through Supabase Auth
+- Returning questions ordered by missed, due, unseen, and future review state
 - Subject ranks from Junior Scroller to CEO of Scrolling
 - Accessible bottom sheets, keyboard controls, focus states, and reduced-motion support
 - Responsive desktop presentation of the mobile product
@@ -41,7 +43,7 @@ The core learning experience remains free:
 | Access | Experience |
 | --- | --- |
 | Without an account | 10 posts per day, every topic, no registration |
-| Free account | 100 posts per day, personalized feed, spaced repetition, streaks, and ranks |
+| Free account | 100 posts per day, personalized feed, missed questions return, streaks, and ranks |
 | Premium account | Everything in the free account, plus AI-generated questions based on the learner's own prompt |
 
 The premium feature is an optional creation tool. It does not place the core feed, topics, or learning loop behind payment.
@@ -73,18 +75,19 @@ More detail is available in [`DESIGN.md`](DESIGN.md) and [`PRODUCT.md`](PRODUCT.
 - Browser local storage for MVP progress persistence
 - Versioned JSON question data with schema and quality validation
 - PostgreSQL, Prisma ORM 7, migrations, and an idempotent dataset seed
+- Supabase Auth with server-verified sessions and PostgreSQL-backed learner progress
 - A disabled, server-only AI question-generation pipeline using the OpenAI Responses API, Structured Outputs, moderation, factual review, and bounded repair
 
 ## Run locally
 
 ```bash
 npm install
-npm run dev
+npm run dev:mock
 ```
 
 Open [http://localhost:3000](http://localhost:3000). The landing page is `/` and the learning app is `/learn`.
 
-By default the backend API serves the local reviewed dataset. PostgreSQL setup, migration, seeding, deployment, and verification are documented in [`docs/DATABASE.md`](docs/DATABASE.md).
+Use `npm run dev:mock` for the reviewed local dataset or `npm run dev:postgres` for a strict PostgreSQL-backed feed. PostgreSQL setup, migration, seeding, deployment, and verification are documented in [`docs/DATABASE.md`](docs/DATABASE.md). Account and Google OAuth configuration are documented in [`docs/AUTH.md`](docs/AUTH.md).
 
 ## Validation
 
@@ -93,12 +96,16 @@ npm run typecheck
 npm run validate:dataset
 npm run db:validate
 npm run test:security
+npm run test:learning
 npm run test:ai
+npm run test:e2e
 npm run build
 npm run check:client-bundle
 ```
 
-The current threat model, VAPT findings, implemented controls, and production security checklist are documented in [`docs/SECURITY.md`](docs/SECURITY.md).
+The Playwright suite starts the app with the reviewed mock dataset and verifies the complete guest flow on mobile and desktop Chromium. Install its browser once with `npx playwright install chromium`, then run `npm run test:e2e`. Run every automated gate with `npm run check`.
+
+The current security architecture and production checklist are documented in [`docs/SECURITY.md`](docs/SECURITY.md).
 
 The future premium AI workflow is documented in [`lib/ai-question-generation/README.md`](lib/ai-question-generation/README.md). Developers can follow the concise [`AI activation guide`](lib/ai-question-generation/ACTIVATION.md) when the product is ready for a premium beta. Its API route is scaffolded but deliberately fails closed until authentication, premium entitlements, distributed rate limiting, durable jobs, and background execution exist.
 
@@ -110,7 +117,7 @@ The founder brought the idea, the research whitepaper, the Figma design, and a v
 
 The working rhythm was simple: describe an idea, build it, open it locally, notice what felt wrong, and iterate. Codex turned rough notes into React and Next.js code directly in the repository, then helped refine the feed, filters, answer sheets, responsive navigation, saved state, streaks, ranks, and landing page. Because it could inspect the code and the live result in the same loop, changes that would normally become a backlog were often tested a few minutes after they were suggested.
 
-Codex also took care of much of the engineering work behind the visible prototype. It helped structure and validate the 168-question dataset, move the questions behind server APIs, design the Prisma and PostgreSQL content model, add server-side grading, audit the client bundle for leaked answers, run security tests, and scaffold the future premium AI workflow so that it stays disabled until authentication and the other production controls exist.
+Codex also took care of much of the engineering work behind the visible prototype. It helped structure and validate the 168-question dataset, move the questions behind server APIs, design the Prisma and PostgreSQL content model, add server-side grading, wire Supabase accounts to synchronized learner progress, audit the client bundle for leaked answers, run security tests, and scaffold the future premium AI workflow so that it stays disabled until the remaining production controls exist.
 
 GPT-5.6 was especially useful when a loose product idea crossed several disciplines at once. It could reason about the UX, trace the change through the frontend and backend, and then verify the result with type checks, tests, and production builds. The founder still made the calls: what belonged in StudyScroll, what sounded wrong, what looked off, and when an iteration was good enough to keep. Codex made those decisions much faster to explore and much cheaper to revise.
 
@@ -118,13 +125,16 @@ That back-and-forth is the real role AI played in StudyScroll. It was not a repl
 
 ## Next steps
 
-- Add authentication and account synchronization
-- Add authenticated user persistence for saved questions, attempts, streaks, and ranks
-- Connect authentication, premium entitlements, rate limiting, and background jobs to the scaffolded AI question-generation pipeline
-- Implement personalized ranking, feed selection, and spaced repetition on the backend
+- Configure Supabase email delivery and Google OAuth for the deployed domain
+- Connect premium entitlements, rate limiting, and background jobs to the scaffolded AI question-generation pipeline
+- Add optional guest-to-account progress import after sign-up
 - Containerize local services with Docker
 - Deploy the MVP to Vercel, with a possible later migration to AWS
 
 ## Project status
 
-StudyScroll is an interactive hackathon MVP. The learning flow, filters, saved state, streaks, ranks, product presentation, backend question API, and PostgreSQL content layer are functional. The production-oriented AI pipeline is scaffolded but disabled; authentication, user-progress persistence, payments, distributed rate limiting, and background execution are still required before it can launch.
+StudyScroll is an interactive hackathon MVP. The learning flow, filters, guest mode, account UI, server grading, synchronized learner progress, returning-question schedule, and PostgreSQL content layer are implemented. Account flows become live once Supabase credentials, email delivery, and Google OAuth are configured. The production-oriented AI pipeline remains disabled until premium entitlements, distributed rate limiting, payments, and background execution exist.
+
+## Credits
+
+Created by Dragan Sanjevic and Nathalia Lenci.
