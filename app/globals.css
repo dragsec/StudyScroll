@@ -223,10 +223,12 @@ button:disabled {
 
 .landing-brand {
   position: absolute;
-  top: max(1.5rem, calc(env(safe-area-inset-top) + 0.75rem));
-  left: max(1.5rem, env(safe-area-inset-left));
+  top: max(2.75rem, calc(env(safe-area-inset-top) + 2rem));
+  left: 50%;
+  transform: translateX(-50%);
   font-family: var(--font-sora), system-ui, sans-serif;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .landing-brand span:last-child,
