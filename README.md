@@ -7,7 +7,7 @@ The idea is simple: instead of asking people to build a new learning habit, make
 **[Try the live app](https://study-scroll-silk.vercel.app)**
 
 <p align="center">
-  <img src="docs/images/landing.png" alt="StudyScroll mobile landing page" width="390" />
+  <img src="docs/images/landing.png" alt="StudyScroll mobile landing page" width="384" />
 </p>
 
 <p align="center">
