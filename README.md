@@ -101,4 +101,5 @@ The hackathon MVP is live on Vercel with its PostgreSQL feed and account system 
 
 ## Credits
 
-Created by **Dragan Sanjevic** and **Nathalia Lenci**.
+Copyright © 2026 Dragan Sanjevic and Nathalia Lenci. All rights reserved.
+This repository is publicly available for evaluation and demonstration only. No permission is granted to copy, modify, distribute, sublicense, or commercially use its contents.
