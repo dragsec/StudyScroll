@@ -249,6 +249,12 @@ export function StudyApp({
   const appViewRef = useRef<HTMLDivElement>(null);
   const sheetScrollRef = useRef({ app: 0, windowX: 0, windowY: 0 });
 
+  function changeTab(nextTab: Tab) {
+    setTab(nextTab);
+    const nextUrl = nextTab === "scroll" ? "/learn" : `/learn?tab=${nextTab}`;
+    window.history.replaceState(window.history.state, "", nextUrl);
+  }
+
   const openSheetAtCurrentPosition = useCallback((nextSheet: Exclude<Sheet, null>) => {
     sheetScrollRef.current = {
       app: appViewRef.current?.scrollTop ?? 0,
@@ -608,7 +614,7 @@ export function StudyApp({
               onOpen={openQuestion}
               onSave={toggleSaved}
               onShare={shareQuestion}
-              onExplore={() => setTab("scroll")}
+              onExplore={() => changeTab("scroll")}
             />
           )}
           {tab === "progress" && (
@@ -625,7 +631,7 @@ export function StudyApp({
           )}
         </div>
 
-        <BottomNav tab={tab} onChange={setTab} />
+        <BottomNav tab={tab} onChange={changeTab} />
 
         {sheet === "question" && activeQuestion && (
           <QuestionSheet

@@ -9,5 +9,9 @@ export default async function LearnPage({
   searchParams: Promise<{ tab?: string }>;
 }) {
   const [viewer, params] = await Promise.all([getAccountViewer(), searchParams]);
-  return <StudyApp viewer={viewer} initialTab={params.tab === "profile" ? "profile" : "scroll"} />;
+  const initialTab =
+    params.tab === "saved" || params.tab === "progress" || params.tab === "profile"
+      ? params.tab
+      : "scroll";
+  return <StudyApp viewer={viewer} initialTab={initialTab} />;
 }
