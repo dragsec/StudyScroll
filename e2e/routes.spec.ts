@@ -9,13 +9,14 @@ test("the public and guarded route surface returns deliberate responses", async 
   const feed = await request.get("/api/questions");
   expect(feed.status()).toBe(200);
   const payload = await feed.json();
-  expect(payload.meta.count).toBe(168);
+  expect(payload.meta.count).toBe(12);
+  expect(payload.meta.total).toBe(168);
   expect(payload.questions[0].answers[0]).not.toHaveProperty("verdict");
   expect(payload.questions[0].answers[0]).not.toHaveProperty("feedback");
 
   const account = await request.get("/account", { maxRedirects: 0 });
   expect(account.status()).toBe(307);
-  expect(account.headers().location).toBe("/auth");
+  expect(account.headers().location).toBe("/auth?next=/account");
 
   const accountState = await request.get("/api/account/state");
   expect(accountState.status()).toBe(401);

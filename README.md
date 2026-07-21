@@ -1,82 +1,73 @@
 # StudyScroll
 
-StudyScroll is a mobile-first learning app that redirects the habit of scrolling into active study. Instead of passively consuming a feed, learners inspect short technical questions, judge three plausible answers as **Legit** or **Sus**, and receive immediate explanations.
+StudyScroll turns scrolling into active study. Learners move through a social-style feed of short technical challenges, judge three plausible replies as **Legit** or **Sus**, and get an explanation immediately.
 
-The MVP is designed for quick sessions, low friction, and deliberate practice. Its versioned local dataset contains 168 reviewed technical questions, while optional Supabase Auth and PostgreSQL persistence support real learner accounts without breaking the guest demo.
+The idea is simple: instead of asking people to build a new learning habit, make better use of one they already have.
 
-## Mobile-first by design
+**[Try the live app](https://study-scroll-silk.vercel.app)**
 
-StudyScroll is designed for phones first because its core interaction is short, thumb-friendly learning inside a scrolling feed. Mobile is the primary product experience and the main design target for every screen, control, bottom sheet, and navigation decision.
+<p align="center">
+  <img src="docs/images/landing.png" alt="StudyScroll mobile landing page" width="390" />
+</p>
 
-The desktop version is a responsive adaptation rather than a separate interface. It keeps the learning feed compact and centered while moving navigation into an Instagram-style left sidebar. This preserves the mobile rhythm without stretching cards or weakening the focused scrolling experience on larger screens.
+<p align="center">
+  <img src="docs/images/feed.png" alt="StudyScroll learning feed" width="380" />
+  <img src="docs/images/progress.png" alt="StudyScroll streak and subject ranks" width="380" />
+</p>
 
-## Why StudyScroll
+## How it works
 
-Most learning tools ask users to create a new habit. StudyScroll starts from one they already have.
+Each post presents one question and three replies written as a small social discussion. The learner judges every reply, then commits all three choices before seeing the result. A question counts as perfect only when all three judgments are correct.
 
-The experience combines retrieval practice, immediate feedback, spaced repetition, and calibrated difficulty with the familiar interaction pattern of a social feed. The research and product rationale are documented in [`docs/WHITEPAPER.md`](docs/WHITEPAPER.md).
+Wrong answers return, perfect answers move through longer review intervals, and progress is tied to subjects rather than raw activity. Five perfect questions in one subject unlock Junior Scroller. Later ranks unlock at 15, 35, 65, and 120.
 
-## Current MVP
+The MVP currently includes:
 
-- Mobile-first landing page and learning app
-- Infinite technical question feed
-- Topic search and difficulty filters
-- Three Legit/Sus judgments per question
-- Immediate scoring and answer explanations
-- Saved questions and share controls
-- Daily goal of five perfect questions
-- Guest progress stored locally, with synchronized saves, attempts, streaks, and ranks for registered learners
-- Email/password accounts, Google sign-in, password recovery, account settings, and account deletion through Supabase Auth
-- Returning questions ordered by missed, due, unseen, and future review state
-- Subject ranks from Junior Scroller to CEO of Scrolling
-- Accessible bottom sheets, keyboard controls, focus states, and reduced-motion support
-- Responsive desktop presentation of the mobile product
-- 168 source-backed questions across 14 technical and mathematical topics
-- Backend question API with mock and PostgreSQL data modes
+- 168 reviewed questions across 14 technical and mathematical topics
+- Infinite scrolling with topic search and difficulty filters
+- Immediate grading without exposing answer keys to the browser
+- Saved posts, sharing, daily streaks, and subject ranks
+- Guest mode with local progress
+- Supabase accounts with synchronized progress and PostgreSQL persistence
+- Email and Google login, password recovery, account settings, and account deletion
+- A responsive desktop layout built around the mobile experience
 
-A question is considered perfect only when all three judgments are correct. Five perfect questions in one subject unlock the first rank.
+The research behind the learning loop is documented in the [whitepaper](docs/WHITEPAPER.md).
 
-## Product model
+## Mobile first
 
-The core learning experience remains free:
+StudyScroll was designed for phones first. The feed, bottom navigation, filters, answer sheets, and touch targets all start from the mobile experience defined in the original [Figma design](https://www.figma.com/design/HGWDBinn0RIboxdUAf43su/Studyscroll).
 
-| Access | Experience |
-| --- | --- |
-| Without an account | 10 posts per day, every topic, no registration |
-| Free account | 100 posts per day, personalized feed, missed questions return, streaks, and ranks |
-| Premium account | Everything in the free account, plus AI-generated questions based on the learner's own prompt |
+On desktop, navigation moves to a fixed sidebar and the feed becomes wider and flatter. It is still the same product, not a separate desktop application.
 
-The premium feature is an optional creation tool. It does not place the core feed, topics, or learning loop behind payment.
+## Accounts and access
 
-## Rank system
+The learning feed remains free:
 
-| Rank | Perfect questions in one subject |
-| --- | ---: |
-| Junior Scroller | 5 |
-| Senior Scroller | 15 |
-| Staff Scroller | 35 |
-| Principal Scroller | 65 |
-| CEO of Scrolling | 120 |
+- **Guest:** 10 posts per day, every topic, no registration
+- **Free account:** 100 posts per day, synchronized progress, returning mistakes, streaks, and ranks
+- **Premium concept:** everything above, plus AI-generated question sets from a short prompt
 
-## Design
+The premium AI workflow is a non-working proof of concept for the hackathon. Its server-only pipeline includes prompt validation, moderation, structured generation, factual review, and bounded repair, but it stays disabled until payments, entitlements, distributed rate limiting, and background jobs exist.
 
-The interface is based on the original [StudyScroll Figma design](https://www.figma.com/design/HGWDBinn0RIboxdUAf43su/Studyscroll), created for the project by the founder's design collaborator. It defines the mobile UX, visual identity, typography, colors, feed cards, bottom sheets, and navigation direction.
+## Architecture
 
-The implementation preserves that dark, compact visual language while extending it to interactive states, responsive behavior, accessibility, progress gamification, and the new premium product tier.
+StudyScroll is a Next.js 16 application with React 19 and TypeScript. The browser talks only to Next.js route handlers. Those routes load questions from either the reviewed JSON dataset or PostgreSQL, grade answers on the server, and verify Supabase sessions before accessing learner data.
 
-More detail is available in [`DESIGN.md`](DESIGN.md) and [`PRODUCT.md`](PRODUCT.md).
+PostgreSQL is modeled with Prisma 7 and stores question sets, answers, attempts, review schedules, saves, streaks, ranks, and short-lived password recovery grants. The production app runs on Vercel with Supabase Postgres and Supabase Auth.
 
-## Built with
+Key technical choices:
 
-- Next.js 16 and React 19
-- TypeScript
-- CSS with reusable design tokens and responsive layouts
-- Lucide and Material icon libraries
-- Browser local storage for MVP progress persistence
-- Versioned JSON question data with schema and quality validation
-- PostgreSQL, Prisma ORM 7, migrations, and an idempotent dataset seed
-- Supabase Auth with server-verified sessions and PostgreSQL-backed learner progress
-- A disabled, server-only AI question-generation pipeline using the OpenAI Responses API, Structured Outputs, moderation, factual review, and bounded repair
+- Versioned and validated question datasets
+- Mock and PostgreSQL modes behind the same API
+- Idempotent database seed for all 168 curated questions
+- Server-side grading and bounded request bodies
+- Per-user progress queries scoped to a verified Supabase UUID
+- Row Level Security with no public browser policies on application tables
+- Infinite-feed pagination and a connection limit suited to serverless functions
+- Accessible dialogs, keyboard controls, focus handling, and reduced-motion support
+
+More detail is available in [DATABASE.md](docs/DATABASE.md), [AUTH.md](docs/AUTH.md), [SECURITY.md](docs/SECURITY.md), and the [AI activation guide](lib/ai-question-generation/ACTIVATION.md).
 
 ## Run locally
 
@@ -85,56 +76,32 @@ npm install
 npm run dev:mock
 ```
 
-Open [http://localhost:3000](http://localhost:3000). The landing page is `/` and the learning app is `/learn`.
+Open [http://localhost:3000](http://localhost:3000).
 
-Use `npm run dev:mock` for the reviewed local dataset or `npm run dev:postgres` for a strict PostgreSQL-backed feed. PostgreSQL setup, migration, seeding, deployment, and verification are documented in [`docs/DATABASE.md`](docs/DATABASE.md). Account and Google OAuth configuration are documented in [`docs/AUTH.md`](docs/AUTH.md).
+Use `npm run dev:mock` for the local reviewed dataset or `npm run dev:postgres` to require PostgreSQL. Database migrations and seeding are covered in [DATABASE.md](docs/DATABASE.md).
 
 ## Validation
 
 ```bash
-npm run typecheck
-npm run validate:dataset
-npm run db:validate
-npm run test:security
-npm run test:learning
-npm run test:ai
-npm run test:e2e
-npm run build
-npm run check:client-bundle
+npm run check
 ```
 
-The Playwright suite starts the app with the reviewed mock dataset and verifies the complete guest flow on mobile and desktop Chromium. Install its browser once with `npx playwright install chromium`, then run `npm run test:e2e`. Run every automated gate with `npm run check`.
+The validation pipeline checks TypeScript, the complete dataset, Prisma, security controls, learning behavior, the AI scaffold, the production build, client-bundle leakage, and the guest flow on mobile and desktop Chromium.
 
-The current security architecture and production checklist are documented in [`docs/SECURITY.md`](docs/SECURITY.md).
+## How we worked with Codex
 
-The future premium AI workflow is documented in [`lib/ai-question-generation/README.md`](lib/ai-question-generation/README.md). Developers can follow the concise [`AI activation guide`](lib/ai-question-generation/ACTIVATION.md) when the product is ready for a premium beta. Its API route is scaffolded but deliberately fails closed until authentication, premium entitlements, distributed rate limiting, durable jobs, and background execution exist.
+StudyScroll did not come from one giant prompt. It grew through a tight loop: explain an idea, build it, use the running app, notice what felt wrong, and revise it.
 
-## How we collaborated with Codex
+Dragan brought the product idea, research, business rules, and a strong opinion about the experience. Nathalia created the visual direction in Figma. Codex, powered by GPT-5.6, helped turn rough notes into working code across the frontend, backend, database, authentication, tests, and deployment setup. Because Codex could inspect both the repository and the live interface, small observations such as an icon feeling off, a line sounding artificial, or a loading state flashing at the wrong time could become tested changes within minutes.
 
-StudyScroll was not built from one giant prompt. It came together through a lot of small, fast conversations between the founder and Codex, powered by GPT-5.6.
+Codex accelerated the work that normally spreads across several specialists. It helped shape and validate the 168-question dataset, build the Prisma model and APIs, connect Supabase accounts, implement returning-question schedules, review security boundaries, and test the complete learning flow. GPT-5.6 was particularly useful when one decision touched product, design, and engineering at the same time.
 
-The founder brought the idea, the research whitepaper, the Figma design, and a very specific opinion about how the product should feel. That meant making it mobile-first, keeping the feed familiar without turning learning into a sterile quiz, counting only perfect questions toward progress, and keeping the core experience free. Even details such as rank names, icon weight, difficulty colors, and lines of copy were discussed while looking at the running app.
+The product decisions stayed human. Dragan chose what StudyScroll should reward, how ranks work, what remains free, and which iterations felt authentic. Nathalia's design set the visual standard. Codex made those choices faster to explore and cheaper to change.
 
-The working rhythm was simple: describe an idea, build it, open it locally, notice what felt wrong, and iterate. Codex turned rough notes into React and Next.js code directly in the repository, then helped refine the feed, filters, answer sheets, responsive navigation, saved state, streaks, ranks, and landing page. Because it could inspect the code and the live result in the same loop, changes that would normally become a backlog were often tested a few minutes after they were suggested.
+## Status
 
-Codex also took care of much of the engineering work behind the visible prototype. It helped structure and validate the 168-question dataset, move the questions behind server APIs, design the Prisma and PostgreSQL content model, add server-side grading, wire Supabase accounts to synchronized learner progress, audit the client bundle for leaked answers, run security tests, and scaffold the future premium AI workflow so that it stays disabled until the remaining production controls exist.
-
-GPT-5.6 was especially useful when a loose product idea crossed several disciplines at once. It could reason about the UX, trace the change through the frontend and backend, and then verify the result with type checks, tests, and production builds. The founder still made the calls: what belonged in StudyScroll, what sounded wrong, what looked off, and when an iteration was good enough to keep. Codex made those decisions much faster to explore and much cheaper to revise.
-
-That back-and-forth is the real role AI played in StudyScroll. It was not a replacement for the product vision or the design process. It was a very fast collaborator that helped turn both into a working, testable MVP.
-
-## Next steps
-
-- Configure Supabase email delivery and Google OAuth for the deployed domain
-- Connect premium entitlements, rate limiting, and background jobs to the scaffolded AI question-generation pipeline
-- Add optional guest-to-account progress import after sign-up
-- Containerize local services with Docker
-- Deploy the MVP to Vercel, with a possible later migration to AWS
-
-## Project status
-
-StudyScroll is an interactive hackathon MVP. The learning flow, filters, guest mode, account UI, server grading, synchronized learner progress, returning-question schedule, and PostgreSQL content layer are implemented. Account flows become live once Supabase credentials, email delivery, and Google OAuth are configured. The production-oriented AI pipeline remains disabled until premium entitlements, distributed rate limiting, payments, and background execution exist.
+The hackathon MVP is live on Vercel with its PostgreSQL feed and account system connected. The next stage is production email delivery, full Google OAuth verification, analytics, and the infrastructure required to activate premium AI question generation safely.
 
 ## Credits
 
-Created by Dragan Sanjevic and Nathalia Lenci.
+Created by **Dragan Sanjevic** and **Nathalia Lenci**.

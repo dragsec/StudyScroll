@@ -8,7 +8,9 @@ async function chooseJavaScript(page: Page): Promise<Locator> {
   const topicSheet = page.getByRole("dialog", { name: "Choose topics" });
   await expect(topicSheet).toBeVisible();
   await topicSheet.getByPlaceholder("Search topics").fill("javascript");
-  await topicSheet.getByRole("option", { name: /JavaScript\s+12/ }).click();
+  const javascriptOption = topicSheet.getByRole("option", { name: /JavaScript\s+12/ });
+  await javascriptOption.click();
+  await expect(javascriptOption).toHaveAttribute("aria-selected", "true");
   await topicSheet.getByRole("button", { name: "Done" }).click();
 
   await expect(
@@ -36,7 +38,7 @@ test("a guest can discover, filter, and save a learning card", async ({ page }) 
   const javascriptPrompt = (await firstCard.locator(".question-title").textContent())?.trim();
   expect(javascriptPrompt).toBeTruthy();
   await firstCard.getByRole("button", { name: "Save challenge" }).click();
-  await expect(page.getByRole("status")).toHaveText("Saved for later");
+  await expect(page.locator(".toast")).toHaveText("Saved for later");
 
   await page.getByRole("button", { name: "saved", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Saved cards" })).toBeVisible();
@@ -95,9 +97,28 @@ test("a guest can reach the account creation flow", async ({ page }) => {
 
   await expect(page).toHaveURL(/\/auth\?mode=signup$/);
   await expect(page.getByRole("heading", { name: "Keep your momentum" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Create account" })).toHaveAttribute(
+  await expect(page.getByRole("button", { name: "Sign up" })).toHaveAttribute(
     "aria-pressed",
     "true",
   );
   await expect(page.getByText("Passwords are hashed by Supabase Auth.", { exact: false })).toBeVisible();
+});
+
+test("opening the topic sheet preserves the feed position", async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== "mobile-chromium", "The mobile feed owns this scroll container.");
+  await page.goto("/learn");
+  const appView = page.locator(".app-view");
+  await expect(page.getByRole("region", { name: "Learning feed" })).toBeVisible();
+  await expect(page.locator(".question-card:not(.question-card-skeleton)")).toHaveCount(12);
+
+  await appView.evaluate((element) => {
+    element.scrollTop = 600;
+  });
+  const scrollPosition = await appView.evaluate((element) => element.scrollTop);
+  expect(scrollPosition).toBeGreaterThan(0);
+
+  await page.getByRole("button", { name: "All topics" }).click();
+  await expect(page.getByRole("dialog", { name: "Choose topics" })).toBeVisible();
+  await expect(page.getByPlaceholder("Search topics")).not.toBeFocused();
+  await expect.poll(() => appView.evaluate((element) => element.scrollTop)).toBe(scrollPosition);
 });

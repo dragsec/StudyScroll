@@ -46,6 +46,7 @@ import {
   Fragment,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -239,6 +240,37 @@ export function StudyApp({ viewer }: { viewer: AccountViewer }) {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [toast, setToast] = useState("");
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const appViewRef = useRef<HTMLDivElement>(null);
+  const sheetScrollRef = useRef({ app: 0, windowX: 0, windowY: 0 });
+
+  const openSheetAtCurrentPosition = useCallback((nextSheet: Exclude<Sheet, null>) => {
+    sheetScrollRef.current = {
+      app: appViewRef.current?.scrollTop ?? 0,
+      windowX: window.scrollX,
+      windowY: window.scrollY,
+    };
+    setSheet(nextSheet);
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!sheet) return;
+    const savedPosition = sheetScrollRef.current;
+    const restoreScroll = () => {
+      if (appViewRef.current) appViewRef.current.scrollTop = savedPosition.app;
+      window.scrollTo(savedPosition.windowX, savedPosition.windowY);
+    };
+    let secondFrame = 0;
+    restoreScroll();
+    const firstFrame = window.requestAnimationFrame(() => {
+      restoreScroll();
+      secondFrame = window.requestAnimationFrame(restoreScroll);
+    });
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.cancelAnimationFrame(secondFrame);
+      restoreScroll();
+    };
+  }, [sheet]);
 
   const applyLearningState = useCallback((state: LearningState) => {
     setSaved(new Set(state.savedQuestionIds));
@@ -392,8 +424,8 @@ export function StudyApp({ viewer }: { viewer: AccountViewer }) {
     setDecisions({});
     setGradeResult(null);
     setRevealed(false);
-    setSheet("question");
-  }, []);
+    openSheetAtCurrentPosition("question");
+  }, [openSheetAtCurrentPosition]);
 
   const closeSheet = useCallback(() => {
     setSheet(null);
@@ -544,7 +576,7 @@ export function StudyApp({ viewer }: { viewer: AccountViewer }) {
           </Link>
         </header>
 
-        <div className="app-view" aria-live="polite">
+        <div ref={appViewRef} className="app-view" aria-live="polite">
           {tab === "scroll" && (
             <FeedView
               feedItems={feedItems}
@@ -557,8 +589,8 @@ export function StudyApp({ viewer }: { viewer: AccountViewer }) {
               saved={saved}
               sentinelRef={sentinelRef}
               onOpen={openQuestion}
-              onOpenLevels={() => setSheet("levels")}
-              onOpenTopics={() => setSheet("topics")}
+              onOpenLevels={() => openSheetAtCurrentPosition("levels")}
+              onOpenTopics={() => openSheetAtCurrentPosition("topics")}
               onSave={toggleSaved}
               onShare={shareQuestion}
             />
@@ -579,7 +611,7 @@ export function StudyApp({ viewer }: { viewer: AccountViewer }) {
               isRegistered={isRegistered}
               perfectByTopic={perfectByTopic}
               rankSubjects={rankSubjects}
-              onOpenRules={() => setSheet("rankRules")}
+              onOpenRules={() => openSheetAtCurrentPosition("rankRules")}
             />
           )}
           {tab === "profile" && (
@@ -1171,7 +1203,7 @@ function BottomSheet({
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const returnFocusTo =
       document.activeElement instanceof HTMLElement ? document.activeElement : null;
     sheetRef.current?.focus({ preventScroll: true });
@@ -1342,7 +1374,6 @@ function TopicSheet({
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search topics"
-          autoFocus
         />
       </label>
       <div className="topic-options" role="listbox" aria-label="Topics">
