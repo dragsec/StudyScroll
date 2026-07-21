@@ -2420,11 +2420,11 @@ button:disabled {
   }
 
   .landing-hero {
-    min-height: 53rem;
+    min-height: 100svh;
   }
 
   .hero-inner {
-    min-height: 44rem;
+    min-height: calc(100svh - 12rem);
   }
 
   .app-stage {
