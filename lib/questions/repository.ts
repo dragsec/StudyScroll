@@ -139,42 +139,16 @@ export async function getQuestionFeedPage({
     };
   }
 
-  const [rows, total, topicsWithCounts] = await Promise.all([
-    getPrisma().question.findMany({
-      where: publishedQuestionWhere,
-      include: questionInclude,
-      orderBy: [{ position: "asc" }, { topic: { name: "asc" } }],
-      skip: offset,
-      take: limit,
-    }),
-    getPrisma().question.count({ where: publishedQuestionWhere }),
-    getPrisma().topic.findMany({
-      where: { isActive: true },
-      select: {
-        name: true,
-        _count: {
-          select: {
-            questions: {
-              where: {
-                isActive: true,
-                reviewStatus: ReviewStatus.APPROVED,
-                questionSet: { status: PublishStatus.PUBLISHED },
-              },
-            },
-          },
-        },
-      },
-    }),
-  ]);
+  // Curated v1 is intentionally small and its stable, topic-interleaved order is
+  // part of the feed experience. Slice that reviewed order here; once the
+  // catalogue grows, persist the computed feed position and cursor on Question.
+  const result = await readPublishedQuestions();
 
   return {
-    questions: rows.map(mapQuestionRow),
-    source: "postgres",
-    datasetVersion: rows[0]?.questionSet.datasetVersion ?? "database",
-    total,
-    topicCounts: Object.fromEntries(
-      topicsWithCounts.map((topic) => [topic.name, topic._count.questions]),
-    ),
+    ...result,
+    questions: result.questions.slice(offset, offset + limit),
+    total: result.questions.length,
+    topicCounts: countTopics(result.questions),
   };
 }
 
