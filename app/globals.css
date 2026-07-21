@@ -126,6 +126,10 @@ button:disabled {
   animation: app-launch-exit 180ms var(--ease-out) 520ms both;
 }
 
+.route-loading-splash {
+  animation: none;
+}
+
 .app-launch-wordmark {
   display: inline-flex;
   align-items: baseline;

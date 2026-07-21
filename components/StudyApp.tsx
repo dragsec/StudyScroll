@@ -210,9 +210,15 @@ function readSaved(): string[] {
   }
 }
 
-export function StudyApp({ viewer }: { viewer: AccountViewer }) {
+export function StudyApp({
+  viewer,
+  initialTab = "scroll",
+}: {
+  viewer: AccountViewer;
+  initialTab?: Tab;
+}) {
   const isRegistered = viewer.authenticated;
-  const [tab, setTab] = useState<Tab>("scroll");
+  const [tab, setTab] = useState<Tab>(initialTab);
   const [sheet, setSheet] = useState<Sheet>(null);
   const [activeQuestion, setActiveQuestion] = useState<PublicQuestion | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<(typeof topics)[number]>("All");

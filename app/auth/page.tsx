@@ -10,7 +10,9 @@ export default async function AuthPage({
   searchParams: Promise<{ mode?: string; error?: string; password?: string }>;
 }) {
   const [viewer, params] = await Promise.all([getAccountViewer(), searchParams]);
-  if (viewer.authenticated) redirect("/learn");
+  if (viewer.authenticated) {
+    redirect(params.mode === "signup" ? "/learn?tab=profile" : "/learn");
+  }
 
   return (
     <AuthForm
