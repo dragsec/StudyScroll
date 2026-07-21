@@ -1,5 +1,9 @@
 import { StudyApp } from "@/components/StudyApp";
+import { getAccountViewer } from "@/lib/supabase/auth";
 
-export default function LearnPage() {
-  return <StudyApp />;
+export const dynamic = "force-dynamic";
+
+export default async function LearnPage() {
+  const viewer = await getAccountViewer();
+  return <StudyApp viewer={viewer} />;
 }

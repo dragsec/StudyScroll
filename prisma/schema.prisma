@@ -129,3 +129,105 @@ model QuestionReference {
 
   @@map("question_references")
 }
+
+model LearnerProfile {
+  userId          String                @id @map("user_id") @db.Uuid
+  timezone        String                @default("UTC") @db.VarChar(64)
+  questionStates  UserQuestionState[]
+  attempts        QuestionAttempt[]
+  savedQuestions  UserSavedQuestion[]
+  dailyProgress   UserDailyProgress[]
+  subjectProgress UserSubjectProgress[]
+  recoveryGrants  PasswordRecoveryGrant[]
+  createdAt       DateTime              @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime              @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@map("learner_profiles")
+}
+
+model PasswordRecoveryGrant {
+  tokenHash  String         @id @map("token_hash") @db.Char(64)
+  userId     String         @map("user_id") @db.Uuid
+  expiresAt  DateTime       @map("expires_at") @db.Timestamptz(3)
+  consumedAt DateTime?      @map("consumed_at") @db.Timestamptz(3)
+  profile    LearnerProfile @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  createdAt  DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([userId, expiresAt])
+  @@map("password_recovery_grants")
+}
+
+model UserQuestionState {
+  userId           String         @map("user_id") @db.Uuid
+  questionKey      String         @map("question_key") @db.VarChar(160)
+  topic            String         @db.VarChar(120)
+  totalAttempts    Int            @default(0) @map("total_attempts")
+  lastScore        Int?           @map("last_score") @db.SmallInt
+  reviewStage      Int            @default(0) @map("review_stage") @db.SmallInt
+  everPerfect      Boolean        @default(false) @map("ever_perfect")
+  firstAttemptedAt DateTime?      @map("first_attempted_at") @db.Timestamptz(3)
+  lastAttemptedAt  DateTime?      @map("last_attempted_at") @db.Timestamptz(3)
+  nextReviewAt     DateTime?      @map("next_review_at") @db.Timestamptz(3)
+  profile          LearnerProfile @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  createdAt        DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@id([userId, questionKey])
+  @@index([userId, nextReviewAt])
+  @@index([userId, topic, everPerfect])
+  @@map("user_question_states")
+}
+
+model QuestionAttempt {
+  id          String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String         @map("user_id") @db.Uuid
+  questionKey String         @map("question_key") @db.VarChar(160)
+  topic       String         @db.VarChar(120)
+  decisions   Json
+  score       Int            @db.SmallInt
+  total       Int            @default(3) @db.SmallInt
+  isPerfect   Boolean        @map("is_perfect")
+  profile     LearnerProfile @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  createdAt   DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([userId, createdAt])
+  @@index([userId, questionKey, createdAt])
+  @@map("question_attempts")
+}
+
+model UserSavedQuestion {
+  userId      String         @map("user_id") @db.Uuid
+  questionKey String         @map("question_key") @db.VarChar(160)
+  profile     LearnerProfile @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  createdAt   DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@id([userId, questionKey])
+  @@index([userId, createdAt])
+  @@map("user_saved_questions")
+}
+
+model UserDailyProgress {
+  userId       String         @map("user_id") @db.Uuid
+  dateKey      String         @map("date_key") @db.VarChar(10)
+  perfectCount Int            @default(0) @map("perfect_count")
+  profile      LearnerProfile @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@id([userId, dateKey])
+  @@index([userId, dateKey])
+  @@map("user_daily_progress")
+}
+
+model UserSubjectProgress {
+  userId          String         @map("user_id") @db.Uuid
+  topic           String         @db.VarChar(120)
+  perfectQuestions Int           @default(0) @map("perfect_questions")
+  profile         LearnerProfile @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  createdAt       DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt       DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
+
+  @@id([userId, topic])
+  @@index([userId, perfectQuestions])
+  @@map("user_subject_progress")
+}

@@ -1,13 +1,27 @@
 import type { NextConfig } from "next";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
+const supabaseOrigin = (() => {
+  try {
+    return process.env.NEXT_PUBLIC_SUPABASE_URL
+      ? new URL(process.env.NEXT_PUBLIC_SUPABASE_URL).origin
+      : null;
+  } catch {
+    return null;
+  }
+})();
+const connectSources = [
+  "'self'",
+  ...(supabaseOrigin ? [supabaseOrigin] : []),
+  ...(isDevelopment ? ["ws:", "wss:"] : []),
+];
 const contentSecurityPolicy = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline'${isDevelopment ? " 'unsafe-eval'" : ""}`,
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
-  `connect-src 'self'${isDevelopment ? " ws: wss:" : ""}`,
+  `connect-src ${connectSources.join(" ")}`,
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -32,11 +46,29 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  distDir: process.env.PLAYWRIGHT_TEST === "1" ? ".next-e2e" : ".next",
   reactStrictMode: true,
   poweredByHeader: false,
   allowedDevOrigins: ["127.0.0.1"],
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      {
+        source: "/auth/:path*",
+        headers: [
+          { key: "Cache-Control", value: "private, no-store" },
+          { key: "Referrer-Policy", value: "no-referrer" },
+        ],
+      },
+      {
+        source: "/account/:path*",
+        headers: [{ key: "Cache-Control", value: "private, no-store" }],
+      },
+      {
+        source: "/learn",
+        headers: [{ key: "Cache-Control", value: "private, no-store" }],
+      },
+    ];
   },
 };
 

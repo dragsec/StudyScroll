@@ -39,7 +39,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const fonts = sora.variable + " " + plexSans.variable + " " + plexMono.variable;
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={fonts}>
         <a className="skip-link" href="#main-content">
           Skip to main content

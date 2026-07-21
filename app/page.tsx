@@ -4,7 +4,6 @@ import {
   BookOpen,
   Brain,
   CirclePlay,
-  GraduationCap,
   Users,
 } from "lucide-react";
 
@@ -113,8 +112,8 @@ export default function LandingPage() {
             <Link className="button button-primary" href="/learn">
               Start learning
             </Link>
-            <Link className="button button-secondary" href="/learn">
-              Sign up
+            <Link className="button button-secondary" href="/auth?mode=signup">
+              Create account
             </Link>
             <a className="scroll-more" href="#how-it-works">
               <span>scroll for more info</span>
@@ -194,50 +193,37 @@ export default function LandingPage() {
       <section className="landing-section cost-section" aria-labelledby="cost-title">
         <div className="section-content">
           <div className="cost-heading">
-            <h2 id="cost-title">The core app is free forever.</h2>
-            <p>Learn every topic. Build your streak. Climb every rank.</p>
-            <span>Personalized practice. Mistakes come back automatically.</span>
+            <h2 id="cost-title">StudyScroll is free forever.</h2>
           </div>
           <div className="plans">
-            <article>
-              <span className="plan-kicker">JUMP RIGHT IN</span>
-              <h3>without account</h3>
+            <article className="guest-plan">
+              <h3>No account</h3>
               <ul>
-                <li>10 posts/day</li>
-                <li>All topics accessible</li>
-                <li>No registration needed</li>
+                <li>10 posts a day</li>
+                <li>Every topic</li>
+                <li>No sign-up</li>
               </ul>
             </article>
             <article className="featured-plan">
-              <span className="plan-label">CORE EXPERIENCE</span>
-              <h3>free account</h3>
+              <h3>Free account</h3>
               <ul>
-                <li>100 posts/day</li>
+                <li>100 posts a day</li>
                 <li>Personalized feed</li>
                 <li>Mistakes come back</li>
                 <li>Streaks and ranks</li>
               </ul>
             </article>
             <article className="premium-plan">
-              <span className="plan-label premium-label">OPTIONAL UPGRADE</span>
-              <span className="plan-kicker">MAKE IT YOURS</span>
-              <h3>premium account</h3>
-              <p className="plan-summary">Turn exactly what you want to learn into a custom StudyScroll feed.</p>
+              <h3>Premium</h3>
               <ul>
-                <li>Everything in the free account</li>
+                <li>Everything in Free</li>
                 <li>Generate questions with AI</li>
-                <li>Build from your own specific prompt</li>
               </ul>
             </article>
           </div>
-          <div className="closing-copy">
-            <GraduationCap aria-hidden="true" size={30} />
-            <h2>StudyScroll doesn&apos;t ask you to study.<br />It asks you to scroll.</h2>
-            <p>The learning is a side effect.</p>
-          </div>
           <div className="closing-actions">
             <Link className="button button-primary" href="/learn">Start learning</Link>
-            <Link className="button button-secondary" href="/learn">Sign up</Link>
+            <Link className="button button-secondary" href="/auth?mode=signup">Create account</Link>
           </div>
         </div>
       </section>

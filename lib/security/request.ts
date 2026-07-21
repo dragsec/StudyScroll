@@ -43,12 +43,21 @@ export function assertTrustedMutation(request: Request) {
   const allowedOrigins = new Set<string>();
   if (configuredOrigin) {
     allowedOrigins.add(new URL(configuredOrigin).origin);
-  } else if (process.env.NODE_ENV === "production") {
-    throw new RequestSecurityError("invalid_request", "Application origin is not configured.", 403);
-  } else {
+  }
+
+  const vercelUrl = process.env.VERCEL_URL?.trim();
+  if (process.env.VERCEL_ENV === "preview" && vercelUrl) {
+    allowedOrigins.add(new URL(`https://${vercelUrl}`).origin);
+  }
+
+  if (process.env.NODE_ENV !== "production") {
     allowedOrigins.add(requestUrl.origin);
     const host = request.headers.get("host");
     if (host) allowedOrigins.add(`${requestUrl.protocol}//${host}`);
+  }
+
+  if (allowedOrigins.size === 0) {
+    throw new RequestSecurityError("invalid_request", "Application origin is not configured.", 403);
   }
 
   if (!allowedOrigins.has(normalizedSource)) {

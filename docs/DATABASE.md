@@ -8,27 +8,42 @@ StudyScroll uses PostgreSQL through Prisma ORM 7. The app has two explicit quest
 
 The browser always requests questions from `GET /api/questions`. This keeps the UI independent from the storage implementation and lets the hackathon demo remain usable before PostgreSQL is configured.
 
+## Choose a local mode
+
+Use an explicit development command instead of editing `.env` whenever you switch:
+
+```bash
+# Reviewed JSON dataset, no question database required
+npm run dev:mock
+
+# PostgreSQL is required and failures do not fall back to mock data
+npm run dev:postgres
+```
+
+Both commands still load shared settings such as Supabase credentials and database URLs from `.env`. They only override `QUESTION_DATA_SOURCE` for that process. Use `npm run dev` when you deliberately want the value from `.env`, including `auto`.
+
+For a local production build, the equivalent commands are `npm run start:mock` and `npm run start:postgres`. Run `npm run build` first. Normal development should use the `dev:*` commands.
+
 ## Local PostgreSQL setup
 
 1. Copy `.env.example` to `.env`.
-2. Set `QUESTION_DATA_SOURCE=postgres`.
-3. Start the database:
+2. Start the database:
 
 ```bash
 docker compose up -d postgres
 ```
 
-4. Apply the committed migrations and import the reviewed v1 dataset:
+3. Apply the committed migrations and import the reviewed v1 dataset:
 
 ```bash
 npm run db:deploy
 npm run db:seed
 ```
 
-5. Start StudyScroll and verify both endpoints:
+4. Start StudyScroll in PostgreSQL mode and verify both endpoints:
 
 ```bash
-npm run dev
+npm run dev:postgres
 ```
 
 - `GET /api/health` should return `{"status":"ok"}`.
@@ -45,6 +60,13 @@ The canonical schema is `prisma/schema.prisma`; SQL migrations live under `prism
 - `questions` stores difficulty, review state, source set, topic, and stable import key.
 - `answers` stores the three replies, verdicts, and vote-specific feedback.
 - `question_references` stores the authoritative source attached to each question.
+- `learner_profiles` connects a Supabase Auth UUID to timezone-aware learning data without duplicating email addresses.
+- `question_attempts` keeps the append-only grading history used for analytics and progress totals.
+- `user_question_states` records attempts, mastery, and the next time a question should return.
+- `user_saved_questions` synchronizes a learner's saved feed items.
+- `user_daily_progress` stores unique perfect questions per local calendar day for streaks.
+- `user_subject_progress` stores unique perfect questions per topic for ranks.
+- `password_recovery_grants` stores SHA-256 hashes for short-lived, single-use password recovery grants.
 
 Foreign keys protect relationships. Cascades are limited to content owned by a question set or question, while topics use restricted deletion. Feed lookup indexes cover publication state, topic, difficulty, review status, and active content.
 
@@ -66,7 +88,8 @@ Use `db:migrate` only while creating migrations in development. Use `db:deploy` 
 - Keep database URLs server-side. Never use a `NEXT_PUBLIC_` prefix.
 - Use TLS in hosted environments.
 - If the provider supplies separate URLs, use a pooled `DATABASE_URL` at runtime and a direct `DIRECT_DATABASE_URL` for migrations and seeding.
+- Keep `DATABASE_POOL_MAX=1` on Vercel unless the Supabase connection budget has been calculated for concurrent function instances.
 - Set `QUESTION_DATA_SOURCE=postgres` in production so a database outage is visible instead of silently switching content stores.
 - Set `APP_ORIGIN` to the exact deployed HTTPS origin so mutation requests can be verified independently of proxy headers.
 - Run `npm run db:deploy` before starting the new application release.
-- The current content endpoint is read-only. Authentication, server-recorded attempts, saved questions, streaks, and ranks belong in a later user-data migration once the authentication provider is selected.
+- Authentication setup and the user-data security boundary are documented in [`AUTH.md`](AUTH.md).

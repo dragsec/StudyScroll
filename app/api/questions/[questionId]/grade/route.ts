@@ -8,6 +8,9 @@ import {
 } from "@/lib/security/request";
 import { VerdictSchema } from "@/lib/ai-question-generation/schemas";
 import type { QuestionGrade, Verdict } from "@/data/question-types";
+import { databaseUrl } from "@/lib/db/prisma";
+import { recordQuestionAttempt } from "@/lib/learning/state";
+import { getAuthenticatedUser } from "@/lib/supabase/auth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -16,6 +19,7 @@ const MAX_REQUEST_BYTES = 512;
 const QuestionIdSchema = z.string().regex(/^[a-z0-9][a-z0-9-]{1,159}$/u);
 const GradeRequestSchema = z.object({
   decisions: z.record(z.string().min(1).max(20), VerdictSchema),
+  timezone: z.string().max(64).optional(),
 }).strict();
 
 function errorResponse(message: string, status: number) {
@@ -68,6 +72,24 @@ export async function POST(
         verdict: answer.verdict,
         feedback: answer.feedback[selected],
       };
+    }
+
+    const user = await getAuthenticatedUser();
+    if (user) {
+      if (!databaseUrl()) {
+        return NextResponse.json(
+          { error: { code: "progress_unavailable", message: "Account progress needs PostgreSQL." } },
+          { status: 503, headers: { "Cache-Control": "no-store" } },
+        );
+      }
+      grade.learningState = await recordQuestionAttempt({
+        userId: user.id,
+        question,
+        decisions: parsedBody.data.decisions as Record<string, Verdict>,
+        score: grade.score,
+        total: grade.total,
+        timeZone: parsedBody.data.timezone ?? "UTC",
+      });
     }
 
     return NextResponse.json(grade, {

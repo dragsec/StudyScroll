@@ -37,6 +37,7 @@ export type QuestionGrade = {
   score: number;
   total: number;
   answers: Record<string, AnswerGrade>;
+  learningState?: import("@/data/account-types").LearningState;
 };
 
 export const topics = [

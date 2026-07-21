@@ -38,6 +38,7 @@ import {
   type Verdict,
   topics,
 } from "@/data/question-types";
+import type { AccountViewer, LearningState } from "@/data/account-types";
 import {
   Fragment,
   useCallback,
@@ -101,6 +102,24 @@ function isQuestionApiResponse(value: unknown): value is QuestionApiResponse {
   );
 }
 
+function isLearningState(value: unknown): value is LearningState {
+  if (!value || typeof value !== "object") return false;
+  const state = value as Partial<LearningState>;
+  return (
+    Array.isArray(state.savedQuestionIds) &&
+    state.savedQuestionIds.every((id) => typeof id === "string") &&
+    Array.isArray(state.attemptedQuestionIds) &&
+    state.attemptedQuestionIds.every((id) => typeof id === "string") &&
+    Array.isArray(state.perfectQuestionIds) &&
+    state.perfectQuestionIds.every((id) => typeof id === "string") &&
+    Number.isInteger(state.correctJudgments) &&
+    Boolean(state.perfectByTopic) &&
+    typeof state.perfectByTopic === "object" &&
+    Boolean(state.dailyPerfect) &&
+    typeof state.dailyPerfect === "object"
+  );
+}
+
 type StoredProgress = {
   attemptedQuestionIds: string[];
   perfectQuestionIds: string[];
@@ -156,8 +175,8 @@ function readSaved(): string[] {
   }
 }
 
-export function StudyApp() {
-  const isRegistered = false;
+export function StudyApp({ viewer }: { viewer: AccountViewer }) {
+  const isRegistered = viewer.authenticated;
   const [tab, setTab] = useState<Tab>("scroll");
   const [sheet, setSheet] = useState<Sheet>(null);
   const [activeQuestion, setActiveQuestion] = useState<PublicQuestion | null>(null);
@@ -181,23 +200,64 @@ export function StudyApp() {
   const [toast, setToast] = useState("");
   const sentinelRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setSaved(new Set(readSaved()));
-    const progress = readProgress();
-    setCompleted(new Set(progress.attemptedQuestionIds));
-    setPerfectQuestions(new Set(progress.perfectQuestionIds));
-    setCorrectJudgments(progress.correctJudgments);
-    setPerfectByTopic(progress.perfectByTopic);
-    setDailyPerfect(progress.dailyPerfect);
-    setProgressReady(true);
+  const applyLearningState = useCallback((state: LearningState) => {
+    setSaved(new Set(state.savedQuestionIds));
+    setCompleted(new Set(state.attemptedQuestionIds));
+    setPerfectQuestions(new Set(state.perfectQuestionIds));
+    setCorrectJudgments(state.correctJudgments);
+    setPerfectByTopic(state.perfectByTopic);
+    setDailyPerfect(state.dailyPerfect);
   }, []);
 
   useEffect(() => {
+    if (!isRegistered) {
+      const progress = readProgress();
+      applyLearningState({
+        savedQuestionIds: readSaved(),
+        attemptedQuestionIds: progress.attemptedQuestionIds,
+        perfectQuestionIds: progress.perfectQuestionIds,
+        correctJudgments: progress.correctJudgments,
+        perfectByTopic: progress.perfectByTopic,
+        dailyPerfect: progress.dailyPerfect,
+      });
+      setProgressReady(true);
+      return;
+    }
+
+    const controller = new AbortController();
+    async function loadAccountState() {
+      try {
+        const response = await fetch("/api/account/state", {
+          headers: { Accept: "application/json" },
+          signal: controller.signal,
+        });
+        if (!response.ok) throw new Error("state_unavailable");
+        const payload: unknown = await response.json();
+        const learningState =
+          payload && typeof payload === "object" && "learningState" in payload
+            ? (payload as { learningState: unknown }).learningState
+            : null;
+        if (!isLearningState(learningState)) throw new Error("invalid_state");
+        applyLearningState(learningState);
+      } catch (error) {
+        if (!(error instanceof DOMException && error.name === "AbortError")) {
+          setToast("Progress sync is unavailable. Try refreshing.");
+        }
+      } finally {
+        if (!controller.signal.aborted) setProgressReady(true);
+      }
+    }
+    void loadAccountState();
+    return () => controller.abort();
+  }, [applyLearningState, isRegistered]);
+
+  useEffect(() => {
+    if (!progressReady || isRegistered) return;
     window.localStorage.setItem(
       "studyscroll-saved",
       JSON.stringify(Array.from(saved)),
     );
-  }, [saved]);
+  }, [isRegistered, progressReady, saved]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -223,7 +283,7 @@ export function StudyApp() {
   }, []);
 
   useEffect(() => {
-    if (!progressReady) return;
+    if (!progressReady || isRegistered) return;
     const progress: StoredProgress = {
       attemptedQuestionIds: Array.from(completed),
       perfectQuestionIds: Array.from(perfectQuestions),
@@ -232,7 +292,7 @@ export function StudyApp() {
       dailyPerfect,
     };
     window.localStorage.setItem("studyscroll-progress", JSON.stringify(progress));
-  }, [completed, correctJudgments, dailyPerfect, perfectByTopic, perfectQuestions, progressReady]);
+  }, [completed, correctJudgments, dailyPerfect, isRegistered, perfectByTopic, perfectQuestions, progressReady]);
 
   useEffect(() => {
     if (!toast) return;
@@ -249,9 +309,8 @@ export function StudyApp() {
   }, [levels, questionBank, selectedTopic]);
 
   const feedItems = useMemo(() => {
-    if (filteredQuestions.length === 0) return [];
-    return Array.from({ length: visibleCount }, (_, index) => ({
-      question: filteredQuestions[index % filteredQuestions.length],
+    return filteredQuestions.slice(0, visibleCount).map((question, index) => ({
+      question,
       instance: index,
     }));
   }, [filteredQuestions, visibleCount]);
@@ -262,7 +321,7 @@ export function StudyApp() {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setVisibleCount((count) => Math.min(count + 4, 40));
+          setVisibleCount((count) => Math.min(count + 4, filteredQuestions.length));
         }
       },
       { rootMargin: "240px" },
@@ -287,18 +346,34 @@ export function StudyApp() {
     setRevealed(false);
   }, []);
 
-  function toggleSaved(id: string) {
-    setSaved((current) => {
-      const next = new Set(current);
-      if (next.has(id)) {
-        next.delete(id);
-        setToast("Removed from saved");
-      } else {
-        next.add(id);
-        setToast("Saved for later");
-      }
-      return next;
-    });
+  async function toggleSaved(id: string) {
+    const wasSaved = saved.has(id);
+    const next = new Set(saved);
+    if (wasSaved) next.delete(id);
+    else next.add(id);
+    setSaved(next);
+    setToast(wasSaved ? "Removed from saved" : "Saved for later");
+
+    if (!isRegistered) return;
+    try {
+      const response = await fetch(`/api/account/saved/${encodeURIComponent(id)}`, {
+        method: wasSaved ? "DELETE" : "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-StudyScroll-Request": "1",
+        },
+        body: "{}",
+      });
+      if (!response.ok) throw new Error("save_failed");
+    } catch {
+      setSaved((current) => {
+        const rollback = new Set(current);
+        if (wasSaved) rollback.add(id);
+        else rollback.delete(id);
+        return rollback;
+      });
+      setToast("Could not sync that save. Try again.");
+    }
   }
 
   async function shareQuestion(question: PublicQuestion) {
@@ -333,7 +408,10 @@ export function StudyApp() {
             "Content-Type": "application/json",
             "X-StudyScroll-Request": "1",
           },
-          body: JSON.stringify({ decisions }),
+          body: JSON.stringify({
+            decisions,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          }),
         },
       );
       if (!response.ok) throw new Error("grading_failed");
@@ -344,21 +422,28 @@ export function StudyApp() {
 
       const count = payload.score;
       setGradeResult(payload);
-      if (!completed.has(activeQuestion.id)) {
-        setCorrectJudgments((total) => total + count);
-        setCompleted((current) => new Set(current).add(activeQuestion.id));
-      }
-      if (count === 3 && !perfectQuestions.has(activeQuestion.id)) {
-        const today = localDateKey();
-        setPerfectQuestions((current) => new Set(current).add(activeQuestion.id));
-        setPerfectByTopic((current) => ({
-          ...current,
-          [activeQuestion.topic]: (current[activeQuestion.topic] ?? 0) + 1,
-        }));
-        setDailyPerfect((current) => ({
-          ...current,
-          [today]: (current[today] ?? 0) + 1,
-        }));
+      if (isRegistered) {
+        if (!isLearningState(payload.learningState)) {
+          throw new Error("missing_learning_state");
+        }
+        applyLearningState(payload.learningState);
+      } else {
+        if (!completed.has(activeQuestion.id)) {
+          setCorrectJudgments((total) => total + count);
+          setCompleted((current) => new Set(current).add(activeQuestion.id));
+        }
+        if (count === 3 && !perfectQuestions.has(activeQuestion.id)) {
+          const today = localDateKey();
+          setPerfectQuestions((current) => new Set(current).add(activeQuestion.id));
+          setPerfectByTopic((current) => ({
+            ...current,
+            [activeQuestion.topic]: (current[activeQuestion.topic] ?? 0) + 1,
+          }));
+          setDailyPerfect((current) => ({
+            ...current,
+            [today]: (current[today] ?? 0) + 1,
+          }));
+        }
       }
       setRevealed(true);
     } catch {
@@ -438,10 +523,7 @@ export function StudyApp() {
             />
           )}
           {tab === "profile" && (
-            <ProfileView
-              isRegistered={isRegistered}
-              onNotice={setToast}
-            />
+            <ProfileView viewer={viewer} />
           )}
         </div>
 
@@ -746,7 +828,7 @@ function ProgressView({
           <LockKeyhole aria-hidden="true" size={17} />
           <p>
             <strong>Registered users only</strong>
-            Create a free account to keep your streak and subject ranks.
+            <Link href="/auth?mode=signup">Create an account or log in</Link> to keep your streak and ranks.
           </p>
         </aside>
       )}
@@ -834,13 +916,8 @@ function ProgressView({
   );
 }
 
-function ProfileView({
-  isRegistered,
-  onNotice,
-}: {
-  isRegistered: boolean;
-  onNotice: (message: string) => void;
-}) {
+function ProfileView({ viewer }: { viewer: AccountViewer }) {
+  const isRegistered = viewer.authenticated;
   return (
     <section className="tab-page profile-page" aria-labelledby="profile-title">
       <div className="tab-heading">
@@ -852,43 +929,43 @@ function ProfileView({
         <span className="profile-avatar"><UserRound aria-hidden="true" size={34} /></span>
         <div>
           <strong>{isRegistered ? "StudyScroller" : "Guest learner"}</strong>
-          <span>{isRegistered ? "Your StudyScroll account" : "Register to sync your account"}</span>
+          <span>{isRegistered ? viewer.email ?? "Your StudyScroll account" : "Register to sync your account"}</span>
         </div>
       </div>
 
       {isRegistered ? (
         <section className="account-settings" aria-labelledby="account-settings-title">
           <h2 id="account-settings-title">Account settings</h2>
-          <button type="button" className="account-setting-row" onClick={() => onNotice("Email editing is coming soon")}>
+          <Link href="/account" className="account-setting-row">
             <Mail aria-hidden="true" size={19} />
             <span>
               <strong>Edit email</strong>
               <small>Change your sign-in email</small>
             </span>
             <ChevronRight aria-hidden="true" size={18} />
-          </button>
-          <button type="button" className="account-setting-row" onClick={() => onNotice("Password editing is coming soon")}>
+          </Link>
+          <Link href="/account" className="account-setting-row">
             <KeyRound aria-hidden="true" size={19} />
             <span>
               <strong>Edit password</strong>
               <small>Choose a new password</small>
             </span>
             <ChevronRight aria-hidden="true" size={18} />
-          </button>
-          <button type="button" className="delete-account" onClick={() => onNotice("Account deletion is coming soon")}>
+          </Link>
+          <Link href="/account" className="delete-account">
             Delete account
-          </button>
+          </Link>
         </section>
       ) : (
         <section className="guest-account-card" aria-labelledby="guest-account-title">
           <h2 id="guest-account-title">Keep your progress</h2>
           <p>Create a free account to save your streak, ranks, and personalized feed.</p>
-          <button type="button" className="button button-primary" onClick={() => onNotice("Account creation is coming soon")}>
+          <Link href="/auth?mode=signup" className="button button-primary">
             Create free account
-          </button>
-          <button type="button" className="guest-sign-in" onClick={() => onNotice("Sign in is coming soon")}>
+          </Link>
+          <Link href="/auth" className="guest-sign-in">
             Already registered? Sign in
-          </button>
+          </Link>
         </section>
       )}
 

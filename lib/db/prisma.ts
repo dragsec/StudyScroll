@@ -18,11 +18,15 @@ export function getPrisma() {
   }
 
   if (!globalForPrisma.studyScrollPrisma) {
+    const configuredPoolMax = Number(process.env.DATABASE_POOL_MAX ?? "1");
+    const poolMax = Number.isSafeInteger(configuredPoolMax)
+      ? Math.min(Math.max(configuredPoolMax, 1), 10)
+      : 1;
     const adapter = new PrismaPg({
       connectionString,
       connectionTimeoutMillis: 5_000,
       idleTimeoutMillis: 10_000,
-      max: 10,
+      max: poolMax,
     });
     globalForPrisma.studyScrollPrisma = new PrismaClient({ adapter });
   }

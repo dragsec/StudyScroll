@@ -3,13 +3,25 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "dev": "next dev",
+    "dev:mock": "node scripts/run-with-data-source.mjs mock dev",
+    "dev:postgres": "node scripts/run-with-data-source.mjs postgres dev",
     "build": "next build",
     "start": "next start",
+    "start:mock": "node scripts/run-with-data-source.mjs mock start",
+    "start:postgres": "node scripts/run-with-data-source.mjs postgres start",
     "typecheck": "tsc --noEmit",
+    "test": "npm run test:security && npm run test:learning && npm run test:ai",
     "test:ai": "tsx --test lib/ai-question-generation/__tests__/*.test.ts",
+    "test:e2e": "playwright test",
+    "test:learning": "tsx --test lib/learning/__tests__/*.test.ts",
+    "test:e2e:headed": "playwright test --headed",
     "test:security": "tsx --test lib/security/__tests__/*.test.ts",
+    "check": "npm run typecheck && npm run validate:dataset && npm run db:validate && npm test && npm run build && npm run check:client-bundle && npm run test:e2e",
     "check:client-bundle": "node scripts/check-client-bundle.mjs",
     "validate:dataset": "node scripts/validate-question-dataset.mjs",
     "build:dataset": "node scripts/build-question-dataset.mjs",
@@ -24,6 +36,8 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.9.0",
     "@prisma/client": "^7.9.0",
+    "@supabase/ssr": "^0.12.3",
+    "@supabase/supabase-js": "^2.110.7",
     "dotenv": "^17.4.2",
     "lucide-react": "^1.25.0",
     "next": "^16.2.10",
@@ -35,6 +49,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "@types/node": "^26.1.1",
     "@types/pg": "^8.20.0",
     "@types/react": "^19.2.17",
