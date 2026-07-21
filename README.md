@@ -7,12 +7,9 @@ The idea is simple: instead of asking people to build a new learning habit, make
 **[Try the live app](https://study-scroll-silk.vercel.app)**
 
 <p align="center">
-  <img src="docs/images/landing.png" alt="StudyScroll mobile landing page" width="384" />
-</p>
-
-<p align="center">
-  <img src="docs/images/feed.png" alt="StudyScroll learning feed" width="380" />
-  <img src="docs/images/progress.png" alt="StudyScroll streak and subject ranks" width="380" />
+  <img src="docs/images/landing.png" alt="StudyScroll mobile landing page" width="250" />
+  <img src="docs/images/feed.png" alt="StudyScroll learning feed" width="250" />
+  <img src="docs/images/progress.png" alt="StudyScroll streak and subject ranks" width="250" />
 </p>
 
 ## How it works
