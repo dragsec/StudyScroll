@@ -1,11 +1,13 @@
 node_modules/
 .next/
 .next-e2e/
+next-env.d.ts
 out/
 .env*
 !.env.example
 npm-debug.log*
 .codex-dev.log
+.codex-dev-error.log
 .DS_Store
 *.tsbuildinfo
 lib/generated/prisma/

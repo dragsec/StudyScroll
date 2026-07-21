@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Mono, IBM_Plex_Sans, Sora } from "next/font/google";
+import { AppLaunchSplash } from "@/components/AppLaunchSplash";
 import "./globals.css";
 
 const sora = Sora({
@@ -41,6 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body className={fonts}>
+        <AppLaunchSplash />
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>

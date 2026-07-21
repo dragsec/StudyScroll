@@ -29,12 +29,31 @@ export type QuestionFeedResult = {
   datasetVersion: string;
 };
 
+export type QuestionFeedPage = QuestionFeedResult & {
+  total: number;
+  topicCounts: Record<string, number>;
+};
+
 const questionInclude = {
   topic: true,
   questionSet: { select: { datasetVersion: true } },
   reference: true,
   answers: { orderBy: { position: "asc" as const } },
 } satisfies Prisma.QuestionInclude;
+
+const publishedQuestionWhere = {
+  isActive: true,
+  reviewStatus: ReviewStatus.APPROVED,
+  topic: { isActive: true },
+  questionSet: { status: PublishStatus.PUBLISHED },
+} satisfies Prisma.QuestionWhereInput;
+
+function countTopics(questions: Question[]) {
+  return questions.reduce<Record<string, number>>((counts, question) => {
+    counts[question.topic] = (counts[question.topic] ?? 0) + 1;
+    return counts;
+  }, {});
+}
 
 function configuredDataSource(): ConfiguredQuestionDataSource {
   const value = process.env.QUESTION_DATA_SOURCE?.trim().toLowerCase() || "auto";
@@ -88,12 +107,7 @@ function mapQuestionRow(
 
 async function readPublishedQuestions(): Promise<QuestionFeedResult> {
   const rows = await getPrisma().question.findMany({
-    where: {
-      isActive: true,
-      reviewStatus: ReviewStatus.APPROVED,
-      topic: { isActive: true },
-      questionSet: { status: PublishStatus.PUBLISHED },
-    },
+    where: publishedQuestionWhere,
     include: questionInclude,
     orderBy: [{ topic: { name: "asc" } }, { position: "asc" }],
   });
@@ -105,6 +119,62 @@ async function readPublishedQuestions(): Promise<QuestionFeedResult> {
     questions: interleaveQuestionTopics(mapped),
     source: "postgres",
     datasetVersion,
+  };
+}
+
+export async function getQuestionFeedPage({
+  offset,
+  limit,
+}: {
+  offset: number;
+  limit: number;
+}): Promise<QuestionFeedPage> {
+  if (resolvedDataSource() === "mock") {
+    return {
+      questions: localQuestions.slice(offset, offset + limit),
+      source: "mock",
+      datasetVersion: "v1",
+      total: localQuestions.length,
+      topicCounts: countTopics(localQuestions),
+    };
+  }
+
+  const [rows, total, topicsWithCounts] = await Promise.all([
+    getPrisma().question.findMany({
+      where: publishedQuestionWhere,
+      include: questionInclude,
+      orderBy: [{ position: "asc" }, { topic: { name: "asc" } }],
+      skip: offset,
+      take: limit,
+    }),
+    getPrisma().question.count({ where: publishedQuestionWhere }),
+    getPrisma().topic.findMany({
+      where: { isActive: true },
+      select: {
+        name: true,
+        _count: {
+          select: {
+            questions: {
+              where: {
+                isActive: true,
+                reviewStatus: ReviewStatus.APPROVED,
+                questionSet: { status: PublishStatus.PUBLISHED },
+              },
+            },
+          },
+        },
+      },
+    }),
+  ]);
+
+  return {
+    questions: rows.map(mapQuestionRow),
+    source: "postgres",
+    datasetVersion: rows[0]?.questionSet.datasetVersion ?? "database",
+    total,
+    topicCounts: Object.fromEntries(
+      topicsWithCounts.map((topic) => [topic.name, topic._count.questions]),
+    ),
   };
 }
 
@@ -121,13 +191,7 @@ export async function getQuestionForGrading(questionId: string): Promise<Questio
   }
 
   const row = await getPrisma().question.findFirst({
-    where: {
-      key: questionId,
-      isActive: true,
-      reviewStatus: ReviewStatus.APPROVED,
-      topic: { isActive: true },
-      questionSet: { status: PublishStatus.PUBLISHED },
-    },
+    where: { ...publishedQuestionWhere, key: questionId },
     include: questionInclude,
   });
   return row ? mapQuestionRow(row) : null;

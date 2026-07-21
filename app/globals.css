@@ -27,6 +27,7 @@
   --z-backdrop: 20;
   --z-sheet: 30;
   --z-toast: 40;
+  --z-splash: 50;
 }
 
 * {
@@ -106,6 +107,49 @@ button:disabled {
   overflow: hidden;
   white-space: nowrap;
   border: 0;
+}
+
+.app-launch-splash {
+  position: fixed;
+  z-index: var(--z-splash);
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+  background: var(--surface);
+  animation: app-launch-exit 180ms var(--ease-out) 520ms both;
+}
+
+.app-launch-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  color: var(--text);
+  font-family: var(--font-sora), system-ui, sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+
+.app-launch-wordmark span:last-child {
+  color: var(--primary);
+}
+
+@keyframes app-launch-exit {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-launch-splash {
+    animation-duration: 1ms;
+  }
 }
 
 .button {
@@ -668,6 +712,104 @@ button:disabled {
   border: 1px solid var(--outline);
   border-radius: 1rem;
   background: var(--surface-raised);
+}
+
+.feed-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.feed-loading-more {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  color: var(--text-secondary);
+  font-family: var(--font-plex-mono), monospace;
+  font-size: 0.75rem;
+}
+
+.feed-loading-more .skeleton-block {
+  width: 0.65rem;
+  height: 0.65rem;
+}
+
+.question-card-skeleton {
+  min-height: 16rem;
+  overflow: hidden;
+}
+
+.skeleton-persona {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(0, 1fr) 4rem;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.skeleton-block {
+  display: block;
+  border-radius: 999px;
+  background: var(--surface-control);
+  animation: skeleton-pulse 900ms ease-in-out infinite alternate;
+}
+
+.skeleton-avatar {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.skeleton-name {
+  width: min(9rem, 72%);
+  height: 0.75rem;
+}
+
+.skeleton-badge {
+  width: 4rem;
+  height: 1.5rem;
+}
+
+.skeleton-topic {
+  width: 5rem;
+  height: 0.65rem;
+  margin-top: 1.15rem;
+}
+
+.skeleton-title {
+  width: 92%;
+  height: 0.95rem;
+  margin-top: 1.8rem;
+}
+
+.skeleton-title-short {
+  width: 64%;
+  margin-top: 0.55rem;
+}
+
+.skeleton-context {
+  width: 100%;
+  height: 2.5rem;
+  margin-top: 1rem;
+  border-radius: 0.75rem;
+}
+
+.skeleton-action {
+  width: 4.5rem;
+  height: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+@keyframes skeleton-pulse {
+  from { opacity: 0.48; }
+  to { opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-block {
+    animation: none;
+    opacity: 0.72;
+  }
 }
 
 .card-open-area {
@@ -1797,14 +1939,15 @@ button:disabled {
 }
 
 .rank-rules-sheet {
-  height: min(46rem, calc(100% - 2rem));
+  height: auto;
+  max-height: min(36rem, calc(100% - 2rem));
   display: flex;
   flex-direction: column;
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
 
 .rank-rules-scroll {
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   padding: 0 0.25rem 1rem 0;
   overflow-y: auto;
 }

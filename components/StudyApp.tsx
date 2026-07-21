@@ -35,6 +35,7 @@ import {
   type Difficulty,
   type PublicQuestion,
   type QuestionGrade,
+  type Topic,
   type Verdict,
   topics,
 } from "@/data/question-types";
@@ -65,6 +66,11 @@ const rankTiers = [
 
 type QuestionApiResponse = {
   questions: PublicQuestion[];
+  meta: {
+    total: number;
+    next_cursor: string | null;
+    topic_counts: Partial<Record<Topic, number>>;
+  };
 };
 
 function isQuestionGrade(value: unknown): value is QuestionGrade {
@@ -83,10 +89,10 @@ function isQuestionGrade(value: unknown): value is QuestionGrade {
 
 function isQuestionApiResponse(value: unknown): value is QuestionApiResponse {
   if (!value || typeof value !== "object" || !("questions" in value)) return false;
-  const candidate = value as { questions?: unknown };
+  const candidate = value as { questions?: unknown; meta?: unknown };
+  const meta = candidate.meta as Partial<QuestionApiResponse["meta"]> | undefined;
   return (
     Array.isArray(candidate.questions) &&
-    candidate.questions.length > 0 &&
     candidate.questions.every(
       (question) =>
         question &&
@@ -105,8 +111,27 @@ function isQuestionApiResponse(value: unknown): value is QuestionApiResponse {
         "answers" in question &&
         Array.isArray(question.answers) &&
         question.answers.length === 3,
-    )
+    ) &&
+    Boolean(meta) &&
+    Number.isInteger(meta?.total) &&
+    meta!.total! >= 0 &&
+    (typeof meta?.next_cursor === "string" || meta?.next_cursor === null) &&
+    Boolean(meta?.topic_counts) &&
+    typeof meta?.topic_counts === "object"
   );
+}
+
+async function requestQuestionPage(cursor: string | null, signal?: AbortSignal) {
+  const params = new URLSearchParams({ limit: "12" });
+  if (cursor) params.set("cursor", cursor);
+  const response = await fetch(`/api/questions?${params}`, {
+    headers: { Accept: "application/json" },
+    signal,
+  });
+  if (!response.ok) throw new Error("question_feed_unavailable");
+  const payload: unknown = await response.json();
+  if (!isQuestionApiResponse(payload)) throw new Error("invalid_question_feed");
+  return payload;
 }
 
 function isLearningState(value: unknown): value is LearningState {
@@ -203,7 +228,13 @@ export function StudyApp({ viewer }: { viewer: AccountViewer }) {
   const [dailyPerfect, setDailyPerfect] = useState<Record<string, number>>({});
   const [progressReady, setProgressReady] = useState(false);
   const [questionBank, setQuestionBank] = useState<PublicQuestion[]>([]);
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [questionLoadState, setQuestionLoadState] = useState<"loading" | "ready" | "error">(
+    "loading",
+  );
+  const [nextQuestionCursor, setNextQuestionCursor] = useState<string | null>(null);
+  const [questionTotal, setQuestionTotal] = useState(0);
+  const [topicCounts, setTopicCounts] = useState<Partial<Record<Topic, number>>>({});
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [toast, setToast] = useState("");
   const sentinelRef = useRef<HTMLDivElement>(null);
 
@@ -271,16 +302,16 @@ export function StudyApp({ viewer }: { viewer: AccountViewer }) {
 
     async function loadQuestionBank() {
       try {
-        const response = await fetch("/api/questions", {
-          headers: { Accept: "application/json" },
-          signal: controller.signal,
-        });
-        if (!response.ok) return;
-        const payload: unknown = await response.json();
-        if (isQuestionApiResponse(payload)) setQuestionBank(payload.questions);
+        const payload = await requestQuestionPage(null, controller.signal);
+        setQuestionBank(payload.questions);
+        setNextQuestionCursor(payload.meta.next_cursor);
+        setQuestionTotal(payload.meta.total);
+        setTopicCounts(payload.meta.topic_counts);
+        setQuestionLoadState("ready");
       } catch (error) {
         if (!(error instanceof DOMException && error.name === "AbortError")) {
           console.warn("The question API is unavailable.");
+          setQuestionLoadState("error");
         }
       }
     }
@@ -316,26 +347,43 @@ export function StudyApp({ viewer }: { viewer: AccountViewer }) {
   }, [levels, questionBank, selectedTopic]);
 
   const feedItems = useMemo(() => {
-    return filteredQuestions.slice(0, visibleCount).map((question, index) => ({
+    return filteredQuestions.map((question, index) => ({
       question,
       instance: index,
     }));
-  }, [filteredQuestions, visibleCount]);
+  }, [filteredQuestions]);
+
+  const loadMoreQuestions = useCallback(async () => {
+    if (!nextQuestionCursor || isLoadingMore) return;
+    setIsLoadingMore(true);
+    try {
+      const payload = await requestQuestionPage(nextQuestionCursor);
+      setQuestionBank((current) => {
+        const known = new Set(current.map((question) => question.id));
+        return [...current, ...payload.questions.filter((question) => !known.has(question.id))];
+      });
+      setNextQuestionCursor(payload.meta.next_cursor);
+      setQuestionTotal(payload.meta.total);
+      setTopicCounts(payload.meta.topic_counts);
+    } catch {
+      setToast("More questions couldn't load. Try scrolling again.");
+    } finally {
+      setIsLoadingMore(false);
+    }
+  }, [isLoadingMore, nextQuestionCursor]);
 
   useEffect(() => {
     const sentinel = sentinelRef.current;
-    if (!sentinel || tab !== "scroll" || filteredQuestions.length === 0) return;
+    if (!sentinel || tab !== "scroll" || !nextQuestionCursor || isLoadingMore) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisibleCount((count) => Math.min(count + 4, filteredQuestions.length));
-        }
+        if (entry.isIntersecting) void loadMoreQuestions();
       },
       { rootMargin: "240px" },
     );
     observer.observe(sentinel);
     return () => observer.disconnect();
-  }, [filteredQuestions.length, tab]);
+  }, [isLoadingMore, loadMoreQuestions, nextQuestionCursor, questionBank.length, tab]);
 
   const openQuestion = useCallback((question: PublicQuestion) => {
     setActiveQuestion(question);
@@ -499,6 +547,9 @@ export function StudyApp({ viewer }: { viewer: AccountViewer }) {
             <FeedView
               feedItems={feedItems}
               filteredCount={filteredQuestions.length}
+              hasMore={nextQuestionCursor !== null}
+              isLoadingMore={isLoadingMore}
+              loadState={questionLoadState}
               levels={levels}
               selectedTopic={selectedTopic}
               saved={saved}
@@ -560,12 +611,12 @@ export function StudyApp({ viewer }: { viewer: AccountViewer }) {
 
         {sheet === "topics" && (
           <TopicSheet
-            questionBank={questionBank}
+            questionTotal={questionTotal}
             selected={selectedTopic}
+            topicCounts={topicCounts}
             onClose={() => setSheet(null)}
             onSelect={(topic) => {
               setSelectedTopic(topic);
-              setVisibleCount(6);
             }}
           />
         )}
@@ -584,7 +635,6 @@ export function StudyApp({ viewer }: { viewer: AccountViewer }) {
                 }
                 return next;
               });
-              setVisibleCount(6);
             }}
           />
         )}
@@ -604,6 +654,9 @@ type FeedItem = { question: PublicQuestion; instance: number };
 function FeedView({
   feedItems,
   filteredCount,
+  hasMore,
+  isLoadingMore,
+  loadState,
   levels,
   selectedTopic,
   saved,
@@ -616,6 +669,9 @@ function FeedView({
 }: {
   feedItems: FeedItem[];
   filteredCount: number;
+  hasMore: boolean;
+  isLoadingMore: boolean;
+  loadState: "loading" | "ready" | "error";
   levels: Set<Difficulty>;
   selectedTopic: string;
   saved: Set<string>;
@@ -637,7 +693,21 @@ function FeedView({
         </button>
       </div>
       <section className="feed" aria-label="Learning feed">
-        {filteredCount === 0 ? (
+        {loadState === "loading" ? (
+          <FeedSkeleton />
+        ) : loadState === "error" ? (
+          <div className="empty-state" role="alert">
+            <h1>Questions couldn't load</h1>
+            <p>Check your connection and try again.</p>
+            <button
+              type="button"
+              className="button button-primary"
+              onClick={() => window.location.reload()}
+            >
+              Try again
+            </button>
+          </div>
+        ) : filteredCount === 0 && !hasMore ? (
           <div className="empty-state">
             <h1>No cards match</h1>
             <p>Turn on another difficulty or choose a different topic.</p>
@@ -657,9 +727,43 @@ function FeedView({
             />
           ))
         )}
+        {loadState === "ready" && hasMore && (isLoadingMore || filteredCount === 0) && (
+          <FeedLoadingMore />
+        )}
         <div ref={sentinelRef} className="feed-sentinel" aria-hidden="true" />
       </section>
     </>
+  );
+}
+
+function FeedSkeleton() {
+  return (
+    <div className="feed-loading" role="status" aria-live="polite">
+      <span className="sr-only">Loading questions</span>
+      {[0, 1, 2].map((item) => (
+        <div className="question-card question-card-skeleton" aria-hidden="true" key={item}>
+          <div className="skeleton-persona">
+            <span className="skeleton-block skeleton-avatar" />
+            <span className="skeleton-block skeleton-name" />
+            <span className="skeleton-block skeleton-badge" />
+          </div>
+          <span className="skeleton-block skeleton-topic" />
+          <span className="skeleton-block skeleton-title" />
+          <span className="skeleton-block skeleton-title skeleton-title-short" />
+          <span className="skeleton-block skeleton-context" />
+          <span className="skeleton-block skeleton-action" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FeedLoadingMore() {
+  return (
+    <div className="feed-loading-more" role="status">
+      <span className="skeleton-block" aria-hidden="true" />
+      <span>Loading more</span>
+    </div>
   );
 }
 
@@ -1038,14 +1142,22 @@ function BottomSheet({
   className?: string;
 }) {
   const sheetRef = useRef<HTMLElement>(null);
+  const onCloseRef = useRef(onClose);
+  onCloseRef.current = onClose;
+
   useEffect(() => {
-    sheetRef.current?.focus();
+    const returnFocusTo =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    sheetRef.current?.focus({ preventScroll: true });
     function handleKey(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") onCloseRef.current();
     }
     window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [onClose]);
+    return () => {
+      window.removeEventListener("keydown", handleKey);
+      returnFocusTo?.focus({ preventScroll: true });
+    };
+  }, []);
   return (
     <div className="sheet-layer" role="presentation">
       <button type="button" className="sheet-backdrop" onClick={onClose} aria-label="Close sheet" />
@@ -1174,13 +1286,15 @@ function QuestionSheet({
 }
 
 function TopicSheet({
-  questionBank,
+  questionTotal,
   selected,
+  topicCounts,
   onSelect,
   onClose,
 }: {
-  questionBank: PublicQuestion[];
+  questionTotal: number;
   selected: (typeof topics)[number];
+  topicCounts: Partial<Record<Topic, number>>;
   onSelect: (topic: (typeof topics)[number]) => void;
   onClose: () => void;
 }) {
@@ -1209,8 +1323,8 @@ function TopicSheet({
         {filteredTopics.map((topic) => {
           const count =
             topic === "All"
-              ? questionBank.length
-              : questionBank.filter((question) => question.topic === topic).length;
+              ? questionTotal
+              : topicCounts[topic] ?? 0;
           return (
             <Fragment key={topic}>
               <button
