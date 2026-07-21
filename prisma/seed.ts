@@ -156,7 +156,9 @@ async function seed() {
         },
       });
     },
-    { maxWait: 5_000, timeout: 30_000 },
+    // Hosted databases add network latency to every upsert. Keep the import
+    // atomic, but allow enough time for the full curated dataset to finish.
+    { maxWait: 10_000, timeout: 120_000 },
   );
 
   const [topicCount, questionCount, answerCount] = await Promise.all([
