@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   ArrowDown,
+  ArrowRight,
   BookOpen,
   Brain,
   CirclePlay,
@@ -101,24 +102,46 @@ export default function LandingPage() {
           <span>Scroll</span>
         </header>
         <div className="hero-inner">
-          <p className="hero-kicker">learning tool for the AI era</p>
-          <div className="hero-copy">
-            <h1 id="hero-title">
-              Learn by <span>scrolling.</span>
-            </h1>
-            <p>Scroll through quick coding challenges. Test your judgment as you go.</p>
+          <div className="hero-content">
+            <p className="hero-kicker">learning tool for the AI era</p>
+            <div className="hero-copy">
+              <h1 id="hero-title">
+                Learn by <span>scrolling.</span>
+              </h1>
+              <p>Scroll through quick coding challenges. Test your judgment as you go.</p>
+            </div>
+            <div className="hero-actions">
+              <Link className="button button-primary" href="/learn">
+                Start learning
+              </Link>
+              <Link className="button button-secondary" href="/auth?mode=signup">
+                Sign up
+              </Link>
+              <a className="scroll-more" href="#how-it-works">
+                <span>scroll for more info</span>
+                <ArrowDown aria-hidden="true" size={22} />
+              </a>
+            </div>
           </div>
-          <div className="hero-actions">
-            <Link className="button button-primary" href="/learn">
-              Start learning
-            </Link>
-            <Link className="button button-secondary" href="/auth?mode=signup">
-              Sign up
-            </Link>
-            <a className="scroll-more" href="#how-it-works">
-              <span>scroll for more info</span>
-              <ArrowDown aria-hidden="true" size={22} />
-            </a>
+          <div className="hero-feed-preview" aria-hidden="true">
+            <div className="hero-preview-post">
+              <div className="hero-preview-author">
+                <span className="hero-preview-avatar">M</span>
+                <span>
+                  <strong>@mira.builds</strong>
+                  <small>Backend developer</small>
+                </span>
+                <span className="hero-preview-level">medium</span>
+              </div>
+              <p className="hero-preview-topic">System Design</p>
+              <p className="hero-preview-question">Why does a cache sometimes show old data even after the database has changed?</p>
+              <code>Cache-Control: max-age=300</code>
+              <div className="hero-preview-footer">
+                <span>ANSWER <ArrowRight size={17} /></span>
+                <span>3 replies to judge</span>
+              </div>
+            </div>
+            <p>One question. Three calls.</p>
           </div>
         </div>
       </section>

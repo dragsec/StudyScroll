@@ -244,6 +244,10 @@ button:disabled {
 
 .hero-inner {
   min-height: calc(100svh - 9rem);
+}
+
+.hero-content {
+  min-height: inherit;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -307,6 +311,10 @@ button:disabled {
   margin-top: 1rem;
   font-family: var(--font-plex-mono), monospace;
   font-size: 0.75rem;
+}
+
+.hero-feed-preview {
+  display: none;
 }
 
 .section-content {
@@ -2436,6 +2444,178 @@ button:disabled {
 }
 
 @media (min-width: 64rem) {
+  .landing-hero {
+    min-height: min(100svh, 54rem);
+    padding: clamp(3rem, 5vw, 5rem) max(3rem, env(safe-area-inset-left));
+    overflow: hidden;
+  }
+
+  .landing-brand {
+    top: clamp(2.25rem, 4vw, 4rem);
+    left: max(3rem, env(safe-area-inset-left));
+    transform: none;
+  }
+
+  .hero-inner {
+    width: min(100%, 72rem);
+    min-height: clamp(38rem, calc(100svh - 10rem), 44rem);
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(23rem, 0.78fr);
+    align-items: center;
+    gap: clamp(3rem, 8vw, 8rem);
+  }
+
+  .hero-content {
+    min-height: 0;
+    justify-content: center;
+    gap: 2.25rem;
+  }
+
+  .hero-kicker {
+    width: fit-content;
+  }
+
+  .hero-copy {
+    text-align: left;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(4.25rem, 6.5vw, 5.75rem);
+  }
+
+  .hero-copy p {
+    max-width: 30rem;
+    margin-left: 0;
+  }
+
+  .hero-actions {
+    width: min(100%, 22rem);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .hero-actions .scroll-more {
+    grid-column: 1 / -1;
+    min-height: auto;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 0.25rem 0 0;
+  }
+
+  .hero-feed-preview {
+    display: block;
+    align-self: center;
+  }
+
+  .hero-preview-post {
+    padding: 1.5rem;
+    border: 1px solid var(--outline-soft);
+    border-radius: 1rem;
+    background: var(--surface-raised);
+  }
+
+  .hero-preview-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text);
+    font-family: var(--font-plex-mono), monospace;
+    font-size: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .hero-preview-author > span:nth-child(2) {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .hero-preview-author strong {
+    font-size: 0.875rem;
+  }
+
+  .hero-preview-author small {
+    color: var(--text-secondary);
+    font-size: inherit;
+  }
+
+  .hero-preview-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--surface-muted);
+    color: var(--primary);
+    font-family: var(--font-sora), system-ui, sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .hero-preview-level {
+    margin-left: auto;
+    padding: 0.35rem 0.625rem;
+    border: 1px solid var(--outline-soft);
+    border-radius: 999px;
+    background: var(--difficulty-medium-bg);
+    color: var(--difficulty-medium-text);
+  }
+
+  .hero-preview-topic {
+    margin: 1.5rem 0 0;
+    color: var(--primary-pale);
+    font-family: var(--font-plex-mono), monospace;
+    font-size: 0.75rem;
+  }
+
+  .hero-preview-question {
+    margin: 1rem 0 1.25rem;
+    color: var(--primary);
+    font-family: var(--font-sora), system-ui, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  .hero-preview-post code {
+    display: block;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--outline-soft);
+    border-radius: 0.75rem;
+    background: var(--surface-control);
+    color: var(--text);
+    font-family: var(--font-plex-mono), monospace;
+    font-size: 0.75rem;
+  }
+
+  .hero-preview-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1.25rem;
+    color: var(--text-secondary);
+    font-family: var(--font-plex-mono), monospace;
+    font-size: 0.75rem;
+  }
+
+  .hero-preview-footer span:first-child {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--primary-strong);
+  }
+
+  .hero-feed-preview > p {
+    margin: 1rem 0 0;
+    color: var(--text-secondary);
+    font-family: var(--font-plex-mono), monospace;
+    font-size: 0.75rem;
+    text-align: right;
+  }
+
   .app-stage {
     display: block;
     min-height: 100dvh;
