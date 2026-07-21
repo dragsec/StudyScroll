@@ -1574,6 +1574,20 @@ button:disabled {
   color: #777b8c;
 }
 
+.account-logout-row {
+  font: inherit;
+}
+
+.account-logout-row > svg {
+  color: var(--primary-pale);
+}
+
+.profile-action-error {
+  margin: 0.75rem 0 0;
+  color: #ff9ca8;
+  font-size: 0.75rem;
+}
+
 .delete-account {
   min-height: 2.75rem;
   display: inline-flex;

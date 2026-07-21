@@ -12,6 +12,7 @@ import {
   Flame,
   KeyRound,
   LockKeyhole,
+  LogOut,
   Mail,
   Search,
   Share2,
@@ -40,6 +41,7 @@ import {
   topics,
 } from "@/data/question-types";
 import type { AccountViewer, LearningState } from "@/data/account-types";
+import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 import {
   Fragment,
   useCallback,
@@ -1035,6 +1037,22 @@ function ProgressView({
 
 function ProfileView({ viewer }: { viewer: AccountViewer }) {
   const isRegistered = viewer.authenticated;
+  const [signingOut, setSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState("");
+
+  async function signOut() {
+    if (signingOut) return;
+    setSigningOut(true);
+    setSignOutError("");
+    const { error } = await createBrowserSupabaseClient().auth.signOut();
+    if (error) {
+      setSignOutError("Could not log you out. Try again.");
+      setSigningOut(false);
+      return;
+    }
+    window.location.assign("/");
+  }
+
   return (
     <section className="tab-page profile-page" aria-labelledby="profile-title">
       <div className="tab-heading">
@@ -1069,6 +1087,14 @@ function ProfileView({ viewer }: { viewer: AccountViewer }) {
             </span>
             <ChevronRight aria-hidden="true" size={18} />
           </Link>
+          <button type="button" className="account-setting-row account-logout-row" onClick={signOut} disabled={signingOut}>
+            <LogOut aria-hidden="true" size={19} />
+            <span>
+              <strong>{signingOut ? "Logging out..." : "Log out"}</strong>
+              <small>End this session on this device</small>
+            </span>
+          </button>
+          {signOutError && <p className="profile-action-error" role="alert">{signOutError}</p>}
           <Link href="/account" className="delete-account">
             Delete account
           </Link>
