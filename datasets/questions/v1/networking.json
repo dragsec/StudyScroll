@@ -9,11 +9,11 @@
     {
       "id": "networking-tcp-udp",
       "difficulty": "easy",
-      "prompt": "How does TCP differ from UDP?",
+      "prompt": "If I am choosing between TCP and UDP, what reliability work does TCP take on that UDP leaves to the application?",
       "answers": [
         {
           "id": "a",
-          "text": "TCP provides an ordered reliable byte stream.",
+          "text": "TCP gives the application one ordered, reliable byte stream instead of a pile of independent packets.",
           "verdict": "legit",
           "feedback": {
             "legit": "TCP provides an ordered reliable byte stream. Marking it Legit was correct.",
@@ -22,7 +22,7 @@
         },
         {
           "id": "b",
-          "text": "UDP datagrams can be lost, duplicated, or reordered.",
+          "text": "UDP datagrams may vanish, arrive twice, or show up out of order. The protocol does not repair that for you.",
           "verdict": "legit",
           "feedback": {
             "legit": "UDP datagrams can be lost, duplicated, or reordered. The source agrees with your Legit vote.",
@@ -31,7 +31,7 @@
         },
         {
           "id": "c",
-          "text": "UDP avoids connection setup and lets applications choose their own reliability strategy.",
+          "text": "UDP skips connection setup and lets the application decide whether it needs retries, ordering, or no reliability layer at all.",
           "verdict": "legit",
           "feedback": {
             "legit": "UDP avoids connection setup and lets applications choose their own reliability strategy. The evidence backs your Legit choice.",
@@ -48,11 +48,11 @@
     {
       "id": "networking-dns",
       "difficulty": "easy",
-      "prompt": "What does DNS normally resolve?",
+      "prompt": "When an app asks DNS about a hostname, what kind of answer comes back, and why might a resolver reuse it?",
       "answers": [
         {
           "id": "a",
-          "text": "It encrypts every application connection automatically.",
+          "text": "DNS also encrypts the application's entire connection automatically. Once the name resolves, TLS is unnecessary.",
           "verdict": "sus",
           "feedback": {
             "legit": "DNS resolution and transport encryption are separate mechanisms. The Legit label misses the flaw here.",
@@ -61,7 +61,7 @@
         },
         {
           "id": "b",
-          "text": "Resolvers may cache answers until their time-to-live expires.",
+          "text": "Resolvers can cache a record until its time-to-live expires instead of repeating the lookup every time.",
           "verdict": "legit",
           "feedback": {
             "legit": "Resolvers may cache answers until their time-to-live expires. Legit was the accurate read.",
@@ -70,7 +70,7 @@
         },
         {
           "id": "c",
-          "text": "Names such as hostnames into records including IP addresses.",
+          "text": "DNS maps names to records, including address records that contain IPv4 or IPv6 addresses.",
           "verdict": "legit",
           "feedback": {
             "legit": "Names such as hostnames into records including IP addresses. Marking it Legit was correct.",
@@ -87,11 +87,11 @@
     {
       "id": "networking-http-idempotent",
       "difficulty": "easy",
-      "prompt": "What does idempotent mean for an HTTP method?",
+      "prompt": "People call an HTTP method idempotent when retries are safer. What stays the same after repeating the request?",
       "answers": [
         {
           "id": "a",
-          "text": "An idempotent request must return byte-for-byte identical responses every time.",
+          "text": "Every retry must return the exact same response bytes, headers, timestamp, and status code.",
           "verdict": "sus",
           "feedback": {
             "legit": "Idempotency concerns the intended server effect; response content can change between requests. The reply changes an important technical fact.",
@@ -100,7 +100,7 @@
         },
         {
           "id": "b",
-          "text": "Repeating the same request has the same intended effect as sending it once.",
+          "text": "The intended effect on server state should match the effect of sending the request once.",
           "verdict": "legit",
           "feedback": {
             "legit": "Repeating the same request has the same intended effect as sending it once. You classified that correctly as Legit.",
@@ -109,7 +109,7 @@
         },
         {
           "id": "c",
-          "text": "The request has no side effects.",
+          "text": "Idempotent means side-effect free. Any request that changes stored data is automatically non-idempotent.",
           "verdict": "sus",
           "feedback": {
             "legit": "An idempotent request can change state; repetition should not add further intended change. The original claim needed a Sus vote.",
@@ -126,11 +126,11 @@
     {
       "id": "networking-tls-certificate",
       "difficulty": "medium",
-      "prompt": "What does a TLS server certificate help a client verify?",
+      "prompt": "A browser accepts a server's TLS certificate. What identity and key binding has it actually verified?",
       "answers": [
         {
           "id": "a",
-          "text": "That a trusted issuer bound a public key to the requested identity.",
+          "text": "It verifies that a trusted issuer bound the presented public key to the identity the client requested.",
           "verdict": "legit",
           "feedback": {
             "legit": "That a trusted issuer bound a public key to the requested identity. Your Legit vote was right.",
@@ -139,7 +139,7 @@
         },
         {
           "id": "b",
-          "text": "Certificates authenticate identity and keys, not application correctness.",
+          "text": "That authenticates identity and key material, not whether the server's application code is secure or correct.",
           "verdict": "legit",
           "feedback": {
             "legit": "Certificates authenticate identity and keys, not application correctness. Your Legit judgment holds up.",
@@ -148,7 +148,7 @@
         },
         {
           "id": "c",
-          "text": "The hostname and validity period are part of normal verification.",
+          "text": "Normal validation also checks details such as the requested hostname and the certificate's validity period.",
           "verdict": "legit",
           "feedback": {
             "legit": "The hostname and validity period are part of normal verification. That is a solid Legit pick.",
@@ -165,11 +165,11 @@
     {
       "id": "networking-nat",
       "difficulty": "medium",
-      "prompt": "What does network address translation commonly do?",
+      "prompt": "A packet crosses a NAT boundary. Which parts of its addressing are commonly rewritten, and what security does that not imply?",
       "answers": [
         {
           "id": "a",
-          "text": "Provide end-to-end encryption by itself.",
+          "text": "NAT encrypts the packet end to end. Address translation and confidentiality are the same service.",
           "verdict": "sus",
           "feedback": {
             "legit": "NAT changes addressing; encryption requires a protocol such as TLS or IPsec. That makes the original claim unsafe to label Legit.",
@@ -178,7 +178,7 @@
         },
         {
           "id": "b",
-          "text": "NAT is a complete firewall that makes separate traffic policy unnecessary.",
+          "text": "It is a complete firewall by itself, so separate allow and deny policies only duplicate what NAT already guarantees.",
           "verdict": "sus",
           "feedback": {
             "legit": "Address translation is not a substitute for explicit firewall and access-control rules. The original claim needed a Sus vote.",
@@ -187,7 +187,7 @@
         },
         {
           "id": "c",
-          "text": "Rewrite address and often port information between network realms.",
+          "text": "NAT commonly rewrites IP addresses and often ports as traffic moves between network realms.",
           "verdict": "legit",
           "feedback": {
             "legit": "Rewrite address and often port information between network realms. You classified that correctly as Legit.",
@@ -204,11 +204,11 @@
     {
       "id": "networking-subnet",
       "difficulty": "medium",
-      "prompt": "What does an IP subnet prefix length describe?",
+      "prompt": "What does the `/24` part of an IP network tell a host when it decides whether a destination is on-link?",
       "answers": [
         {
           "id": "a",
-          "text": "A host can compare the destination with its on-link prefixes when making a routing decision.",
+          "text": "The host compares the destination against its configured on-link prefixes before choosing a direct path or a router.",
           "verdict": "legit",
           "feedback": {
             "legit": "A host can compare the destination with its on-link prefixes when making a routing decision. That is a solid Legit pick.",
@@ -217,7 +217,7 @@
         },
         {
           "id": "b",
-          "text": "Which leading address bits identify the network prefix.",
+          "text": "The prefix length says how many leading address bits identify the network portion.",
           "verdict": "legit",
           "feedback": {
             "legit": "Which leading address bits identify the network prefix. That makes your Legit call correct.",
@@ -226,7 +226,7 @@
         },
         {
           "id": "c",
-          "text": "The maximum TCP port number.",
+          "text": "It sets the highest TCP or UDP port number available to hosts inside the subnet.",
           "verdict": "sus",
           "feedback": {
             "legit": "Ports belong to the transport layer and are unrelated to the subnet prefix. That makes the original claim unsafe to label Legit.",
@@ -243,11 +243,11 @@
     {
       "id": "networking-arp",
       "difficulty": "medium",
-      "prompt": "What does ARP do on an IPv4 local network?",
+      "prompt": "My IPv4 host knows a neighbor's IP address but needs to send an Ethernet frame. What does ARP discover?",
       "answers": [
         {
           "id": "a",
-          "text": "Map an IPv4 address to a link-layer address.",
+          "text": "ARP resolves the neighbor's IPv4 address to its link-layer address on the local network.",
           "verdict": "legit",
           "feedback": {
             "legit": "Map an IPv4 address to a link-layer address. Marking it Legit was correct.",
@@ -256,7 +256,7 @@
         },
         {
           "id": "b",
-          "text": "Resolve public domain names globally.",
+          "text": "It resolves public domain names across the internet, acting as a lower-level replacement for DNS.",
           "verdict": "sus",
           "feedback": {
             "legit": "DNS resolves names; ARP operates on a local link. The original reply should be marked Sus.",
@@ -265,7 +265,7 @@
         },
         {
           "id": "c",
-          "text": "ARP requests are normally broadcast on the local network segment.",
+          "text": "The request is normally broadcast on the local segment so the owner of that IPv4 address can reply.",
           "verdict": "legit",
           "feedback": {
             "legit": "ARP requests are normally broadcast on the local network segment. The evidence backs your Legit choice.",
@@ -282,11 +282,11 @@
     {
       "id": "networking-flow-congestion",
       "difficulty": "medium",
-      "prompt": "How do flow control and congestion control differ?",
+      "prompt": "TCP has both flow control and congestion control. Which one protects the receiver, and which one reacts to the network?",
       "answers": [
         {
           "id": "a",
-          "text": "Congestion control reacts to capacity and contention in the network.",
+          "text": "Congestion control responds to contention and limited capacity along the network path.",
           "verdict": "legit",
           "feedback": {
             "legit": "Congestion control reacts to capacity and contention in the network. Your call matches the underlying rule.",
@@ -295,7 +295,7 @@
         },
         {
           "id": "b",
-          "text": "They are two names for the same receiver buffer setting.",
+          "text": "They are two labels for the same receiver-buffer value. Neither one considers conditions in the network.",
           "verdict": "sus",
           "feedback": {
             "legit": "They address different bottlenecks even though both can limit sending rate. That distinction makes the original answer Sus.",
@@ -304,7 +304,7 @@
         },
         {
           "id": "c",
-          "text": "Flow control protects the receiver from being overwhelmed.",
+          "text": "Flow control keeps a fast sender from overwhelming the receiving endpoint's available capacity.",
           "verdict": "legit",
           "feedback": {
             "legit": "Flow control protects the receiver from being overwhelmed. You were right to trust this reply.",
@@ -321,11 +321,11 @@
     {
       "id": "networking-cors",
       "difficulty": "medium",
-      "prompt": "What does browser CORS enforcement control?",
+      "prompt": "A browser blocks frontend code from reading a cross-origin response. What is CORS enforcing, and what is it not stopping?",
       "answers": [
         {
           "id": "a",
-          "text": "CORS by itself prevents cross-site request forgery against the server.",
+          "text": "CORS stops cross-site request forgery by preventing the browser from sending the request to the server at all.",
           "verdict": "sus",
           "feedback": {
             "legit": "CORS mainly controls browser access to responses; CSRF needs its own defenses. The original reply is what needed flagging.",
@@ -334,7 +334,7 @@
         },
         {
           "id": "b",
-          "text": "Whether frontend code may read certain cross-origin responses.",
+          "text": "It controls whether browser-based frontend code may read certain responses from another origin.",
           "verdict": "legit",
           "feedback": {
             "legit": "Whether frontend code may read certain cross-origin responses. That makes your Legit call correct.",
@@ -343,7 +343,7 @@
         },
         {
           "id": "c",
-          "text": "Whether a non-browser client can send packets to the server.",
+          "text": "It is a network firewall for every client. Curl and backend services cannot send packets when CORS denies an origin.",
           "verdict": "sus",
           "feedback": {
             "legit": "CORS is a browser security policy, not a network firewall. That distinction makes the original answer Sus.",
@@ -360,11 +360,11 @@
     {
       "id": "networking-quic",
       "difficulty": "hard",
-      "prompt": "Why does QUIC run over UDP?",
+      "prompt": "QUIC wants reliable streams, so why build it on UDP instead of putting everything back inside TCP?",
       "answers": [
         {
           "id": "a",
-          "text": "It can implement transport features in user space while using UDP datagrams for network traversal.",
+          "text": "UDP provides datagram traversal while QUIC implements transport behavior in user space, where it can evolve more quickly.",
           "verdict": "legit",
           "feedback": {
             "legit": "It can implement transport features in user space while using UDP datagrams for network traversal. That makes your Legit call correct.",
@@ -373,7 +373,7 @@
         },
         {
           "id": "b",
-          "text": "It gives up reliable ordered streams entirely.",
+          "text": "It abandons reliability and ordered streams completely. QUIC is fast only because lost data is ignored.",
           "verdict": "sus",
           "feedback": {
             "legit": "QUIC implements reliability and multiple streams above UDP. The original wording does not hold up.",
@@ -382,7 +382,7 @@
         },
         {
           "id": "c",
-          "text": "Independent streams reduce transport-level head-of-line blocking between streams.",
+          "text": "Separate QUIC streams reduce transport-level head-of-line blocking between streams when one stream loses data.",
           "verdict": "legit",
           "feedback": {
             "legit": "Independent streams reduce transport-level head-of-line blocking between streams. Legit was the accurate read.",
@@ -399,11 +399,11 @@
     {
       "id": "networking-websocket",
       "difficulty": "hard",
-      "prompt": "What changes after an HTTP connection is upgraded to WebSocket?",
+      "prompt": "After the HTTP upgrade to WebSocket succeeds, what communication model replaces ordinary request and response?",
       "answers": [
         {
           "id": "a",
-          "text": "Every message becomes an independent HTTP request.",
+          "text": "Every WebSocket message starts a brand-new HTTP request, complete with fresh headers and a separate connection.",
           "verdict": "sus",
           "feedback": {
             "legit": "WebSocket uses its own framing after the handshake. That distinction makes the original answer Sus.",
@@ -412,7 +412,7 @@
         },
         {
           "id": "b",
-          "text": "The long-lived connection still needs failure detection and reconnection logic.",
+          "text": "The long-lived connection still fails sometimes, so applications need detection, reconnection, and state-recovery logic.",
           "verdict": "legit",
           "feedback": {
             "legit": "The long-lived connection still needs failure detection and reconnection logic. Your call matches the underlying rule.",
@@ -421,7 +421,7 @@
         },
         {
           "id": "c",
-          "text": "Client and server can exchange framed messages in both directions.",
+          "text": "Client and server can send framed messages in both directions over the upgraded connection.",
           "verdict": "legit",
           "feedback": {
             "legit": "Client and server can exchange framed messages in both directions. You classified that correctly as Legit.",
@@ -438,11 +438,11 @@
     {
       "id": "networking-pmtud",
       "difficulty": "hard",
-      "prompt": "What problem does path MTU discovery address?",
+      "prompt": "A large packet fits the first link but not a smaller link later in the route. What is path MTU discovery trying to learn?",
       "answers": [
         {
           "id": "a",
-          "text": "Path MTU discovery matters only for IPv4 and never for IPv6.",
+          "text": "It is an IPv4-only concern. IPv6 paths never contain links with different MTUs.",
           "verdict": "sus",
           "feedback": {
             "legit": "IPv6 also relies on path MTU discovery because routers do not fragment packets in transit. The original reply should be marked Sus.",
@@ -451,7 +451,7 @@
         },
         {
           "id": "b",
-          "text": "The largest MTU on any link is automatically safe for the whole path.",
+          "text": "Just use the largest MTU found anywhere on the path; every smaller link will adapt automatically.",
           "verdict": "sus",
           "feedback": {
             "legit": "The path MTU is constrained by the smallest supported MTU along the route. The Legit label misses the flaw here.",
@@ -460,7 +460,7 @@
         },
         {
           "id": "c",
-          "text": "Choosing the fastest DNS resolver.",
+          "text": "It chooses the fastest DNS resolver, which then advertises a safe packet size for the route.",
           "verdict": "sus",
           "feedback": {
             "legit": "Path MTU concerns packet size, not name resolution. The original statement is materially misleading.",

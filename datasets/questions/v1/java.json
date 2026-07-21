@@ -9,11 +9,11 @@
     {
       "id": "java-reference-equality",
       "difficulty": "easy",
-      "prompt": "What does `==` compare for Java object references?",
+      "prompt": "Two Java variables refer to objects that look identical. What is `==` actually asking about those references?",
       "answers": [
         {
           "id": "a",
-          "text": "It tests whether the references point to the same object.",
+          "text": "It asks whether both references point to the exact same object, not whether the objects contain equal data.",
           "verdict": "legit",
           "feedback": {
             "legit": "It tests whether the references point to the same object. That makes your Legit call correct.",
@@ -22,7 +22,7 @@
         },
         {
           "id": "b",
-          "text": "Content equality is normally expressed by `equals`.",
+          "text": "Use `equals` for logical or content equality when the class defines that comparison.",
           "verdict": "legit",
           "feedback": {
             "legit": "Content equality is normally expressed by `equals`. This supports the Legit label you chose.",
@@ -31,7 +31,7 @@
         },
         {
           "id": "c",
-          "text": "Two distinct String objects can be equal by `equals` but not by `==`.",
+          "text": "Two separate String objects can satisfy `equals` while failing `==`. Same text does not force same identity.",
           "verdict": "legit",
           "feedback": {
             "legit": "Two distinct String objects can be equal by `equals` but not by `==`. Legit was the accurate read.",
@@ -48,11 +48,11 @@
     {
       "id": "java-string-immutable",
       "difficulty": "easy",
-      "prompt": "What does Java String immutability mean?",
+      "prompt": "Java Strings are immutable, but String variables clearly change values. What exactly is frozen?",
       "answers": [
         {
           "id": "a",
-          "text": "A String variable can never reference a different String.",
+          "text": "The variable can never point at another String. Once assigned, every String reference is permanently fixed.",
           "verdict": "sus",
           "feedback": {
             "legit": "The variable can be reassigned unless the variable itself is final. The original statement is materially misleading.",
@@ -61,7 +61,7 @@
         },
         {
           "id": "b",
-          "text": "Operations such as `replace` return a new String when content changes.",
+          "text": "Methods such as `replace` produce another String when the content differs; they do not rewrite the original object.",
           "verdict": "legit",
           "feedback": {
             "legit": "Operations such as `replace` return a new String when content changes. The evidence backs your Legit choice.",
@@ -70,7 +70,7 @@
         },
         {
           "id": "c",
-          "text": "A String object's character sequence cannot change after construction.",
+          "text": "The character sequence inside a String object cannot be changed after that object is constructed.",
           "verdict": "legit",
           "feedback": {
             "legit": "A String object's character sequence cannot change after construction. Your call matches the underlying rule.",
@@ -87,11 +87,11 @@
     {
       "id": "java-equals-hashcode",
       "difficulty": "easy",
-      "prompt": "What must be true when two Java objects are equal according to `equals`?",
+      "prompt": "If `a.equals(b)` is true, what must their hash codes do, and does the reverse implication hold?",
       "answers": [
         {
           "id": "a",
-          "text": "Equal objects may return different hash codes as long as collisions are rare.",
+          "text": "Equal objects may return unrelated hash codes as long as the hash table handles collisions correctly.",
           "verdict": "sus",
           "feedback": {
             "legit": "The equals and hashCode contract requires equal objects to return the same hash code. That makes the original claim unsafe to label Legit.",
@@ -100,7 +100,7 @@
         },
         {
           "id": "b",
-          "text": "They must return the same hash code.",
+          "text": "They must produce the same hash code. That is the contract hash-based collections rely on.",
           "verdict": "legit",
           "feedback": {
             "legit": "They must return the same hash code. Your Legit judgment holds up.",
@@ -109,7 +109,7 @@
         },
         {
           "id": "c",
-          "text": "Objects with the same hash code must be equal.",
+          "text": "Matching hash codes prove the objects are equal. A collision between unequal objects would violate Java's rules.",
           "verdict": "sus",
           "feedback": {
             "legit": "Unequal objects may have hash collisions. The original reply is what needed flagging.",
@@ -126,11 +126,11 @@
     {
       "id": "java-checked-exception",
       "difficulty": "medium",
-      "prompt": "How are checked exceptions treated by the Java compiler?",
+      "prompt": "What makes an exception 'checked' in Java? Is it about runtime severity or what the compiler forces me to write?",
       "answers": [
         {
           "id": "a",
-          "text": "They must be caught or declared, subject to the language rules.",
+          "text": "The compiler requires a checked exception to be caught or declared, within the language's exception rules.",
           "verdict": "legit",
           "feedback": {
             "legit": "They must be caught or declared, subject to the language rules. This supports the Legit label you chose.",
@@ -139,7 +139,7 @@
         },
         {
           "id": "b",
-          "text": "Checked exception handling is verified by the compiler.",
+          "text": "The checking happens during compilation. Ignoring a checked exception is not merely a runtime gamble.",
           "verdict": "legit",
           "feedback": {
             "legit": "Checked exception handling is verified by the compiler. Legit was the accurate read.",
@@ -148,7 +148,7 @@
         },
         {
           "id": "c",
-          "text": "RuntimeException subclasses are unchecked exceptions.",
+          "text": "`RuntimeException` and its subclasses are unchecked, so the compiler does not impose that catch-or-declare requirement.",
           "verdict": "legit",
           "feedback": {
             "legit": "RuntimeException subclasses are unchecked exceptions. Marking it Legit was correct.",
@@ -165,11 +165,11 @@
     {
       "id": "java-type-erasure",
       "difficulty": "medium",
-      "prompt": "What is a consequence of Java generic type erasure?",
+      "prompt": "Java generics look specific in source code. What information disappears after type erasure, and what restrictions follow?",
       "answers": [
         {
           "id": "a",
-          "text": "A `List<String>` is a subclass of `List<Object>`.",
+          "text": "`List<String>` becomes a subtype of `List<Object>` after erasure, so assigning between them is safe.",
           "verdict": "sus",
           "feedback": {
             "legit": "Java generics are invariant; those two parameterizations are not in a subtype relationship. The reply changes an important technical fact.",
@@ -178,7 +178,7 @@
         },
         {
           "id": "b",
-          "text": "You cannot directly create `new T()` without another construction mechanism.",
+          "text": "You cannot just write `new T()` because the runtime does not have a concrete constructor for that erased type variable.",
           "verdict": "legit",
           "feedback": {
             "legit": "You cannot directly create `new T()` without another construction mechanism. Marking it Legit was correct.",
@@ -187,7 +187,7 @@
         },
         {
           "id": "c",
-          "text": "Most generic type arguments are not available as distinct runtime classes.",
+          "text": "Most generic arguments do not survive as separate runtime classes. The compiler uses them primarily for static checks.",
           "verdict": "legit",
           "feedback": {
             "legit": "Most generic type arguments are not available as distinct runtime classes. The source agrees with your Legit vote.",
@@ -204,11 +204,11 @@
     {
       "id": "java-stream-lazy",
       "difficulty": "medium",
-      "prompt": "When does a Java Stream pipeline normally execute?",
+      "prompt": "I chained `filter`, `map`, and `peek`, but nothing happened. When does a Java Stream pipeline actually run?",
       "answers": [
         {
           "id": "a",
-          "text": "Changing a stream to parallel always makes the pipeline faster.",
+          "text": "Flip it to parallel and it always runs faster. Parallel execution forces immediate evaluation of the pipeline.",
           "verdict": "sus",
           "feedback": {
             "legit": "Parallel execution has overhead and can be slower or unsuitable depending on the work and source. That makes the original claim unsafe to label Legit.",
@@ -217,7 +217,7 @@
         },
         {
           "id": "b",
-          "text": "A terminal operation triggers evaluation.",
+          "text": "A terminal operation starts consumption of the pipeline. Intermediate operations mainly describe the work until then.",
           "verdict": "legit",
           "feedback": {
             "legit": "A terminal operation triggers evaluation. Your call matches the underlying rule.",
@@ -226,7 +226,7 @@
         },
         {
           "id": "c",
-          "text": "Every intermediate operation immediately traverses the source.",
+          "text": "Each intermediate call traverses the source immediately, so `filter` finishes before `map` is even created.",
           "verdict": "sus",
           "feedback": {
             "legit": "Intermediate operations are generally lazy. The original reply is what needed flagging.",
@@ -243,11 +243,11 @@
     {
       "id": "java-volatile",
       "difficulty": "medium",
-      "prompt": "What does `volatile` provide for a Java field?",
+      "prompt": "If I mark a Java field `volatile`, what concurrency guarantee do I gain, and what do I definitely not gain?",
       "answers": [
         {
           "id": "a",
-          "text": "Visibility and ordering guarantees for reads and writes of that field.",
+          "text": "Reads and writes gain visibility and ordering guarantees, so threads observe volatile updates under the memory model.",
           "verdict": "legit",
           "feedback": {
             "legit": "Visibility and ordering guarantees for reads and writes of that field. That makes your Legit call correct.",
@@ -256,7 +256,7 @@
         },
         {
           "id": "b",
-          "text": "It makes a compound increment such as `count++` atomic.",
+          "text": "`volatile` turns compound operations such as `count++` into atomic transactions. No additional coordination is needed.",
           "verdict": "sus",
           "feedback": {
             "legit": "Read-modify-write operations still need atomic classes or synchronization. The source contradicts the original reply.",
@@ -265,7 +265,7 @@
         },
         {
           "id": "c",
-          "text": "A volatile write happens-before a subsequent volatile read of that field.",
+          "text": "A volatile write happens-before a later volatile read of that same field, carrying visibility with it.",
           "verdict": "legit",
           "feedback": {
             "legit": "A volatile write happens-before a subsequent volatile read of that field. Legit was the accurate read.",
@@ -282,11 +282,11 @@
     {
       "id": "java-synchronized",
       "difficulty": "medium",
-      "prompt": "What does entering a Java synchronized block require?",
+      "prompt": "When a thread enters `synchronized(lock)`, what does it acquire, and how does that affect visibility?",
       "answers": [
         {
           "id": "a",
-          "text": "It locks every object in the JVM.",
+          "text": "It locks every object in the JVM for the duration of the block. That global pause is what makes it safe.",
           "verdict": "sus",
           "feedback": {
             "legit": "Synchronization is associated with a particular monitor. The original reply should be marked Sus.",
@@ -295,7 +295,7 @@
         },
         {
           "id": "b",
-          "text": "Monitor release and later acquisition establish visibility guarantees.",
+          "text": "Releasing a monitor and later acquiring it establishes memory-visibility guarantees between the threads.",
           "verdict": "legit",
           "feedback": {
             "legit": "Monitor release and later acquisition establish visibility guarantees. That is a solid Legit pick.",
@@ -304,7 +304,7 @@
         },
         {
           "id": "c",
-          "text": "The thread acquires the monitor associated with the chosen object.",
+          "text": "The thread acquires the monitor associated with the chosen lock object before entering the protected block.",
           "verdict": "legit",
           "feedback": {
             "legit": "The thread acquires the monitor associated with the chosen object. That makes your Legit call correct.",
@@ -321,11 +321,11 @@
     {
       "id": "java-record",
       "difficulty": "medium",
-      "prompt": "Does a Java record guarantee deep immutability?",
+      "prompt": "A Java record looks immutable at first glance. Does that immutability extend into mutable objects stored in its components?",
       "answers": [
         {
           "id": "a",
-          "text": "A record automatically generates mutating setter methods for its components.",
+          "text": "Records generate setters for every component, so their top-level state is designed to change after construction.",
           "verdict": "sus",
           "feedback": {
             "legit": "Record components are final, and records generate accessors rather than mutating setters. The Legit label misses the flaw here.",
@@ -334,7 +334,7 @@
         },
         {
           "id": "b",
-          "text": "Yes, every object referenced by a component becomes immutable.",
+          "text": "Yes. Put a mutable list in a record and Java automatically freezes the list and everything reachable from it.",
           "verdict": "sus",
           "feedback": {
             "legit": "Record components are final references, but referenced objects may remain mutable. The original statement is materially misleading.",
@@ -343,7 +343,7 @@
         },
         {
           "id": "c",
-          "text": "A record provides final component fields and generated accessors.",
+          "text": "Record components become final fields with generated accessors, but referenced objects can still be mutable.",
           "verdict": "legit",
           "feedback": {
             "legit": "A record provides final component fields and generated accessors. You classified that correctly as Legit.",
@@ -360,11 +360,11 @@
     {
       "id": "java-optional",
       "difficulty": "hard",
-      "prompt": "What is a good use of Java Optional?",
+      "prompt": "Where does `Optional` improve a Java API, and where does spreading it everywhere become awkward?",
       "answers": [
         {
           "id": "a",
-          "text": "Representing an absent return value in an API where absence is expected.",
+          "text": "It works well as a return type when absence is an expected outcome the caller should handle explicitly.",
           "verdict": "legit",
           "feedback": {
             "legit": "Representing an absent return value in an API where absence is expected. The source agrees with your Legit vote.",
@@ -373,7 +373,7 @@
         },
         {
           "id": "b",
-          "text": "Replacing every nullable field in entity classes.",
+          "text": "Replace every nullable entity field with `Optional`. Persistence frameworks and serialization love that pattern universally.",
           "verdict": "sus",
           "feedback": {
             "legit": "Optional is primarily designed as a return type and is not universally suitable for fields. The source contradicts the original reply.",
@@ -382,7 +382,7 @@
         },
         {
           "id": "c",
-          "text": "Calling `orElseGet` can avoid eagerly computing a fallback.",
+          "text": "`orElseGet` evaluates the fallback lazily, unlike an eagerly computed value passed to `orElse`.",
           "verdict": "legit",
           "feedback": {
             "legit": "Calling `orElseGet` can avoid eagerly computing a fallback. Your call matches the underlying rule.",
@@ -399,11 +399,11 @@
     {
       "id": "java-gc-reachability",
       "difficulty": "hard",
-      "prompt": "When is a Java object generally eligible for garbage collection?",
+      "prompt": "At what point can Java collect an object if source-code scope is not the deciding rule?",
       "answers": [
         {
           "id": "a",
-          "text": "Immediately when a local variable goes out of its source-code scope.",
+          "text": "The instant a local variable leaves its written scope, the object is collected even if another live reference still points to it.",
           "verdict": "sus",
           "feedback": {
             "legit": "Eligibility depends on runtime reachability, not only lexical scope. The original reply was the misconception in the thread.",
@@ -412,7 +412,7 @@
         },
         {
           "id": "b",
-          "text": "Cycles can be collected when the cycle is unreachable from roots.",
+          "text": "Cycles are collectible when no path from a GC root reaches the cycle. Reference counting is not the deciding rule here.",
           "verdict": "legit",
           "feedback": {
             "legit": "Cycles can be collected when the cycle is unreachable from roots. You classified that correctly as Legit.",
@@ -421,7 +421,7 @@
         },
         {
           "id": "c",
-          "text": "When it is no longer reachable through a chain from GC roots.",
+          "text": "An object becomes eligible once no chain of references from the garbage-collection roots can reach it.",
           "verdict": "legit",
           "feedback": {
             "legit": "When it is no longer reachable through a chain from GC roots. You were right to trust this reply.",
@@ -438,11 +438,11 @@
     {
       "id": "java-concurrent-map",
       "difficulty": "hard",
-      "prompt": "Is `containsKey` followed by `put` an atomic compound action on ConcurrentHashMap?",
+      "prompt": "`ConcurrentHashMap` makes individual calls thread-safe. Does `containsKey` followed by `put` become one atomic decision?",
       "answers": [
         {
           "id": "a",
-          "text": "ConcurrentHashMap accepts null keys and null values.",
+          "text": "It accepts null keys and null values, which makes a missing mapping easy to distinguish during the race.",
           "verdict": "sus",
           "feedback": {
             "legit": "ConcurrentHashMap does not permit null keys or null values. The reply changes an important technical fact.",
@@ -451,7 +451,7 @@
         },
         {
           "id": "b",
-          "text": "Yes, all sequences of thread-safe method calls are automatically atomic.",
+          "text": "Yes. Any sequence built from thread-safe methods is automatically atomic as a group.",
           "verdict": "sus",
           "feedback": {
             "legit": "Separate method calls can interleave; use an atomic method such as `putIfAbsent` or `compute`. That makes the original claim unsafe to label Legit.",
@@ -460,7 +460,7 @@
         },
         {
           "id": "c",
-          "text": "ConcurrentHashMap locks the entire map for every read.",
+          "text": "Every read takes one lock covering the entire map, so another thread cannot slip between those two calls.",
           "verdict": "sus",
           "feedback": {
             "legit": "ConcurrentHashMap reads generally do not lock the entire map. The original claim needed a Sus vote.",

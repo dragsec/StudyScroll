@@ -9,11 +9,11 @@
     {
       "id": "python-is-vs-equals",
       "difficulty": "easy",
-      "prompt": "What is the difference between Python's `is` and `==`?",
+      "prompt": "Python sometimes makes `is` and `==` appear to agree. What different questions are those operators asking?",
       "answers": [
         {
           "id": "a",
-          "text": "`==` checks value equality as defined by the objects.",
+          "text": "`==` asks the objects whether their values should count as equal.",
           "verdict": "legit",
           "feedback": {
             "legit": "`==` checks value equality as defined by the objects. That makes your Legit call correct.",
@@ -22,7 +22,7 @@
         },
         {
           "id": "b",
-          "text": "Identity and equality are different even when interning sometimes makes examples look similar.",
+          "text": "Interning can make small demos misleading, but identity and equality remain separate concepts.",
           "verdict": "legit",
           "feedback": {
             "legit": "Identity and equality are different even when interning sometimes makes examples look similar. This supports the Legit label you chose.",
@@ -31,7 +31,7 @@
         },
         {
           "id": "c",
-          "text": "`is` checks object identity.",
+          "text": "`is` asks whether both names point to the exact same object.",
           "verdict": "legit",
           "feedback": {
             "legit": "`is` checks object identity. Legit was the accurate read.",
@@ -48,11 +48,11 @@
     {
       "id": "python-list-alias",
       "difficulty": "easy",
-      "prompt": "What happens after `b = a` when `a` is a list?",
+      "prompt": "After `b = a` with a list, changing `b` also changed `a`. Did assignment copy anything?",
       "answers": [
         {
           "id": "a",
-          "text": "A mutation through `b` is visible through `a`.",
+          "text": "No copy happened, so a mutation through `b` is visible when you inspect the same list through `a`.",
           "verdict": "legit",
           "feedback": {
             "legit": "A mutation through `b` is visible through `a`. Marking it Legit was correct.",
@@ -61,7 +61,7 @@
         },
         {
           "id": "b",
-          "text": "Both names refer to the same list object.",
+          "text": "Both names now refer to one list object. The assignment copied the reference, not the list contents.",
           "verdict": "legit",
           "feedback": {
             "legit": "Both names refer to the same list object. The source agrees with your Legit vote.",
@@ -70,7 +70,7 @@
         },
         {
           "id": "c",
-          "text": "Python automatically copies the list.",
+          "text": "Python makes an independent list automatically whenever one list variable is assigned to another.",
           "verdict": "sus",
           "feedback": {
             "legit": "Assignment binds another name to the same object; copying must be requested. That makes the original claim unsafe to label Legit.",
@@ -87,11 +87,11 @@
     {
       "id": "python-range",
       "difficulty": "easy",
-      "prompt": "Does Python 3 `range(1_000_000)` create one million integer objects immediately?",
+      "prompt": "Does `range(1_000_000)` allocate a list containing a million Python integers right away?",
       "answers": [
         {
           "id": "a",
-          "text": "Yes, it stores every integer in a list.",
+          "text": "Yes. `range` is only a shorter spelling for constructing the full integer list in memory.",
           "verdict": "sus",
           "feedback": {
             "legit": "A range stores compact start, stop, and step information. The original reply is what needed flagging.",
@@ -100,7 +100,7 @@
         },
         {
           "id": "b",
-          "text": "Range values are produced as needed during iteration.",
+          "text": "Its values are produced as iteration needs them, so it does not store that million-element list.",
           "verdict": "legit",
           "feedback": {
             "legit": "Range values are produced as needed during iteration. You were right to trust this reply.",
@@ -109,7 +109,7 @@
         },
         {
           "id": "c",
-          "text": "A range accepts floating-point start, stop, and step arguments.",
+          "text": "You can also use floating-point start, stop, and step values. `range` accepts any numeric type.",
           "verdict": "sus",
           "feedback": {
             "legit": "The built-in range requires integer arguments or objects with an integer index interpretation. That distinction makes the original answer Sus.",
@@ -126,11 +126,11 @@
     {
       "id": "python-mutable-default",
       "difficulty": "medium",
-      "prompt": "Why can a mutable default argument surprise Python developers?",
+      "prompt": "Why does a function with `items=[]` sometimes remember data from an earlier call?",
       "answers": [
         {
           "id": "a",
-          "text": "Repeated calls can share the same mutable default object.",
+          "text": "Repeated calls can reuse the same default list object instead of creating a fresh one each time.",
           "verdict": "legit",
           "feedback": {
             "legit": "Repeated calls can share the same mutable default object. The source agrees with your Legit vote.",
@@ -139,7 +139,7 @@
         },
         {
           "id": "b",
-          "text": "Using `None` and creating the list inside the function avoids shared state.",
+          "text": "Default to `None`, then create the list inside the function when you need independent state.",
           "verdict": "legit",
           "feedback": {
             "legit": "Using `None` and creating the list inside the function avoids shared state. The evidence backs your Legit choice.",
@@ -148,7 +148,7 @@
         },
         {
           "id": "c",
-          "text": "The default object is created once when the function is defined.",
+          "text": "The default object is created once when Python defines the function, not once per invocation.",
           "verdict": "legit",
           "feedback": {
             "legit": "The default object is created once when the function is defined. Your call matches the underlying rule.",
@@ -165,11 +165,11 @@
     {
       "id": "python-gil",
       "difficulty": "medium",
-      "prompt": "In a GIL-enabled CPython build, what does the Global Interpreter Lock imply for threads?",
+      "prompt": "On a normal GIL-enabled CPython build, what can threads run concurrently, and why can I/O-heavy code still benefit?",
       "answers": [
         {
           "id": "a",
-          "text": "Free-threaded CPython builds can run with the GIL disabled.",
+          "text": "Free-threaded CPython builds are a different configuration and can run with the GIL disabled.",
           "verdict": "legit",
           "feedback": {
             "legit": "Free-threaded CPython builds can run with the GIL disabled. Your call matches the underlying rule.",
@@ -178,7 +178,7 @@
         },
         {
           "id": "b",
-          "text": "Only one thread normally executes Python bytecode in an interpreter at a time.",
+          "text": "Within one GIL-enabled interpreter, only one thread normally executes Python bytecode at a time.",
           "verdict": "legit",
           "feedback": {
             "legit": "Only one thread normally executes Python bytecode in an interpreter at a time. You classified that correctly as Legit.",
@@ -187,7 +187,7 @@
         },
         {
           "id": "c",
-          "text": "Threads can never improve an I/O-bound program.",
+          "text": "Threads can never help I/O-bound code. The GIL blocks every thread even while another one waits on the network.",
           "verdict": "sus",
           "feedback": {
             "legit": "Other threads can run while one waits for I/O, and extensions may release the GIL. The original statement is materially misleading.",
@@ -204,11 +204,11 @@
     {
       "id": "python-generator",
       "difficulty": "medium",
-      "prompt": "How does a Python generator differ from a returned list?",
+      "prompt": "What do I gain and give up when a Python function yields values instead of returning a completed list?",
       "answers": [
         {
           "id": "a",
-          "text": "It produces values lazily as it is iterated.",
+          "text": "The generator produces values lazily as the caller iterates, which can avoid storing the whole result.",
           "verdict": "legit",
           "feedback": {
             "legit": "It produces values lazily as it is iterated. Marking it Legit was correct.",
@@ -217,7 +217,7 @@
         },
         {
           "id": "b",
-          "text": "It can always be restarted after exhaustion.",
+          "text": "After exhaustion it restarts from the beginning automatically. Every generator is permanently reusable.",
           "verdict": "sus",
           "feedback": {
             "legit": "A generator iterator is normally exhausted after one pass. The reply changes an important technical fact.",
@@ -226,7 +226,7 @@
         },
         {
           "id": "c",
-          "text": "A generator supports `len()` because it knows all future values.",
+          "text": "`len(generator)` works because the generator already knows every value it will produce.",
           "verdict": "sus",
           "feedback": {
             "legit": "A generator produces values lazily and does not generally provide a length. That makes the original claim unsafe to label Legit.",
@@ -243,11 +243,11 @@
     {
       "id": "python-dict-order",
       "difficulty": "medium",
-      "prompt": "What ordering guarantee do modern Python dictionaries provide?",
+      "prompt": "Modern Python dictionaries preserve an order. Is it sorted-key order or the order keys were inserted?",
       "answers": [
         {
           "id": "a",
-          "text": "They automatically sort keys.",
+          "text": "They continuously sort keys by value, so iteration order changes whenever a smaller key is inserted.",
           "verdict": "sus",
           "feedback": {
             "legit": "Insertion order is preserved, but keys are not automatically sorted. The original wording does not hold up.",
@@ -256,7 +256,7 @@
         },
         {
           "id": "b",
-          "text": "Updating an existing key does not move it to the end.",
+          "text": "Updating the value of an existing key does not move that key to the end.",
           "verdict": "legit",
           "feedback": {
             "legit": "Updating an existing key does not move it to the end. The source agrees with your Legit vote.",
@@ -265,7 +265,7 @@
         },
         {
           "id": "c",
-          "text": "They preserve insertion order.",
+          "text": "Iteration preserves insertion order. The guarantee is not automatic alphabetical or numeric sorting.",
           "verdict": "legit",
           "feedback": {
             "legit": "They preserve insertion order. The evidence backs your Legit choice.",
@@ -282,11 +282,11 @@
     {
       "id": "python-async-blocking",
       "difficulty": "medium",
-      "prompt": "What happens if blocking code runs directly inside an asyncio coroutine?",
+      "prompt": "What happens to every other asyncio task if one coroutine calls blocking code directly?",
       "answers": [
         {
           "id": "a",
-          "text": "`await` only yields when the awaited operation cooperates with the event loop.",
+          "text": "An `await` yields only when the operation and awaited object cooperate with the event loop.",
           "verdict": "legit",
           "feedback": {
             "legit": "`await` only yields when the awaited operation cooperates with the event loop. Your Legit judgment holds up.",
@@ -295,7 +295,7 @@
         },
         {
           "id": "b",
-          "text": "It can block the event loop and delay other tasks.",
+          "text": "Blocking inside the event-loop thread can stall the loop and delay unrelated tasks.",
           "verdict": "legit",
           "feedback": {
             "legit": "It can block the event loop and delay other tasks. That is a solid Legit pick.",
@@ -304,7 +304,7 @@
         },
         {
           "id": "c",
-          "text": "The event loop automatically moves every blocking call to a thread.",
+          "text": "Asyncio detects every blocking function and transparently moves it to a worker thread.",
           "verdict": "sus",
           "feedback": {
             "legit": "Blocking work must be explicitly offloaded or replaced with async I/O. The original statement is materially misleading.",
@@ -321,11 +321,11 @@
     {
       "id": "python-context-manager",
       "difficulty": "medium",
-      "prompt": "What is a Python context manager responsible for?",
+      "prompt": "What contract does a context manager provide around a `with` block, especially when the block raises?",
       "answers": [
         {
           "id": "a",
-          "text": "It defines setup and cleanup around a `with` block.",
+          "text": "It defines entry and exit behavior so setup and cleanup live around the block in one protocol.",
           "verdict": "legit",
           "feedback": {
             "legit": "It defines setup and cleanup around a `with` block. Marking it Legit was correct.",
@@ -334,7 +334,7 @@
         },
         {
           "id": "b",
-          "text": "It only works with files.",
+          "text": "Context managers are a file-only feature. Locks, transactions, and temporary resources need different syntax.",
           "verdict": "sus",
           "feedback": {
             "legit": "Locks, transactions, temporary resources, and custom objects can use the protocol. The original reply should be marked Sus.",
@@ -343,7 +343,7 @@
         },
         {
           "id": "c",
-          "text": "A context manager automatically suppresses every exception raised inside the block.",
+          "text": "Every exception raised inside `with` is suppressed automatically. Cleanup and suppression are inseparable.",
           "verdict": "sus",
           "feedback": {
             "legit": "An exception is suppressed only when the exit method explicitly returns a true value. The Legit label misses the flaw here.",
@@ -360,11 +360,11 @@
     {
       "id": "python-descriptor",
       "difficulty": "hard",
-      "prompt": "What can a Python descriptor customize?",
+      "prompt": "Properties, bound methods, and managed attributes share the descriptor protocol. What access can a descriptor customize?",
       "answers": [
         {
           "id": "a",
-          "text": "It only changes how dictionary keys are looked up.",
+          "text": "Descriptors only alter dictionary-key lookup. Attribute access never invokes them.",
           "verdict": "sus",
           "feedback": {
             "legit": "Descriptors participate in object attribute access, not normal mapping lookup. The original wording does not hold up.",
@@ -373,7 +373,7 @@
         },
         {
           "id": "b",
-          "text": "Properties are implemented using the descriptor protocol.",
+          "text": "Python's `property` is implemented through the descriptor protocol, which is why access can execute code.",
           "verdict": "legit",
           "feedback": {
             "legit": "Properties are implemented using the descriptor protocol. That makes your Legit call correct.",
@@ -382,7 +382,7 @@
         },
         {
           "id": "c",
-          "text": "It can customize attribute access through methods such as `__get__` and `__set__`.",
+          "text": "Methods such as `__get__`, `__set__`, and `__delete__` can customize attribute access behavior.",
           "verdict": "legit",
           "feedback": {
             "legit": "It can customize attribute access through methods such as `__get__` and `__set__`. This supports the Legit label you chose.",
@@ -399,11 +399,11 @@
     {
       "id": "python-mro",
       "difficulty": "hard",
-      "prompt": "How is Python's method resolution order used with multiple inheritance?",
+      "prompt": "With multiple inheritance, how does Python decide which implementation a method call or `super()` reaches next?",
       "answers": [
         {
           "id": "a",
-          "text": "Zero-argument `super()` follows the MRO rather than naming one fixed parent.",
+          "text": "Zero-argument `super()` follows the class's method resolution order rather than jumping to one hard-coded parent.",
           "verdict": "legit",
           "feedback": {
             "legit": "Zero-argument `super()` follows the MRO rather than naming one fixed parent. Your Legit judgment holds up.",
@@ -412,7 +412,7 @@
         },
         {
           "id": "b",
-          "text": "It gives a consistent linear order for attribute lookup.",
+          "text": "The MRO provides one consistent linear order for attribute lookup across the inheritance graph.",
           "verdict": "legit",
           "feedback": {
             "legit": "It gives a consistent linear order for attribute lookup. That is a solid Legit pick.",
@@ -421,7 +421,7 @@
         },
         {
           "id": "c",
-          "text": "Python searches base classes in a random order.",
+          "text": "Python randomizes the base-class search on each call to avoid favoring one parent.",
           "verdict": "sus",
           "feedback": {
             "legit": "Python computes a deterministic C3 linearization. The original statement is materially misleading.",
@@ -438,11 +438,11 @@
     {
       "id": "python-frozen-dataclass",
       "difficulty": "hard",
-      "prompt": "Does `@dataclass(frozen=True)` make an entire object graph immutable?",
+      "prompt": "A dataclass is marked `frozen=True` but contains a mutable list. How frozen is the object graph really?",
       "answers": [
         {
           "id": "a",
-          "text": "Yes, every nested object becomes immutable.",
+          "text": "Completely frozen. Every list, dictionary, and nested object becomes immutable when stored in the dataclass.",
           "verdict": "sus",
           "feedback": {
             "legit": "Frozen prevents normal field reassignment but does not freeze nested mutable objects. That distinction makes the original answer Sus.",
@@ -451,7 +451,7 @@
         },
         {
           "id": "b",
-          "text": "A frozen dataclass automatically deep-copies mutable constructor arguments.",
+          "text": "The decorator deep-copies mutable constructor arguments, so outside references cannot change the stored values.",
           "verdict": "sus",
           "feedback": {
             "legit": "Frozen dataclasses do not deep-copy their fields; mutable objects passed to the constructor remain mutable. The error puts the original reply under Sus.",
@@ -460,7 +460,7 @@
         },
         {
           "id": "c",
-          "text": "Every frozen dataclass instance is safely hashable regardless of its fields.",
+          "text": "Frozen instances are always safely hashable, no matter which unhashable or mutable fields they contain.",
           "verdict": "sus",
           "feedback": {
             "legit": "Generated hashing still depends on the dataclass options and on whether component values are hashable. The source contradicts the original reply.",

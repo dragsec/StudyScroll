@@ -10,8 +10,11 @@ export type Answer = {
   feedback: Record<Verdict, string>;
 };
 
+export type Persona = Pick<Answer, "handle" | "role">;
+
 export type Question = {
   id: string;
+  author: Persona;
   topic: Topic;
   difficulty: Difficulty;
   prompt: string;

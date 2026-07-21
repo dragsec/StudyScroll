@@ -9,11 +9,11 @@
     {
       "id": "os-kernel",
       "difficulty": "easy",
-      "prompt": "What is a primary role of an operating-system kernel?",
+      "prompt": "What work belongs in an operating-system kernel rather than in an ordinary application or compiler?",
       "answers": [
         {
           "id": "a",
-          "text": "Manage hardware resources and provide protected services to programs.",
+          "text": "The kernel manages hardware resources and exposes protected services that programs can use safely.",
           "verdict": "legit",
           "feedback": {
             "legit": "Manage hardware resources and provide protected services to programs. Marking it Legit was correct.",
@@ -22,7 +22,7 @@
         },
         {
           "id": "b",
-          "text": "Compilation is performed by development tools, not the kernel's core runtime role.",
+          "text": "Compilers translate source code, but that is development tooling rather than the kernel's central runtime job.",
           "verdict": "legit",
           "feedback": {
             "legit": "Compilation is performed by development tools, not the kernel's core runtime role. The source agrees with your Legit vote.",
@@ -31,7 +31,7 @@
         },
         {
           "id": "c",
-          "text": "System calls provide controlled entry to kernel services.",
+          "text": "System calls are the controlled doorway from user programs into kernel services.",
           "verdict": "legit",
           "feedback": {
             "legit": "System calls provide controlled entry to kernel services. The evidence backs your Legit choice.",
@@ -48,11 +48,11 @@
     {
       "id": "os-virtual-memory",
       "difficulty": "easy",
-      "prompt": "What does virtual memory give a process?",
+      "prompt": "Two processes both use address `0x1000` without colliding. What illusion is virtual memory creating for each one?",
       "answers": [
         {
           "id": "a",
-          "text": "Direct unrestricted access to all physical memory.",
+          "text": "Each process receives unrestricted access to every physical RAM address. Isolation would defeat virtual memory's purpose.",
           "verdict": "sus",
           "feedback": {
             "legit": "Address translation and protection isolate process memory. The source contradicts the original reply.",
@@ -61,7 +61,7 @@
         },
         {
           "id": "b",
-          "text": "Different processes can use the same virtual address for different physical storage.",
+          "text": "The same virtual address can map to different physical storage in different processes.",
           "verdict": "legit",
           "feedback": {
             "legit": "Different processes can use the same virtual address for different physical storage. The source agrees with your Legit vote.",
@@ -70,7 +70,7 @@
         },
         {
           "id": "c",
-          "text": "Its own virtual address space mapped to physical memory and other backing.",
+          "text": "Each process sees its own virtual address space, which the OS maps to RAM and other backing storage.",
           "verdict": "legit",
           "feedback": {
             "legit": "Its own virtual address space mapped to physical memory and other backing. The evidence backs your Legit choice.",
@@ -87,11 +87,11 @@
     {
       "id": "os-context-switch",
       "difficulty": "easy",
-      "prompt": "What happens in a context switch?",
+      "prompt": "When the CPU switches from one runnable task to another, what state must the system save and restore?",
       "answers": [
         {
           "id": "a",
-          "text": "A context switch can occur only between different processes, never between threads.",
+          "text": "Context switches happen only between separate processes. Switching between threads never requires execution state to change.",
           "verdict": "sus",
           "feedback": {
             "legit": "The scheduler can switch between threads, including threads in the same process. The error puts the original reply under Sus.",
@@ -100,7 +100,7 @@
         },
         {
           "id": "b",
-          "text": "The system saves one execution context and restores another.",
+          "text": "The system saves the outgoing execution context and restores the incoming one so it can continue.",
           "verdict": "legit",
           "feedback": {
             "legit": "The system saves one execution context and restores another. Your Legit vote was right.",
@@ -109,7 +109,7 @@
         },
         {
           "id": "c",
-          "text": "The CPU permanently erases the previous process.",
+          "text": "The CPU permanently deletes the old process state. A switched-out process cannot resume later.",
           "verdict": "sus",
           "feedback": {
             "legit": "The previous task can resume from its saved state. The original reply should be marked Sus.",
@@ -126,11 +126,11 @@
     {
       "id": "os-page-fault",
       "difficulty": "medium",
-      "prompt": "Does every page fault indicate a program bug?",
+      "prompt": "A process triggered a page fault. Is that automatically a crash, or can it be part of normal virtual-memory operation?",
       "answers": [
         {
           "id": "a",
-          "text": "Many page faults are handled normally by loading or mapping a page.",
+          "text": "Many page faults are routine: the OS maps or loads the needed page and lets the instruction continue.",
           "verdict": "legit",
           "feedback": {
             "legit": "Many page faults are handled normally by loading or mapping a page. That makes your Legit call correct.",
@@ -139,7 +139,7 @@
         },
         {
           "id": "b",
-          "text": "An invalid access can produce a fault the OS cannot resolve for the process.",
+          "text": "Some faults come from invalid access that the OS cannot resolve, which can terminate or signal the process.",
           "verdict": "legit",
           "feedback": {
             "legit": "An invalid access can produce a fault the OS cannot resolve for the process. This supports the Legit label you chose.",
@@ -148,7 +148,7 @@
         },
         {
           "id": "c",
-          "text": "Demand paging relies on recoverable page faults.",
+          "text": "Demand paging depends on recoverable faults to bring pages into memory only when they are touched.",
           "verdict": "legit",
           "feedback": {
             "legit": "Demand paging relies on recoverable page faults. Legit was the accurate read.",
@@ -165,11 +165,11 @@
     {
       "id": "os-thread-process",
       "difficulty": "medium",
-      "prompt": "How do threads within one process normally relate?",
+      "prompt": "Threads belong to one process. Which resources do they share, and why does that make synchronization necessary?",
       "answers": [
         {
           "id": "a",
-          "text": "Each thread has a completely separate copy of all process memory.",
+          "text": "Every thread gets a private copy of all process memory, so shared-state races cannot happen between threads.",
           "verdict": "sus",
           "feedback": {
             "legit": "Threads share memory but have separate stacks and execution state. The original reply should be marked Sus.",
@@ -178,7 +178,7 @@
         },
         {
           "id": "b",
-          "text": "Shared memory makes communication cheap but introduces synchronization risks.",
+          "text": "Sharing memory makes communication cheap, but unsynchronized access can make results depend on timing.",
           "verdict": "legit",
           "feedback": {
             "legit": "Shared memory makes communication cheap but introduces synchronization risks. That is a solid Legit pick.",
@@ -187,7 +187,7 @@
         },
         {
           "id": "c",
-          "text": "They share the process address space and resources.",
+          "text": "Threads normally share the process address space and many process resources while keeping their own execution state.",
           "verdict": "legit",
           "feedback": {
             "legit": "They share the process address space and resources. That makes your Legit call correct.",
@@ -204,11 +204,11 @@
     {
       "id": "os-mutex-semaphore",
       "difficulty": "medium",
-      "prompt": "How does a counting semaphore differ from a mutex?",
+      "prompt": "A mutex models ownership, while a counting semaphore models permits. How does that change their use?",
       "answers": [
         {
           "id": "a",
-          "text": "Declaring a semaphore automatically protects shared data even when code ignores its protocol.",
+          "text": "Declaring a semaphore protects the associated data automatically, even if every thread ignores the intended protocol.",
           "verdict": "sus",
           "feedback": {
             "legit": "Synchronization works only when all relevant accesses follow the semaphore protocol correctly. The original reply should be marked Sus.",
@@ -217,7 +217,7 @@
         },
         {
           "id": "b",
-          "text": "A semaphore can represent multiple available permits.",
+          "text": "A counting semaphore can track several available permits rather than only a single locked or unlocked state.",
           "verdict": "legit",
           "feedback": {
             "legit": "A semaphore can represent multiple available permits. That is a solid Legit pick.",
@@ -226,7 +226,7 @@
         },
         {
           "id": "c",
-          "text": "A semaphore always has one owner that must release it.",
+          "text": "Every semaphore has one owning thread that must release it. Ownership is mandatory for semaphore signaling.",
           "verdict": "sus",
           "feedback": {
             "legit": "Ownership is a mutex concept; semaphore use need not enforce the same owner. The original statement is materially misleading.",
@@ -243,11 +243,11 @@
     {
       "id": "os-race-condition",
       "difficulty": "medium",
-      "prompt": "What makes a race condition possible?",
+      "prompt": "Two correct-looking threads produce different answers depending on timing. What turns that timing into a race condition?",
       "answers": [
         {
           "id": "a",
-          "text": "The result depends on uncontrolled timing of concurrent accesses.",
+          "text": "The outcome depends on uncontrolled ordering between concurrent accesses to shared state.",
           "verdict": "legit",
           "feedback": {
             "legit": "The result depends on uncontrolled timing of concurrent accesses. You classified that correctly as Legit.",
@@ -256,7 +256,7 @@
         },
         {
           "id": "b",
-          "text": "Merely having two functions in the same source file.",
+          "text": "Putting two functions in the same source file creates a race, even if they never run concurrently or share data.",
           "verdict": "sus",
           "feedback": {
             "legit": "Concurrency and shared or interacting state are required for a timing race. The reply changes an important technical fact.",
@@ -265,7 +265,7 @@
         },
         {
           "id": "c",
-          "text": "Synchronization can establish a defined order or atomic access.",
+          "text": "Synchronization can impose an order or make an access atomic, removing the uncontrolled interleaving.",
           "verdict": "legit",
           "feedback": {
             "legit": "Synchronization can establish a defined order or atomic access. Your Legit vote was right.",
@@ -282,11 +282,11 @@
     {
       "id": "os-deadlock",
       "difficulty": "medium",
-      "prompt": "Which conditions are associated with classic resource deadlock?",
+      "prompt": "Four conditions are usually named in classic resource deadlock. Which ones form the trap?",
       "answers": [
         {
           "id": "a",
-          "text": "High CPU utilization alone.",
+          "text": "High CPU utilization alone is enough. Busy processors eventually force every lock into deadlock.",
           "verdict": "sus",
           "feedback": {
             "legit": "Load can be high without any circular resource dependency. The original reply is what needed flagging.",
@@ -295,7 +295,7 @@
         },
         {
           "id": "b",
-          "text": "Breaking one necessary condition can prevent this form of deadlock.",
+          "text": "Break any one necessary condition and this classic form of deadlock cannot persist.",
           "verdict": "legit",
           "feedback": {
             "legit": "Breaking one necessary condition can prevent this form of deadlock. That makes your Legit call correct.",
@@ -304,7 +304,7 @@
         },
         {
           "id": "c",
-          "text": "Mutual exclusion, hold-and-wait, no preemption, and circular wait.",
+          "text": "The set is mutual exclusion, hold-and-wait, no preemption, and circular wait.",
           "verdict": "legit",
           "feedback": {
             "legit": "Mutual exclusion, hold-and-wait, no preemption, and circular wait. This supports the Legit label you chose.",
@@ -321,11 +321,11 @@
     {
       "id": "os-scheduler",
       "difficulty": "medium",
-      "prompt": "What tradeoff does a CPU scheduler manage?",
+      "prompt": "Why can't a CPU scheduler maximize responsiveness, throughput, fairness, and low overhead all at once?",
       "answers": [
         {
           "id": "a",
-          "text": "Giving a task lower priority guarantees that it will still run before starvation is possible.",
+          "text": "Lower-priority work is guaranteed to run before starvation becomes possible, even without an aging policy.",
           "verdict": "sus",
           "feedback": {
             "legit": "Priority scheduling needs an explicit fairness or aging policy to prevent starvation. The source contradicts the original reply.",
@@ -334,7 +334,7 @@
         },
         {
           "id": "b",
-          "text": "Responsiveness, throughput, fairness, and overhead.",
+          "text": "Schedulers balance competing goals such as response time, throughput, fairness, and scheduling overhead.",
           "verdict": "legit",
           "feedback": {
             "legit": "Responsiveness, throughput, fairness, and overhead. You were right to trust this reply.",
@@ -343,7 +343,7 @@
         },
         {
           "id": "c",
-          "text": "It can maximize every metric simultaneously for every workload.",
+          "text": "One scheduling policy maximizes every metric for every workload. The goals never conflict in practice.",
           "verdict": "sus",
           "feedback": {
             "legit": "Scheduling goals conflict and depend on workload. The Legit label misses the flaw here.",
@@ -360,11 +360,11 @@
     {
       "id": "os-copy-on-write",
       "difficulty": "hard",
-      "prompt": "What is copy-on-write after process creation?",
+      "prompt": "After `fork`, parent and child appear to have separate memory. How does copy-on-write delay the expensive copying?",
       "answers": [
         {
           "id": "a",
-          "text": "Processes initially share pages until one attempts to modify a shared page.",
+          "text": "They initially share physical pages, and a page is copied only when one process tries to modify it.",
           "verdict": "legit",
           "feedback": {
             "legit": "Processes initially share pages until one attempts to modify a shared page. The evidence backs your Legit choice.",
@@ -373,7 +373,7 @@
         },
         {
           "id": "b",
-          "text": "Every page is copied before the child can run.",
+          "text": "The kernel duplicates every page before the child runs its first instruction. Sharing would violate process isolation.",
           "verdict": "sus",
           "feedback": {
             "legit": "Copy-on-write postpones copies and avoids copying untouched pages. The error puts the original reply under Sus.",
@@ -382,7 +382,7 @@
         },
         {
           "id": "c",
-          "text": "A write fault can trigger creation of a private copy.",
+          "text": "A write to a shared copy-on-write page faults so the OS can create a private writable copy.",
           "verdict": "legit",
           "feedback": {
             "legit": "A write fault can trigger creation of a private copy. You classified that correctly as Legit.",
@@ -399,11 +399,11 @@
     {
       "id": "os-thrashing",
       "difficulty": "hard",
-      "prompt": "What is virtual-memory thrashing?",
+      "prompt": "The machine is busy moving pages but barely doing application work. Is that the classic symptom of thrashing?",
       "answers": [
         {
           "id": "a",
-          "text": "A CPU executes instructions too quickly for memory.",
+          "text": "Thrashing means the CPU executes instructions faster than RAM can understand them. Paging is unrelated.",
           "verdict": "sus",
           "feedback": {
             "legit": "Thrashing comes from an insufficient working set and heavy paging. The error puts the original reply under Sus.",
@@ -412,7 +412,7 @@
         },
         {
           "id": "b",
-          "text": "Reducing active working sets or adding memory can help.",
+          "text": "Reducing the active working sets or adding enough memory can move the system out of the thrashing regime.",
           "verdict": "legit",
           "feedback": {
             "legit": "Reducing active working sets or adding memory can help. Your Legit vote was right.",
@@ -421,7 +421,7 @@
         },
         {
           "id": "c",
-          "text": "The system spends excessive time moving pages instead of doing useful work.",
+          "text": "Yes. The system spends excessive time paging because the active memory demand does not fit effectively.",
           "verdict": "legit",
           "feedback": {
             "legit": "The system spends excessive time moving pages instead of doing useful work. Your Legit judgment holds up.",
@@ -438,11 +438,11 @@
     {
       "id": "os-page-cache",
       "difficulty": "hard",
-      "prompt": "Why does an operating system cache file data in memory?",
+      "prompt": "Why keep file data in the OS page cache, and what durability mistake can that speed tempt developers to make?",
       "answers": [
         {
           "id": "a",
-          "text": "The operating-system page cache is the same hardware structure as a CPU cache.",
+          "text": "The page cache is literally the CPU's hardware cache. Both names refer to the same silicon structure.",
           "verdict": "sus",
           "feedback": {
             "legit": "The page cache is managed by the kernel for file data; CPU caches are hardware caches for memory accesses. The original reply should be marked Sus.",
@@ -451,7 +451,7 @@
         },
         {
           "id": "b",
-          "text": "Reading file data from the page cache always performs a new disk read.",
+          "text": "A page-cache hit still requires a fresh disk read. Cached data only helps the disk choose sectors faster.",
           "verdict": "sus",
           "feedback": {
             "legit": "A cache hit can satisfy the read from memory without accessing the storage device again. The Legit label misses the flaw here.",
@@ -460,7 +460,7 @@
         },
         {
           "id": "c",
-          "text": "Cached writes are guaranteed durable immediately.",
+          "text": "Once a write reaches the page cache it is guaranteed durable, even before the storage device receives it.",
           "verdict": "sus",
           "feedback": {
             "legit": "Durability requires the data to reach the required stable storage boundary. The original statement is materially misleading.",

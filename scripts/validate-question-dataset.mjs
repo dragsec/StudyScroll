@@ -1,6 +1,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import { getEditorialCopy } from "./editorial-copy/index.mjs";
 
 const datasetDir = path.join(process.cwd(), "datasets", "questions", "v1");
 const expectedDifficulties = { easy: 3, medium: 6, hard: 3 };
@@ -37,12 +38,47 @@ const cannedOpeners = [
   "yep, this one checks out.",
   "this one is legit.",
   "not this one.",
-  "good catch."
+  "good catch.",
+  "a comment thread sent me down a rabbit hole.",
+  "i need a second pair of eyes on this:",
+  "two confident answers, zero agreement.",
+  "no textbook speech, please.",
+  "imagine this comes up in a code review:",
+  "i thought i knew this until a teammate disagreed.",
+  "can someone explain this without hand-waving:",
+  "this feels obvious, which is making me suspicious.",
+  "putting my notes on trial today:",
+  "my study group split right down the middle.",
+  "found an argument about this under a tutorial:",
+  "pretend the multiple-choice options are gone:",
+  "last check before i call this",
+  "i read it this way:",
+  "the one-line answer i would give:",
+  "my notes reduce it to this:",
+  "the key detail for me:",
+  "my understanding:",
+  "the practical reading:",
+  "i keep coming back to this:",
+  "the cleanest explanation i know:",
+  "my mental model is simple:",
+  "for me, it comes down to this:",
+  "the useful rule of thumb:",
+  "my quick explanation:",
 ];
 
 function hasCannedOpener(value) {
   const normalized = value.trim().toLowerCase();
   return cannedOpeners.some((opener) => normalized.startsWith(opener));
+}
+
+function copyIssues(value) {
+  const issues = [];
+  if (/[\u2013\u2014\ufffd]/u.test(value)) issues.push("contains a dash or replacement character");
+  if (/\s{2,}/u.test(value)) issues.push("contains repeated whitespace");
+  if (/\s+[,.!?;:]/u.test(value)) issues.push("contains whitespace before punctuation");
+  if ((value.match(/`/gu)?.length ?? 0) % 2 !== 0) issues.push("contains unbalanced backticks");
+  if (!/[.!?`]$/u.test(value.trim())) issues.push("needs terminal punctuation");
+  return issues;
 }
 
 function fail(file, message) {
@@ -92,6 +128,15 @@ for (const file of files) {
     if (typeof question.prompt === "string" && !question.prompt.trim().endsWith("?")) {
       fail(file, `${question.id}: prompt must end with a question mark`);
     }
+    if (typeof question.prompt === "string") {
+      for (const issue of copyIssues(question.prompt)) fail(file, `${question.id}: prompt ${issue}`);
+    }
+    const editorialCopy = getEditorialCopy(question.id);
+    if (!editorialCopy) {
+      fail(file, `${question.id}: missing one-by-one editorial copy`);
+    } else if (question.prompt !== editorialCopy.prompt) {
+      fail(file, `${question.id}: prompt does not match the approved editorial copy`);
+    }
     const normalizedPrompt = question.prompt?.trim().toLowerCase();
     if (normalizedPrompt) {
       if (globalPrompts.has(normalizedPrompt)) {
@@ -128,6 +173,13 @@ for (const file of files) {
       }
       if (typeof answer.text === "string" && hasCannedOpener(answer.text)) {
         fail(file, `${question.id}/${answer.id}: answer starts with a banned canned opener`);
+      }
+      if (typeof answer.text === "string") {
+        for (const issue of copyIssues(answer.text)) fail(file, `${question.id}/${answer.id}: answer ${issue}`);
+      }
+      const answerIndex = question.answers.indexOf(answer);
+      if (editorialCopy && answer.text !== editorialCopy.answers[answerIndex]) {
+        fail(file, `${question.id}/${answer.id}: answer does not match the approved editorial copy`);
       }
       const normalizedAnswer = answer.text?.trim().toLowerCase();
       if (normalizedAnswer) {

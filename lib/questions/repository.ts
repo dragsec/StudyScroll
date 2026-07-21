@@ -60,8 +60,10 @@ function toVerdict(value: DbVerdict): Verdict {
 function mapQuestionRow(
   row: Prisma.QuestionGetPayload<{ include: typeof questionInclude }>,
 ): Question {
+  const [authorHandle, authorRole] = personaFor(row.key, 3);
   return {
     id: row.key,
+    author: { handle: authorHandle, role: authorRole },
     topic: row.topic.name as Topic,
     difficulty: toDifficulty(row.difficulty),
     prompt: row.prompt,

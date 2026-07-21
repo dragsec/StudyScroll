@@ -95,6 +95,13 @@ function isQuestionApiResponse(value: unknown): value is QuestionApiResponse {
         typeof question.id === "string" &&
         "prompt" in question &&
         typeof question.prompt === "string" &&
+        "author" in question &&
+        Boolean(question.author) &&
+        typeof question.author === "object" &&
+        "handle" in question.author &&
+        typeof question.author.handle === "string" &&
+        "role" in question.author &&
+        typeof question.author.role === "string" &&
         "answers" in question &&
         Array.isArray(question.answers) &&
         question.answers.length === 3,
@@ -670,14 +677,14 @@ function QuestionCard({
   onShare: () => void;
 }) {
   return (
-    <article className="question-card">
+    <article className="question-card" data-question-id={question.id}>
       <button type="button" className="card-open-area" onClick={onOpen}>
         <span className="persona-row">
           <span className="persona">
             <Image src="/avatar.png" alt="" width={24} height={24} />
             <span>
-              <strong>{question.answers[0].handle}</strong>
-              <small>{question.answers[0].role}</small>
+              <strong>{question.author.handle}</strong>
+              <small>{question.author.role}</small>
             </span>
           </span>
           <DifficultyBadge level={question.difficulty} />
@@ -867,7 +874,13 @@ function ProgressView({
             <p>Subject mastery</p>
             <h2 id="ranks-title">Your ranks</h2>
           </div>
-          <button type="button" onClick={onOpenRules}>
+          <button
+            type="button"
+            onClick={onOpenRules}
+            disabled={!isRegistered}
+            aria-label={isRegistered ? "Rank rules" : "Rank rules, registered users only"}
+            title={isRegistered ? undefined : "Create an account to view rank rules"}
+          >
             <CircleHelp aria-hidden="true" size={17} />
             Rank rules
           </button>

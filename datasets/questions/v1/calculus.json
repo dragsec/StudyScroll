@@ -9,11 +9,11 @@
     {
       "id": "calculus-derivative",
       "difficulty": "easy",
-      "prompt": "For a real-valued function of one real variable, what does its derivative represent at a point?",
+      "prompt": "I can calculate derivatives, but what is the number actually telling me at a point: slope, accumulated area, or something else?",
       "answers": [
         {
           "id": "a",
-          "text": "Geometrically it is the slope of the tangent line.",
+          "text": "On the graph, it is the slope of the tangent line at that point, assuming the derivative exists there.",
           "verdict": "legit",
           "feedback": {
             "legit": "Geometrically it is the slope of the tangent line. The evidence backs your Legit choice.",
@@ -22,7 +22,7 @@
         },
         {
           "id": "b",
-          "text": "The instantaneous rate of change when the derivative exists.",
+          "text": "I think of it as the function's instant rate of change, like zooming in until the local behavior looks linear.",
           "verdict": "legit",
           "feedback": {
             "legit": "The instantaneous rate of change when the derivative exists. Your call matches the underlying rule.",
@@ -31,7 +31,7 @@
         },
         {
           "id": "c",
-          "text": "Definite integration, not differentiation, describes accumulated signed area.",
+          "text": "Accumulated signed area belongs to definite integration, not to the derivative at one point.",
           "verdict": "legit",
           "feedback": {
             "legit": "Definite integration, not differentiation, describes accumulated signed area. You classified that correctly as Legit.",
@@ -48,11 +48,11 @@
     {
       "id": "calculus-power-rule",
       "difficulty": "easy",
-      "prompt": "For a positive integer n, what is the derivative of `x^n`?",
+      "prompt": "Sanity check on the power rule: if `f(x) = x^n` for a positive integer `n`, what should `f'(x)` be?",
       "answers": [
         {
           "id": "a",
-          "text": "`n x^(n-1)`.",
+          "text": "Bring the exponent down as a coefficient and reduce it by one: `f'(x) = n x^(n-1)`.",
           "verdict": "legit",
           "feedback": {
             "legit": "`n x^(n-1)`. Legit was the accurate read.",
@@ -61,7 +61,7 @@
         },
         {
           "id": "b",
-          "text": "`x^(n+1)/(n+1)`.",
+          "text": "You raise the exponent and divide, so it becomes `x^(n+1)/(n+1)`. Same move as the power rule.",
           "verdict": "sus",
           "feedback": {
             "legit": "That expression is an antiderivative, not the derivative. The Legit label misses the flaw here.",
@@ -70,7 +70,7 @@
         },
         {
           "id": "c",
-          "text": "The exponent decreases by one and multiplies the result.",
+          "text": "The old exponent becomes the multiplier, then the new exponent is one smaller. That is the pattern I remember.",
           "verdict": "legit",
           "feedback": {
             "legit": "The exponent decreases by one and multiplies the result. The source agrees with your Legit vote.",
@@ -87,11 +87,11 @@
     {
       "id": "calculus-integral-area",
       "difficulty": "easy",
-      "prompt": "Does a definite integral always equal ordinary geometric area?",
+      "prompt": "My definite integral came out zero even though the function was not zero. Can area below the axis cancel area above it?",
       "answers": [
         {
           "id": "a",
-          "text": "It represents accumulated signed change.",
+          "text": "Yes. A definite integral tracks signed accumulation, so positive and negative contributions can cancel.",
           "verdict": "legit",
           "feedback": {
             "legit": "It represents accumulated signed change. Legit was the accurate read.",
@@ -100,7 +100,7 @@
         },
         {
           "id": "b",
-          "text": "If a definite integral is zero, the function must be zero everywhere on the interval.",
+          "text": "No. If the integral is zero, the function had to stay at zero for the entire interval.",
           "verdict": "sus",
           "feedback": {
             "legit": "Positive and negative contributions can cancel, so a zero integral does not force the function to vanish. That makes the original claim unsafe to label Legit.",
@@ -109,7 +109,7 @@
         },
         {
           "id": "c",
-          "text": "Yes, it is always nonnegative.",
+          "text": "Definite integrals are ordinary area, which can never be negative. Cancellation is not part of the definition.",
           "verdict": "sus",
           "feedback": {
             "legit": "A definite integral is signed; regions below the axis contribute negatively. The original claim needed a Sus vote.",
@@ -126,11 +126,11 @@
     {
       "id": "calculus-chain-rule",
       "difficulty": "medium",
-      "prompt": "When is the chain rule used?",
+      "prompt": "A student keeps mixing up the chain rule and the product rule. What pattern would you point out first?",
       "answers": [
         {
           "id": "a",
-          "text": "The outer derivative is multiplied by the derivative of the inner function.",
+          "text": "Differentiate the outside function, leave the inside in place, then multiply by the derivative of that inside function.",
           "verdict": "legit",
           "feedback": {
             "legit": "The outer derivative is multiplied by the derivative of the inner function. Legit was the accurate read.",
@@ -139,7 +139,7 @@
         },
         {
           "id": "b",
-          "text": "When differentiating a composition of functions.",
+          "text": "Look for one function nested inside another. A composition is the chain rule's natural habitat.",
           "verdict": "legit",
           "feedback": {
             "legit": "When differentiating a composition of functions. Marking it Legit was correct.",
@@ -148,7 +148,7 @@
         },
         {
           "id": "c",
-          "text": "Products use the product rule; compositions use the chain rule.",
+          "text": "Two functions multiplied together call for the product rule; one function fed into another calls for the chain rule.",
           "verdict": "legit",
           "feedback": {
             "legit": "Products use the product rule; compositions use the chain rule. The source agrees with your Legit vote.",
@@ -165,11 +165,11 @@
     {
       "id": "calculus-product-rule",
       "difficulty": "medium",
-      "prompt": "What is the derivative of a product `f(x)g(x)`?",
+      "prompt": "No shortcuts: if `h(x) = f(x)g(x)`, what does `h'(x)` expand to?",
       "answers": [
         {
           "id": "a",
-          "text": "`f'(x)g(x) + f(x)g'(x)`.",
+          "text": "`h'(x) = f'(x)g(x) + f(x)g'(x)`. Differentiate each factor once while keeping the other one.",
           "verdict": "legit",
           "feedback": {
             "legit": "`f'(x)g(x) + f(x)g'(x)`. That makes your Legit call correct.",
@@ -178,7 +178,7 @@
         },
         {
           "id": "b",
-          "text": "`f'(x)g'(x)`.",
+          "text": "Easy: `h'(x) = f'(x)g'(x)`. Just differentiate both sides of the product.",
           "verdict": "sus",
           "feedback": {
             "legit": "Differentiating each factor and multiplying omits two required terms. The original wording does not hold up.",
@@ -187,7 +187,7 @@
         },
         {
           "id": "c",
-          "text": "If one factor is constant, the derivative of the whole product must be zero.",
+          "text": "If either factor is constant, the derivative of the entire product is zero. Constants kill the product rule.",
           "verdict": "sus",
           "feedback": {
             "legit": "A constant factor remains and multiplies the derivative of the other factor. The reply changes an important technical fact.",
@@ -204,11 +204,11 @@
     {
       "id": "calculus-ftc",
       "difficulty": "medium",
-      "prompt": "What connection does the Fundamental Theorem of Calculus make?",
+      "prompt": "How would you explain the Fundamental Theorem without reciting its name? What are differentiation and integration doing to each other?",
       "answers": [
         {
           "id": "a",
-          "text": "It says every discontinuous function has an elementary antiderivative.",
+          "text": "It guarantees an elementary antiderivative for every discontinuous function. That is the theorem's main point.",
           "verdict": "sus",
           "feedback": {
             "legit": "The theorem has hypotheses and does not guarantee elementary formulas. The source contradicts the original reply.",
@@ -217,7 +217,7 @@
         },
         {
           "id": "b",
-          "text": "Under suitable conditions, differentiating an integral with a variable upper limit recovers the integrand.",
+          "text": "Under the right conditions, differentiate an integral whose upper limit moves and you recover the integrand.",
           "verdict": "legit",
           "feedback": {
             "legit": "Under suitable conditions, differentiating an integral with a variable upper limit recovers the integrand. You were right to trust this reply.",
@@ -226,7 +226,7 @@
         },
         {
           "id": "c",
-          "text": "It connects accumulation by integration with antiderivatives.",
+          "text": "It ties accumulated change from integration to antiderivatives. In that precise sense, the two operations undo each other.",
           "verdict": "legit",
           "feedback": {
             "legit": "It connects accumulation by integration with antiderivatives. Your Legit vote was right.",
@@ -243,11 +243,11 @@
     {
       "id": "calculus-continuity",
       "difficulty": "medium",
-      "prompt": "Does continuity at a point guarantee differentiability there?",
+      "prompt": "A curve has no break at a point. Is that enough to know a derivative exists there too?",
       "answers": [
         {
           "id": "a",
-          "text": "The absolute-value function is continuous but not differentiable at zero.",
+          "text": "No. `|x|` stays continuous at zero but has a sharp corner there, so the derivative does not exist.",
           "verdict": "legit",
           "feedback": {
             "legit": "The absolute-value function is continuous but not differentiable at zero. Legit was the accurate read.",
@@ -256,7 +256,7 @@
         },
         {
           "id": "b",
-          "text": "Yes, every continuous graph has a tangent slope.",
+          "text": "Yes. If you can draw through the point without lifting your pen, a tangent slope must exist.",
           "verdict": "sus",
           "feedback": {
             "legit": "A continuous function can have a corner or cusp and fail to be differentiable. That distinction makes the original answer Sus.",
@@ -265,7 +265,7 @@
         },
         {
           "id": "c",
-          "text": "Differentiability implies continuity at that point.",
+          "text": "The implication runs the other way: differentiability at a point guarantees continuity at that point.",
           "verdict": "legit",
           "feedback": {
             "legit": "Differentiability implies continuity at that point. The source agrees with your Legit vote.",
@@ -282,11 +282,11 @@
     {
       "id": "calculus-critical-point",
       "difficulty": "medium",
-      "prompt": "Does `f'(c) = 0` guarantee a local maximum or minimum?",
+      "prompt": "I found `f'(c) = 0`. Can I call `c` a maximum or minimum already, or is that jumping the gun?",
       "answers": [
         {
           "id": "a",
-          "text": "Yes, every stationary point is an extremum.",
+          "text": "Call it an extremum. Every stationary point has to be either a local maximum or a local minimum.",
           "verdict": "sus",
           "feedback": {
             "legit": "A stationary point can be neither, as with `x^3` at zero. The reply changes an important technical fact.",
@@ -295,7 +295,7 @@
         },
         {
           "id": "b",
-          "text": "It identifies a critical point that needs further analysis.",
+          "text": "That only makes `c` a critical point worth investigating. It does not classify the point for you.",
           "verdict": "legit",
           "feedback": {
             "legit": "It identifies a critical point that needs further analysis. You classified that correctly as Legit.",
@@ -304,7 +304,7 @@
         },
         {
           "id": "c",
-          "text": "Sign changes or higher-derivative information can help classify the point.",
+          "text": "Check how the derivative changes sign, or use suitable higher-derivative information, before naming the point.",
           "verdict": "legit",
           "feedback": {
             "legit": "Sign changes or higher-derivative information can help classify the point. You were right to trust this reply.",
@@ -321,11 +321,11 @@
     {
       "id": "calculus-substitution",
       "difficulty": "medium",
-      "prompt": "What is substitution in integration designed to reverse?",
+      "prompt": "When I use `u`-substitution in an integral, which differentiation rule am I effectively running backward?",
       "answers": [
         {
           "id": "a",
-          "text": "The quotient rule only.",
+          "text": "It is the quotient rule in reverse, and only the quotient rule. Products and compositions are unrelated.",
           "verdict": "sus",
           "feedback": {
             "legit": "Substitution broadly handles compositions paired with an inner derivative. That distinction makes the original answer Sus.",
@@ -334,7 +334,7 @@
         },
         {
           "id": "b",
-          "text": "A valid substitution never requires changing the bounds of a definite integral.",
+          "text": "The bounds of a definite integral stay untouched after substitution. Only the variable name changes.",
           "verdict": "sus",
           "feedback": {
             "legit": "For a definite integral, either transform the bounds to the new variable or return to the original variable before evaluating. The error puts the original reply under Sus.",
@@ -343,7 +343,7 @@
         },
         {
           "id": "c",
-          "text": "The chain rule.",
+          "text": "You are reversing the chain rule: spot an inner expression and account for its derivative.",
           "verdict": "legit",
           "feedback": {
             "legit": "The chain rule. That is a solid Legit pick.",
@@ -360,11 +360,11 @@
     {
       "id": "calculus-partial",
       "difficulty": "hard",
-      "prompt": "What does a partial derivative hold fixed?",
+      "prompt": "With `∂f/∂x`, what am I pretending stays unchanged while `x` moves?",
       "answers": [
         {
           "id": "a",
-          "text": "Partial derivatives describe coordinate-direction rates of change.",
+          "text": "A partial derivative measures the rate of change along one coordinate direction.",
           "verdict": "legit",
           "feedback": {
             "legit": "Partial derivatives describe coordinate-direction rates of change. Your Legit vote was right.",
@@ -373,7 +373,7 @@
         },
         {
           "id": "b",
-          "text": "The other independent variables while one variable changes.",
+          "text": "Hold the other independent variables fixed, then let `x` vary. That is the whole setup.",
           "verdict": "legit",
           "feedback": {
             "legit": "The other independent variables while one variable changes. Your Legit judgment holds up.",
@@ -382,7 +382,7 @@
         },
         {
           "id": "c",
-          "text": "The function value itself.",
+          "text": "You freeze the function's output value and change `x` underneath it. The other inputs can move freely.",
           "verdict": "sus",
           "feedback": {
             "legit": "The function value generally changes as the selected variable changes. The source contradicts the original reply.",
@@ -399,11 +399,11 @@
     {
       "id": "calculus-gradient",
       "difficulty": "hard",
-      "prompt": "In Euclidean space, what does the gradient of a differentiable scalar field indicate?",
+      "prompt": "For a scalar field in Euclidean space, where does the gradient point, and what does its length tell you?",
       "answers": [
         {
           "id": "a",
-          "text": "The direction of steepest local increase when the gradient is nonzero.",
+          "text": "When it is nonzero, the gradient points in the direction of steepest local increase.",
           "verdict": "legit",
           "feedback": {
             "legit": "The direction of steepest local increase when the gradient is nonzero. The source agrees with your Legit vote.",
@@ -412,7 +412,7 @@
         },
         {
           "id": "b",
-          "text": "A direction tangent to every regular level surface.",
+          "text": "It lies tangent to every regular level surface. Following it keeps the scalar value unchanged.",
           "verdict": "sus",
           "feedback": {
             "legit": "The gradient is normal to a regular level surface. The original reply is what needed flagging.",
@@ -421,7 +421,7 @@
         },
         {
           "id": "c",
-          "text": "Its magnitude is the maximum directional derivative over unit directions at that point.",
+          "text": "Its magnitude is the largest directional derivative available among unit directions at that point.",
           "verdict": "legit",
           "feedback": {
             "legit": "Its magnitude is the maximum directional derivative over unit directions at that point. Your call matches the underlying rule.",
@@ -438,11 +438,11 @@
     {
       "id": "calculus-taylor",
       "difficulty": "hard",
-      "prompt": "Does a function always equal its Taylor series wherever all derivatives exist?",
+      "prompt": "If a function has derivatives of every order, can I safely replace it with its Taylor series everywhere?",
       "answers": [
         {
           "id": "a",
-          "text": "Every Taylor series has an infinite radius of convergence.",
+          "text": "Absolutely. Every Taylor series converges for every input, so the radius is always infinite.",
           "verdict": "sus",
           "feedback": {
             "legit": "A Taylor series can have a finite or even zero radius of convergence. The source contradicts the original reply.",
@@ -451,7 +451,7 @@
         },
         {
           "id": "b",
-          "text": "Adding more Taylor terms always improves the approximation at every input.",
+          "text": "More terms always improve the approximation at every input. Taylor error can only decrease.",
           "verdict": "sus",
           "feedback": {
             "legit": "Improvement depends on the input, convergence region, and remainder; more terms do not give a universal guarantee. The original reply should be marked Sus.",
@@ -460,7 +460,7 @@
         },
         {
           "id": "c",
-          "text": "Yes, infinite differentiability guarantees equality.",
+          "text": "Yes. Infinite differentiability is exactly the condition that makes a function equal its Taylor series.",
           "verdict": "sus",
           "feedback": {
             "legit": "Some smooth functions have Taylor series that do not equal the function away from the expansion point. The Legit label misses the flaw here.",

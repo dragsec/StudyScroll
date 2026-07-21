@@ -9,11 +9,11 @@
     {
       "id": "docker-image-container",
       "difficulty": "easy",
-      "prompt": "How does a Docker image differ from a container?",
+      "prompt": "Someone on my team uses 'image' and 'container' like they are synonyms. What is the clean distinction?",
       "answers": [
         {
           "id": "a",
-          "text": "Multiple containers can be created from one image.",
+          "text": "One image can launch many independent containers. The image is reused; the runtime state is not shared by default.",
           "verdict": "legit",
           "feedback": {
             "legit": "Multiple containers can be created from one image. That is a solid Legit pick.",
@@ -22,7 +22,7 @@
         },
         {
           "id": "b",
-          "text": "An image is an immutable template used to create containers.",
+          "text": "Think template, not running process. An image is the immutable package used to create containers.",
           "verdict": "legit",
           "feedback": {
             "legit": "An image is an immutable template used to create containers. That makes your Legit call correct.",
@@ -31,7 +31,7 @@
         },
         {
           "id": "c",
-          "text": "A container is a runtime instance created from an image.",
+          "text": "A container is what you get when that image is instantiated and running with its own writable state.",
           "verdict": "legit",
           "feedback": {
             "legit": "A container is a runtime instance created from an image. This supports the Legit label you chose.",
@@ -48,11 +48,11 @@
     {
       "id": "docker-volume",
       "difficulty": "easy",
-      "prompt": "Why use a Docker volume?",
+      "prompt": "My container is disposable but its database files are not. Is that exactly the problem a Docker volume solves?",
       "answers": [
         {
           "id": "a",
-          "text": "To persist data outside a container's writable layer.",
+          "text": "Yes. Put persistent data outside the container's writable layer so replacing the container does not erase it.",
           "verdict": "legit",
           "feedback": {
             "legit": "To persist data outside a container's writable layer. Your Legit judgment holds up.",
@@ -61,7 +61,7 @@
         },
         {
           "id": "b",
-          "text": "To bake source code permanently into an image.",
+          "text": "Volumes are for baking source code permanently into the image. They make the build artifact immutable.",
           "verdict": "sus",
           "feedback": {
             "legit": "Image build instructions add files to images; volumes hold runtime data. The Legit label misses the flaw here.",
@@ -70,7 +70,7 @@
         },
         {
           "id": "c",
-          "text": "A volume can survive deletion of the container that used it.",
+          "text": "A named volume can outlive the container that used it. Deleting the process wrapper does not automatically delete the data.",
           "verdict": "legit",
           "feedback": {
             "legit": "A volume can survive deletion of the container that used it. That makes your Legit call correct.",
@@ -87,11 +87,11 @@
     {
       "id": "docker-port",
       "difficulty": "easy",
-      "prompt": "Does exposing a port in a Dockerfile publish it to the host?",
+      "prompt": "I added `EXPOSE 3000` to a Dockerfile. Can the host reach that port now, or am I missing a separate step?",
       "answers": [
         {
           "id": "a",
-          "text": "`docker run -p` can map a host port to a container port.",
+          "text": "You still need a publish mapping such as `docker run -p`. That connects a host port to the container port.",
           "verdict": "legit",
           "feedback": {
             "legit": "`docker run -p` can map a host port to a container port. You classified that correctly as Legit.",
@@ -100,7 +100,7 @@
         },
         {
           "id": "b",
-          "text": "A port must appear in EXPOSE before `docker run -p` can publish it.",
+          "text": "Publishing with `-p` only works for ports previously listed in `EXPOSE`. Docker rejects every other mapping.",
           "verdict": "sus",
           "feedback": {
             "legit": "Runtime port publishing can map a container port even when the Dockerfile does not declare EXPOSE. The original reply was the misconception in the thread.",
@@ -109,7 +109,7 @@
         },
         {
           "id": "c",
-          "text": "Yes, EXPOSE automatically creates a host mapping.",
+          "text": "`EXPOSE` creates the host mapping automatically. The port is public as soon as the container starts.",
           "verdict": "sus",
           "feedback": {
             "legit": "Publishing requires a runtime port mapping; EXPOSE is metadata/documentation. That distinction makes the original answer Sus.",
@@ -126,11 +126,11 @@
     {
       "id": "docker-layer-cache",
       "difficulty": "medium",
-      "prompt": "Why copy dependency manifests before application source in many Dockerfiles?",
+      "prompt": "Why do so many Dockerfiles copy the package manifest, install dependencies, and only then copy the application code?",
       "answers": [
         {
           "id": "a",
-          "text": "A change to an earlier layer invalidates reuse of later layers.",
+          "text": "Docker reuses layers in order. Change an early input and the layers built after it may need to run again.",
           "verdict": "legit",
           "feedback": {
             "legit": "A change to an earlier layer invalidates reuse of later layers. Your Legit judgment holds up.",
@@ -139,7 +139,7 @@
         },
         {
           "id": "b",
-          "text": "The dependency-install layer can remain cached when only source files change.",
+          "text": "Source files change constantly; dependency manifests usually do not. This ordering preserves the expensive install layer more often.",
           "verdict": "legit",
           "feedback": {
             "legit": "The dependency-install layer can remain cached when only source files change. That is a solid Legit pick.",
@@ -148,7 +148,7 @@
         },
         {
           "id": "c",
-          "text": "The ordering is a cache optimization, not a network rule.",
+          "text": "It is a build-cache optimization, not a requirement for package registries or container networking.",
           "verdict": "legit",
           "feedback": {
             "legit": "The ordering is a cache optimization, not a network rule. That makes your Legit call correct.",
@@ -165,11 +165,11 @@
     {
       "id": "docker-bind-mount",
       "difficulty": "medium",
-      "prompt": "How does a bind mount differ from a named volume?",
+      "prompt": "I need local files inside a container. When would I choose a bind mount instead of a named volume?",
       "answers": [
         {
           "id": "a",
-          "text": "A bind mount maps a specific host path into the container.",
+          "text": "A bind mount exposes a specific path from the host, which is handy when the exact local directory matters.",
           "verdict": "legit",
           "feedback": {
             "legit": "A bind mount maps a specific host path into the container. You classified that correctly as Legit.",
@@ -178,7 +178,7 @@
         },
         {
           "id": "b",
-          "text": "A bind mount is stored only inside the image.",
+          "text": "Bind mounts are saved inside the image layers. The host path is copied once and then disconnected.",
           "verdict": "sus",
           "feedback": {
             "legit": "Bind mounts reference host filesystem paths at runtime. The reply changes an important technical fact.",
@@ -187,7 +187,7 @@
         },
         {
           "id": "c",
-          "text": "Named volumes are managed through Docker's volume storage.",
+          "text": "Named volumes live in storage managed by Docker rather than at a host path you choose directly.",
           "verdict": "legit",
           "feedback": {
             "legit": "Named volumes are managed through Docker's volume storage. Your Legit vote was right.",
@@ -204,11 +204,11 @@
     {
       "id": "docker-multistage",
       "difficulty": "medium",
-      "prompt": "Why use a multi-stage Docker build?",
+      "prompt": "My final image contains a compiler, package manager, and half the internet. How does a multi-stage build clean that up?",
       "answers": [
         {
           "id": "a",
-          "text": "Every stage runs as a separate production container.",
+          "text": "Every stage becomes a production container and keeps running beside the final one. Nothing is actually removed.",
           "verdict": "sus",
           "feedback": {
             "legit": "Stages are build phases; only selected outputs need to reach the final image. That makes the original claim unsafe to label Legit.",
@@ -217,7 +217,7 @@
         },
         {
           "id": "b",
-          "text": "A multi-stage build automatically updates every base image to its newest version.",
+          "text": "Declaring multiple stages also upgrades every base image to its newest tag. That is where the size saving comes from.",
           "verdict": "sus",
           "feedback": {
             "legit": "Base-image selection and update policy remain explicit build concerns. The original claim needed a Sus vote.",
@@ -226,7 +226,7 @@
         },
         {
           "id": "c",
-          "text": "Build tools can stay in an earlier stage while only runtime artifacts enter the final image.",
+          "text": "Compile in one stage, then copy only the runtime artifacts into the final stage. The build toolchain stays behind.",
           "verdict": "legit",
           "feedback": {
             "legit": "Build tools can stay in an earlier stage while only runtime artifacts enter the final image. Marking it Legit was correct.",
@@ -243,11 +243,11 @@
     {
       "id": "docker-pid1",
       "difficulty": "medium",
-      "prompt": "Why does PID 1 behavior matter inside a container?",
+      "prompt": "Why do containers care so much about the process running as PID 1? Isn't it just another process ID?",
       "answers": [
         {
           "id": "a",
-          "text": "An init process can help with signal forwarding and zombie reaping.",
+          "text": "A small init can forward signals and reap orphaned child processes, which avoids several PID 1 surprises.",
           "verdict": "legit",
           "feedback": {
             "legit": "An init process can help with signal forwarding and zombie reaping. You were right to trust this reply.",
@@ -256,7 +256,7 @@
         },
         {
           "id": "b",
-          "text": "The main process needs correct signal handling and must reap child processes when it creates them.",
+          "text": "If the main process creates children, it needs to handle signals correctly and reap them instead of leaving zombies.",
           "verdict": "legit",
           "feedback": {
             "legit": "The main process needs correct signal handling and must reap child processes when it creates them. Your Legit vote was right.",
@@ -265,7 +265,7 @@
         },
         {
           "id": "c",
-          "text": "PID 1 cannot receive termination signals.",
+          "text": "PID 1 cannot receive termination signals at all, so graceful shutdown is impossible inside a container.",
           "verdict": "sus",
           "feedback": {
             "legit": "PID 1 can receive signals, but the process and entrypoint must forward or handle them correctly. The original reply was the misconception in the thread.",
@@ -282,11 +282,11 @@
     {
       "id": "docker-secrets",
       "difficulty": "medium",
-      "prompt": "Is an image environment variable a safe place for a permanent secret?",
+      "prompt": "Can I bake an API key into an image environment variable if the repository itself stays private?",
       "answers": [
         {
           "id": "a",
-          "text": "Yes, image configuration is invisible to anyone who pulls it.",
+          "text": "Sure. Image configuration is invisible to anyone who pulls or inspects the image, so the key remains private.",
           "verdict": "sus",
           "feedback": {
             "legit": "Image metadata and layers can expose embedded values. That distinction makes the original answer Sus.",
@@ -295,7 +295,7 @@
         },
         {
           "id": "b",
-          "text": "Secrets should be injected through an appropriate runtime secret mechanism.",
+          "text": "Use a runtime secret mechanism and keep long-lived credentials out of the image artifact entirely.",
           "verdict": "legit",
           "feedback": {
             "legit": "Secrets should be injected through an appropriate runtime secret mechanism. Legit was the accurate read.",
@@ -304,7 +304,7 @@
         },
         {
           "id": "c",
-          "text": "Removing a secret in a later layer may not remove it from earlier image history.",
+          "text": "Deleting the secret in a later layer may leave it recoverable from earlier image history. Layers remember more than the final filesystem view.",
           "verdict": "legit",
           "feedback": {
             "legit": "Removing a secret in a later layer may not remove it from earlier image history. Marking it Legit was correct.",
@@ -321,11 +321,11 @@
     {
       "id": "docker-healthcheck",
       "difficulty": "medium",
-      "prompt": "What does a Docker health check indicate?",
+      "prompt": "A container reports `healthy`. How much does that status really prove about the application and its dependencies?",
       "answers": [
         {
           "id": "a",
-          "text": "That every downstream dependency is permanently available.",
+          "text": "It proves every downstream service will remain available for the entire lifetime of the container.",
           "verdict": "sus",
           "feedback": {
             "legit": "A health command only tests what it was designed to observe. The original reply was the misconception in the thread.",
@@ -334,7 +334,7 @@
         },
         {
           "id": "b",
-          "text": "A Docker health check by itself always restarts an unhealthy container.",
+          "text": "Docker always restarts a container the moment its health check fails. No orchestrator policy is needed.",
           "verdict": "sus",
           "feedback": {
             "legit": "A health check reports status; restart behavior requires an orchestrator or other policy. That distinction makes the original answer Sus.",
@@ -343,7 +343,7 @@
         },
         {
           "id": "c",
-          "text": "Whether a configured command considers the container healthy.",
+          "text": "It proves only that the configured health command currently returns a healthy result. The check is as good as the command you wrote.",
           "verdict": "legit",
           "feedback": {
             "legit": "Whether a configured command considers the container healthy. That makes your Legit call correct.",
@@ -360,11 +360,11 @@
     {
       "id": "docker-compose-depends",
       "difficulty": "hard",
-      "prompt": "Does basic Compose `depends_on` prove a dependency is ready to serve requests?",
+      "prompt": "Compose started the database before the API. Does basic `depends_on` mean the database is ready for connections?",
       "answers": [
         {
           "id": "a",
-          "text": "Health-based conditions can improve orchestration when supported and configured.",
+          "text": "Not by itself, although supported health-based conditions can make startup coordination more meaningful.",
           "verdict": "legit",
           "feedback": {
             "legit": "Health-based conditions can improve orchestration when supported and configured. Legit was the accurate read.",
@@ -373,7 +373,7 @@
         },
         {
           "id": "b",
-          "text": "Yes, process start order guarantees application readiness.",
+          "text": "Yes. Process start order is the same thing as application readiness, so the first API connection is safe.",
           "verdict": "sus",
           "feedback": {
             "legit": "A started container may still be initializing; readiness needs a health condition or retry logic. The Legit label misses the flaw here.",
@@ -382,7 +382,7 @@
         },
         {
           "id": "c",
-          "text": "Applications should tolerate dependency startup delays.",
+          "text": "The API should still tolerate a dependency taking time to become ready. Retry and recovery belong in the application path.",
           "verdict": "legit",
           "feedback": {
             "legit": "Applications should tolerate dependency startup delays. The source agrees with your Legit vote.",
@@ -399,11 +399,11 @@
     {
       "id": "docker-network",
       "difficulty": "hard",
-      "prompt": "How do containers discover each other on a user-defined Docker network?",
+      "prompt": "Two containers share a user-defined Docker network. How should one find the other without hard-coding an IP address?",
       "answers": [
         {
           "id": "a",
-          "text": "They can use Docker-provided name resolution for container or service names.",
+          "text": "Use Docker's built-in name resolution and connect by the container or Compose service name.",
           "verdict": "legit",
           "feedback": {
             "legit": "They can use Docker-provided name resolution for container or service names. Your call matches the underlying rule.",
@@ -412,7 +412,7 @@
         },
         {
           "id": "b",
-          "text": "They must all publish ports to the public host interface.",
+          "text": "Both containers must publish their ports on the host's public interface before they can talk to each other.",
           "verdict": "sus",
           "feedback": {
             "legit": "Publishing is unnecessary for container-to-container traffic on the shared network. That makes the original claim unsafe to label Legit.",
@@ -421,7 +421,7 @@
         },
         {
           "id": "c",
-          "text": "Network isolation controls which containers can communicate directly.",
+          "text": "Network membership also creates an isolation boundary. Containers need a shared reachable network before direct communication works.",
           "verdict": "legit",
           "feedback": {
             "legit": "Network isolation controls which containers can communicate directly. You were right to trust this reply.",
@@ -438,11 +438,11 @@
     {
       "id": "docker-non-root",
       "difficulty": "hard",
-      "prompt": "Why run a container process as a non-root user?",
+      "prompt": "Running the container as non-root is good advice, but what does it reduce rather than magically eliminate?",
       "answers": [
         {
           "id": "a",
-          "text": "It makes host kernel vulnerabilities impossible.",
+          "text": "It makes host-kernel vulnerabilities impossible to exploit. A non-root UID is a complete container escape defense.",
           "verdict": "sus",
           "feedback": {
             "legit": "Least privilege reduces impact but does not eliminate container escape risks. The reply changes an important technical fact.",
@@ -451,7 +451,7 @@
         },
         {
           "id": "b",
-          "text": "A non-root process cannot listen on any network port.",
+          "text": "Non-root processes cannot listen on any TCP or UDP port, including high-numbered ports such as 8080.",
           "verdict": "sus",
           "feedback": {
             "legit": "Non-root processes can listen on unprivileged ports and may receive narrowly configured capabilities when needed. That makes the original claim unsafe to label Legit.",
@@ -460,7 +460,7 @@
         },
         {
           "id": "c",
-          "text": "A Dockerfile USER instruction automatically changes ownership of files copied earlier.",
+          "text": "Adding `USER` also fixes ownership for every file copied earlier in the Dockerfile. No `chown` is ever needed.",
           "verdict": "sus",
           "feedback": {
             "legit": "USER selects the account for later instructions and runtime; file ownership must be set separately, such as with COPY --chown. The original claim needed a Sus vote.",

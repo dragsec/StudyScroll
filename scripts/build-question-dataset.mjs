@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import { applyEditorialCopy } from "./editorial-copy/index.mjs";
 
 const L = (text) => ({ text, verdict: "legit" });
 const S = (text, correction) => ({ text, verdict: "sus", correction });
@@ -519,7 +520,7 @@ for (const [bankIndex, bank] of banks.entries()) {
       answers[replaceIndex] = thirdSus;
     }
     const rotation = (bankIndex + questionIndex) % 3;
-    return ({
+    return applyEditorialCopy({
     id: question.id,
     difficulty: question.difficulty,
     prompt: question.prompt,

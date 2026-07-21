@@ -1739,7 +1739,7 @@ button:disabled {
 
 .ai-topic-copy > svg {
   flex: 0 0 auto;
-  color: #9094a5;
+  color: var(--pink);
 }
 
 .ai-topic-copy strong {

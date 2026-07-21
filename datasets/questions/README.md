@@ -12,7 +12,11 @@ The requested "normal" band is stored as `medium` to match the difficulty name a
 
 Every question contains three answers. Every answer stores its ground-truth verdict and separate feedback for a learner who selects `legit` or `sus`. Questions deliberately vary from zero to three Sus statements, so learners cannot infer an answer pattern from the other cards.
 
-The v1 copy uses a restrained social-feed voice. Prompts read like real technical posts and answers read like direct community replies. Reusable conversational wrappers are intentionally banned so the dataset does not repeat the same synthetic-sounding openers.
+The v1 copy is written as a simulated social feed rather than a stack of textbook cards. Prompts move between study-group questions, code-review debates, comment-thread arguments, practical requests, and deliberately casual knowledge checks. Replies vary in confidence and tone because some fictional commenters are correct and some are confidently wrong.
+
+Every post and reply has its own editorial entry. The copy is paraphrased around the actual concept instead of wrapping a textbook sentence in a reusable opener. Fictional students can sound tentative, tutors tend to be precise, and experienced technical roles are more direct, including when their answer is deliberately wrong.
+
+The factual verdicts and correction branches remain separate from the social copy. Future rebuilds therefore reproduce the reviewed writing without changing which claims are Legit or Sus.
 
 ## Review status
 

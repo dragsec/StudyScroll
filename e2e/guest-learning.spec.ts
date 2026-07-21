@@ -1,9 +1,8 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
 
-const javascriptPrompt =
-  "How does `Array.prototype.sort()` compare values when no comparator is supplied?";
+const javascriptQuestionId = "javascript-default-sort";
 
-async function chooseJavaScript(page: Page) {
+async function chooseJavaScript(page: Page): Promise<Locator> {
   await page.getByRole("button", { name: "All topics" }).click();
 
   const topicSheet = page.getByRole("dialog", { name: "Choose topics" });
@@ -15,7 +14,9 @@ async function chooseJavaScript(page: Page) {
   await expect(
     page.getByRole("button", { name: "JavaScript", exact: true }),
   ).toBeVisible();
-  await expect(page.getByText(javascriptPrompt, { exact: true }).first()).toBeVisible();
+  const card = page.locator(`[data-question-id="${javascriptQuestionId}"]`);
+  await expect(card).toBeVisible();
+  return card;
 }
 
 test.beforeEach(async ({ page }) => {
@@ -30,32 +31,33 @@ test("a guest can discover, filter, and save a learning card", async ({ page }) 
   await expect(page).toHaveURL(/\/learn$/);
   await expect(page.getByRole("region", { name: "Learning feed" })).toBeVisible();
 
-  await chooseJavaScript(page);
+  const firstCard = await chooseJavaScript(page);
 
-  const firstCard = page.locator(".question-card").first();
-  await expect(firstCard.getByText(javascriptPrompt, { exact: true })).toBeVisible();
+  const javascriptPrompt = (await firstCard.locator(".question-title").textContent())?.trim();
+  expect(javascriptPrompt).toBeTruthy();
   await firstCard.getByRole("button", { name: "Save challenge" }).click();
   await expect(page.getByRole("status")).toHaveText("Saved for later");
 
   await page.getByRole("button", { name: "saved", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Saved cards" })).toBeVisible();
-  await expect(page.getByText(javascriptPrompt, { exact: true })).toBeVisible();
+  await expect(page.locator(`[data-question-id="${javascriptQuestionId}"]`)).toBeVisible();
 
   await page.reload();
   await page.getByRole("button", { name: "saved", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Saved cards" })).toBeVisible();
-  await expect(page.getByText(javascriptPrompt, { exact: true })).toBeVisible();
+  await expect(page.locator(`[data-question-id="${javascriptQuestionId}"]`)).toBeVisible();
 });
 
 test("a perfect answer is graded by the server and updates progress", async ({ page }) => {
   await page.goto("/learn");
-  await chooseJavaScript(page);
+  const firstCard = await chooseJavaScript(page);
 
-  const firstCard = page.locator(".question-card").first();
+  const javascriptPrompt = (await firstCard.locator(".question-title").textContent())?.trim();
+  expect(javascriptPrompt).toBeTruthy();
   await firstCard.getByRole("button", { name: "ANSWER" }).click();
 
   const answerSheet = page.getByRole("dialog", { name: "Answer challenge" });
-  await expect(answerSheet.getByRole("heading", { name: javascriptPrompt })).toBeVisible();
+  await expect(answerSheet.getByRole("heading", { name: javascriptPrompt! })).toBeVisible();
 
   const answers = answerSheet.locator(".answer-card");
   await expect(answers).toHaveCount(3);

@@ -9,11 +9,11 @@
     {
       "id": "linux-permissions",
       "difficulty": "easy",
-      "prompt": "How are traditional Linux read, write, and execute mode bits grouped?",
+      "prompt": "Linux permissions show three little `rwx` groups. Who does each group apply to, and what does execute mean on a directory?",
       "answers": [
         {
           "id": "a",
-          "text": "Mode bits apply broadly to filesystem objects.",
+          "text": "Those mode bits apply to filesystem objects broadly, not only to regular executable files.",
           "verdict": "legit",
           "feedback": {
             "legit": "Mode bits apply broadly to filesystem objects. The source agrees with your Legit vote.",
@@ -22,7 +22,7 @@
         },
         {
           "id": "b",
-          "text": "Execute permission on a directory controls traversal rather than running the directory.",
+          "text": "For a directory, execute controls traversal and access through it. You are not 'running' the directory.",
           "verdict": "legit",
           "feedback": {
             "legit": "Execute permission on a directory controls traversal rather than running the directory. The evidence backs your Legit choice.",
@@ -31,7 +31,7 @@
         },
         {
           "id": "c",
-          "text": "They are grouped for the owning user, owning group, and others.",
+          "text": "The three groups belong to the owning user, the owning group, and everyone else.",
           "verdict": "legit",
           "feedback": {
             "legit": "They are grouped for the owning user, owning group, and others. Your call matches the underlying rule.",
@@ -48,11 +48,11 @@
     {
       "id": "linux-process",
       "difficulty": "easy",
-      "prompt": "What is a Linux process?",
+      "prompt": "A program file can launch more than once, so what makes each running Linux process its own thing?",
       "answers": [
         {
           "id": "a",
-          "text": "Each process has an identifier and a virtual address space.",
+          "text": "Each process gets an identifier and its own virtual address-space context among its runtime resources.",
           "verdict": "legit",
           "feedback": {
             "legit": "Each process has an identifier and a virtual address space. This supports the Legit label you chose.",
@@ -61,7 +61,7 @@
         },
         {
           "id": "b",
-          "text": "A running program instance with execution state and resources.",
+          "text": "Think of it as a running instance of a program, complete with execution state and resources managed by the kernel.",
           "verdict": "legit",
           "feedback": {
             "legit": "A running program instance with execution state and resources. Legit was the accurate read.",
@@ -70,7 +70,7 @@
         },
         {
           "id": "c",
-          "text": "A file that can never have more than one running instance.",
+          "text": "A process is just the executable file on disk, and Linux permits only one running instance of that file.",
           "verdict": "sus",
           "feedback": {
             "legit": "The same executable can be used by many processes. The source contradicts the original reply.",
@@ -87,11 +87,11 @@
     {
       "id": "linux-pipe",
       "difficulty": "easy",
-      "prompt": "What does a shell pipeline such as `a | b` connect?",
+      "prompt": "In `a | b`, what stream leaves command `a`, and where exactly does the shell connect it on `b`?",
       "answers": [
         {
           "id": "a",
-          "text": "The standard output of `a` to the standard input of `b`.",
+          "text": "The shell connects `a`'s standard output to `b`'s standard input.",
           "verdict": "legit",
           "feedback": {
             "legit": "The standard output of `a` to the standard input of `b`. The source agrees with your Legit vote.",
@@ -100,7 +100,7 @@
         },
         {
           "id": "b",
-          "text": "The filesystems of two machines automatically.",
+          "text": "It automatically joins the filesystems of the machines running the two commands, even across a network.",
           "verdict": "sus",
           "feedback": {
             "legit": "A shell pipe carries a byte stream between local processes unless other tools add networking. The source contradicts the original reply.",
@@ -109,7 +109,7 @@
         },
         {
           "id": "c",
-          "text": "A pipe preserves application-level message or record boundaries.",
+          "text": "The pipe preserves whatever record boundaries the first application used, so the second receives intact messages.",
           "verdict": "sus",
           "feedback": {
             "legit": "A normal pipe is a byte stream; applications must define their own framing when needed. The original reply should be marked Sus.",
@@ -126,11 +126,11 @@
     {
       "id": "linux-fork",
       "difficulty": "medium",
-      "prompt": "What does `fork()` create?",
+      "prompt": "After a process calls `fork()`, what exists on the other side of that call, and is all memory copied immediately?",
       "answers": [
         {
           "id": "a",
-          "text": "The child is a separate process with its own PID.",
+          "text": "The child is a separate process with its own PID, even though it begins from the parent's state.",
           "verdict": "legit",
           "feedback": {
             "legit": "The child is a separate process with its own PID. You were right to trust this reply.",
@@ -139,7 +139,7 @@
         },
         {
           "id": "b",
-          "text": "Copy-on-write commonly delays copying memory pages until one process writes.",
+          "text": "Copy-on-write commonly lets them share physical pages until one process modifies a page.",
           "verdict": "legit",
           "feedback": {
             "legit": "Copy-on-write commonly delays copying memory pages until one process writes. Your Legit vote was right.",
@@ -148,7 +148,7 @@
         },
         {
           "id": "c",
-          "text": "A child process initially based on the calling process.",
+          "text": "You get a child process initially based on the caller. Both processes continue from the return point of `fork()`.",
           "verdict": "legit",
           "feedback": {
             "legit": "A child process initially based on the calling process. Your Legit judgment holds up.",
@@ -165,11 +165,11 @@
     {
       "id": "linux-signal",
       "difficulty": "medium",
-      "prompt": "What is a Unix signal?",
+      "prompt": "Unix signals are called asynchronous notifications. How reliable are they as a message queue, and can every signal be caught?",
       "answers": [
         {
           "id": "a",
-          "text": "Some signals can be handled or blocked, while SIGKILL cannot be caught.",
+          "text": "Some signals can be handled or blocked, but `SIGKILL` cannot be caught or ignored.",
           "verdict": "legit",
           "feedback": {
             "legit": "Some signals can be handled or blocked, while SIGKILL cannot be caught. That makes your Legit call correct.",
@@ -178,7 +178,7 @@
         },
         {
           "id": "b",
-          "text": "An asynchronous notification delivered to a process or thread.",
+          "text": "A signal is an asynchronous notification delivered to a process or, in some cases, a particular thread.",
           "verdict": "legit",
           "feedback": {
             "legit": "An asynchronous notification delivered to a process or thread. This supports the Legit label you chose.",
@@ -187,7 +187,7 @@
         },
         {
           "id": "c",
-          "text": "A guaranteed queue that preserves unlimited repeated notifications.",
+          "text": "Signals form an unlimited reliable queue. Repeated identical notifications are always preserved one by one.",
           "verdict": "sus",
           "feedback": {
             "legit": "Standard signals can coalesce and are not an unlimited message queue. The original reply should be marked Sus.",
@@ -204,11 +204,11 @@
     {
       "id": "linux-symlink",
       "difficulty": "medium",
-      "prompt": "How does a symbolic link differ from a hard link?",
+      "prompt": "What does a symbolic link store, and why can it cross filesystems or point at something that does not exist yet?",
       "answers": [
         {
           "id": "a",
-          "text": "A symbolic link stores a path to another filesystem object.",
+          "text": "It stores a path that will be resolved when the link is followed.",
           "verdict": "legit",
           "feedback": {
             "legit": "A symbolic link stores a path to another filesystem object. That is a solid Legit pick.",
@@ -217,7 +217,7 @@
         },
         {
           "id": "b",
-          "text": "A symbolic link must stay on the same filesystem as its target.",
+          "text": "A symlink and its target must share a filesystem because they reference the same inode.",
           "verdict": "sus",
           "feedback": {
             "legit": "Symbolic links can point across filesystem boundaries. The original reply should be marked Sus.",
@@ -226,7 +226,7 @@
         },
         {
           "id": "c",
-          "text": "The target must exist before a symbolic link can be created.",
+          "text": "Linux refuses to create a symbolic link until the target path already exists and is readable.",
           "verdict": "sus",
           "feedback": {
             "legit": "A symbolic link can be created for a nonexistent path and will then be dangling. The Legit label misses the flaw here.",
@@ -243,11 +243,11 @@
     {
       "id": "linux-hard-link",
       "difficulty": "medium",
-      "prompt": "What does a hard link reference?",
+      "prompt": "If two directory entries are hard links to the same file, what are they both pointing at underneath?",
       "answers": [
         {
           "id": "a",
-          "text": "A pathname that is followed dynamically each time.",
+          "text": "They store a target pathname and follow that name again on every access, just like symbolic links.",
           "verdict": "sus",
           "feedback": {
             "legit": "That describes a symbolic link; a hard link is another name for the inode. The original claim needed a Sus vote.",
@@ -256,7 +256,7 @@
         },
         {
           "id": "b",
-          "text": "Removing one hard link does not remove the data while another link remains.",
+          "text": "Removing one name does not remove the data while another hard link still references it.",
           "verdict": "legit",
           "feedback": {
             "legit": "Removing one hard link does not remove the data while another link remains. This supports the Legit label you chose.",
@@ -265,7 +265,7 @@
         },
         {
           "id": "c",
-          "text": "The same inode and underlying file data as another directory entry.",
+          "text": "Both directory entries refer to the same inode and therefore the same underlying file data.",
           "verdict": "legit",
           "feedback": {
             "legit": "The same inode and underlying file data as another directory entry. Legit was the accurate read.",
@@ -282,11 +282,11 @@
     {
       "id": "linux-load-average",
       "difficulty": "medium",
-      "prompt": "Does Linux load average equal CPU utilization percentage?",
+      "prompt": "A server shows load average `1.0`. Why can't I translate that directly into '100% CPU'?",
       "answers": [
         {
           "id": "a",
-          "text": "The three values summarize different time windows.",
+          "text": "The three reported numbers summarize load over different windows, commonly one, five, and fifteen minutes.",
           "verdict": "legit",
           "feedback": {
             "legit": "The three values summarize different time windows. Your call matches the underlying rule.",
@@ -295,7 +295,7 @@
         },
         {
           "id": "b",
-          "text": "Yes, a load of 1.0 always means 100 percent CPU use on every machine.",
+          "text": "`1.0` always equals 100 percent CPU usage, whether the machine has one core or sixty-four.",
           "verdict": "sus",
           "feedback": {
             "legit": "Load average counts runnable and certain uninterruptible tasks and must be interpreted with CPU count. That makes the original claim unsafe to label Legit.",
@@ -304,7 +304,7 @@
         },
         {
           "id": "c",
-          "text": "I/O-waiting tasks can contribute to load average.",
+          "text": "Tasks waiting on certain I/O can contribute to load average, so it is not just a CPU-utilization meter.",
           "verdict": "legit",
           "feedback": {
             "legit": "I/O-waiting tasks can contribute to load average. You were right to trust this reply.",
@@ -321,11 +321,11 @@
     {
       "id": "linux-cgroup",
       "difficulty": "medium",
-      "prompt": "What do Linux control groups provide?",
+      "prompt": "Containers use Linux control groups, but what are cgroups actually controlling or measuring?",
       "answers": [
         {
           "id": "a",
-          "text": "Resource accounting and limits for groups of processes.",
+          "text": "They group processes for resource accounting, allocation, and limits such as CPU or memory controls.",
           "verdict": "legit",
           "feedback": {
             "legit": "Resource accounting and limits for groups of processes. You were right to trust this reply.",
@@ -334,7 +334,7 @@
         },
         {
           "id": "b",
-          "text": "A replacement for all filesystem permissions.",
+          "text": "Cgroups replace filesystem ownership and permission checks, so container files no longer need Unix modes.",
           "verdict": "sus",
           "feedback": {
             "legit": "Cgroups manage resources, while permissions remain a separate security control. The original reply is what needed flagging.",
@@ -343,7 +343,7 @@
         },
         {
           "id": "c",
-          "text": "Control groups give processes separate views of process IDs and network interfaces.",
+          "text": "Separate PID and network views come from namespaces. Cgroups provide those isolated views instead.",
           "verdict": "sus",
           "feedback": {
             "legit": "Namespaces isolate resource views; cgroups primarily account for and control resource usage. The original reply was the misconception in the thread.",
@@ -360,11 +360,11 @@
     {
       "id": "linux-namespace",
       "difficulty": "hard",
-      "prompt": "What do Linux namespaces isolate?",
+      "prompt": "When people say a container has an 'isolated view' of Linux, which kernel feature creates those separate views?",
       "answers": [
         {
           "id": "a",
-          "text": "They automatically encrypt all data between processes.",
+          "text": "Namespaces encrypt all communication between processes automatically. Isolation is cryptographic by default.",
           "verdict": "sus",
           "feedback": {
             "legit": "Namespaces isolate views; encryption is a separate feature. The original reply is what needed flagging.",
@@ -373,7 +373,7 @@
         },
         {
           "id": "b",
-          "text": "Containers combine multiple namespace types with other controls.",
+          "text": "Containers combine several namespace types with cgroups, capabilities, and other controls rather than relying on one switch.",
           "verdict": "legit",
           "feedback": {
             "legit": "Containers combine multiple namespace types with other controls. You were right to trust this reply.",
@@ -382,7 +382,7 @@
         },
         {
           "id": "c",
-          "text": "Selected views of system resources such as process IDs, mounts, or networks.",
+          "text": "Namespaces isolate selected views such as process IDs, mount points, host names, users, or network stacks.",
           "verdict": "legit",
           "feedback": {
             "legit": "Selected views of system resources such as process IDs, mounts, or networks. Your Legit vote was right.",
@@ -399,11 +399,11 @@
     {
       "id": "linux-epoll",
       "difficulty": "hard",
-      "prompt": "Why use epoll for many file descriptors?",
+      "prompt": "Why does `epoll` scale better than repeatedly scanning thousands of file descriptors for readiness?",
       "answers": [
         {
           "id": "a",
-          "text": "Edge-triggered use requires draining readiness carefully to avoid missed progress.",
+          "text": "With edge-triggered notification, you need to drain the resource carefully or you can wait forever for an edge that already happened.",
           "verdict": "legit",
           "feedback": {
             "legit": "Edge-triggered use requires draining readiness carefully to avoid missed progress. Your call matches the underlying rule.",
@@ -412,7 +412,7 @@
         },
         {
           "id": "b",
-          "text": "It can report readiness changes without scanning every descriptor on each wait.",
+          "text": "The kernel can report ready descriptors without the caller rescanning the entire descriptor set on every wait.",
           "verdict": "legit",
           "feedback": {
             "legit": "It can report readiness changes without scanning every descriptor on each wait. You classified that correctly as Legit.",
@@ -421,7 +421,7 @@
         },
         {
           "id": "c",
-          "text": "It turns blocking file operations into CPU-parallel work automatically.",
+          "text": "It converts every blocking file operation into CPU-parallel work. Readiness and parallel execution are the same thing.",
           "verdict": "sus",
           "feedback": {
             "legit": "Epoll reports readiness; the application still performs the I/O. The original statement is materially misleading.",
@@ -438,11 +438,11 @@
     {
       "id": "linux-oom",
       "difficulty": "hard",
-      "prompt": "What can happen when Linux cannot satisfy memory demand?",
+      "prompt": "When Linux cannot satisfy memory demand, what can the OOM path do, and what myths about its victim choice should I avoid?",
       "answers": [
         {
           "id": "a",
-          "text": "An out-of-memory event can occur only when swap is disabled.",
+          "text": "An out-of-memory event can happen only when swap is completely disabled. With swap configured, memory is unlimited.",
           "verdict": "sus",
           "feedback": {
             "legit": "OOM can occur with or without swap when the relevant memory domain cannot satisfy an allocation. That distinction makes the original answer Sus.",
@@ -451,7 +451,7 @@
         },
         {
           "id": "b",
-          "text": "The kernel always adds physical RAM automatically.",
+          "text": "The kernel responds by adding physical RAM automatically. Applications never need to handle memory exhaustion.",
           "verdict": "sus",
           "feedback": {
             "legit": "Memory is finite; reclaim, swap, and termination are possible responses. The error puts the original reply under Sus.",
@@ -460,7 +460,7 @@
         },
         {
           "id": "c",
-          "text": "The OOM killer always terminates the process using the most memory.",
+          "text": "The OOM killer always selects whichever process currently uses the most memory. Its scoring has no other inputs.",
           "verdict": "sus",
           "feedback": {
             "legit": "The kernel uses an OOM scoring policy, so raw memory use alone does not determine the victim. The source contradicts the original reply.",

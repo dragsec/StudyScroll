@@ -9,11 +9,11 @@
     {
       "id": "javascript-typeof-null",
       "difficulty": "easy",
-      "prompt": "What does `typeof null` tell you in JavaScript?",
+      "prompt": "JavaScript says `typeof null` is `\"object\"`. Is null secretly an object, or is the language carrying old baggage?",
       "answers": [
         {
           "id": "a",
-          "text": "It returns `\"object\"` because of a historical compatibility quirk.",
+          "text": "It is old baggage. The operator returns `\"object\"` because of a compatibility quirk that the web cannot simply remove.",
           "verdict": "legit",
           "feedback": {
             "legit": "It returns `\"object\"` because of a historical compatibility quirk. Your Legit judgment holds up.",
@@ -22,7 +22,7 @@
         },
         {
           "id": "b",
-          "text": "The operator returns `\"object\"`, even though null is a primitive value.",
+          "text": "You do get `\"object\"`, but null is still a primitive. The result is not a reliable object test.",
           "verdict": "legit",
           "feedback": {
             "legit": "The operator returns `\"object\"`, even though null is a primitive value. That is a solid Legit pick.",
@@ -31,7 +31,7 @@
         },
         {
           "id": "c",
-          "text": "The result does not mean that null behaves like a normal object.",
+          "text": "So null does not suddenly gain normal object behavior. The label is historical, not a description of what null can do.",
           "verdict": "legit",
           "feedback": {
             "legit": "The result does not mean that null behaves like a normal object. That makes your Legit call correct.",
@@ -48,11 +48,11 @@
     {
       "id": "javascript-const-object",
       "difficulty": "easy",
-      "prompt": "What does `const` prevent when it holds an object?",
+      "prompt": "I declared an object with `const` and then changed one of its properties. Why did JavaScript allow that?",
       "answers": [
         {
           "id": "a",
-          "text": "It makes every property of the object immutable.",
+          "text": "It should not. `const` recursively freezes every property and nested object reachable from the variable.",
           "verdict": "sus",
           "feedback": {
             "legit": "Object properties can still change unless the object is frozen or otherwise protected. The error puts the original reply under Sus.",
@@ -61,7 +61,7 @@
         },
         {
           "id": "b",
-          "text": "The object can still be mutated through the const binding.",
+          "text": "The binding stays fixed, but the object behind it can still mutate unless something else freezes or restricts it.",
           "verdict": "legit",
           "feedback": {
             "legit": "The object can still be mutated through the const binding. The evidence backs your Legit choice.",
@@ -70,7 +70,7 @@
         },
         {
           "id": "c",
-          "text": "It prevents assigning a different value to that variable.",
+          "text": "`const` stops you assigning a different value to that variable. It does not promise deep immutability.",
           "verdict": "legit",
           "feedback": {
             "legit": "It prevents assigning a different value to that variable. Your call matches the underlying rule.",
@@ -87,11 +87,11 @@
     {
       "id": "javascript-default-sort",
       "difficulty": "easy",
-      "prompt": "How does `Array.prototype.sort()` compare values when no comparator is supplied?",
+      "prompt": "Why does `[2, 10, 1].sort()` produce a result that looks wrong for numbers? What comparison is happening?",
       "answers": [
         {
           "id": "a",
-          "text": "It returns a new sorted array and leaves the original unchanged.",
+          "text": "It also returns a new array, so at least the original numeric order remains untouched.",
           "verdict": "sus",
           "feedback": {
             "legit": "The sort method rearranges the original array in place and returns that same array reference. The Legit label misses the flaw here.",
@@ -100,7 +100,7 @@
         },
         {
           "id": "b",
-          "text": "It converts elements to strings and compares their UTF-16 code unit sequences.",
+          "text": "Without a comparator, values are converted to strings and ordered by their UTF-16 code-unit sequences.",
           "verdict": "legit",
           "feedback": {
             "legit": "It converts elements to strings and compares their UTF-16 code unit sequences. Your call matches the underlying rule.",
@@ -109,7 +109,7 @@
         },
         {
           "id": "c",
-          "text": "It always sorts numbers from smallest to largest.",
+          "text": "Numbers are always compared numerically from smallest to largest. A comparator only changes ascending to descending.",
           "verdict": "sus",
           "feedback": {
             "legit": "Numeric order requires a comparator such as `(a, b) => a - b`. The original wording does not hold up.",
@@ -126,11 +126,11 @@
     {
       "id": "javascript-closure",
       "difficulty": "medium",
-      "prompt": "What does a JavaScript closure retain?",
+      "prompt": "A function runs after its outer function has already returned. How can a closure still see those old variables?",
       "answers": [
         {
           "id": "a",
-          "text": "It retains access to bindings from its surrounding lexical environment.",
+          "text": "The function retains access to bindings from the lexical environment where it was created.",
           "verdict": "legit",
           "feedback": {
             "legit": "It retains access to bindings from its surrounding lexical environment. Your Legit judgment holds up.",
@@ -139,7 +139,7 @@
         },
         {
           "id": "b",
-          "text": "Closures capture bindings, so they can observe later updates to those bindings.",
+          "text": "It captures the bindings themselves, not frozen snapshots, so later updates can still be observed.",
           "verdict": "legit",
           "feedback": {
             "legit": "Closures capture bindings, so they can observe later updates to those bindings. That is a solid Legit pick.",
@@ -148,7 +148,7 @@
         },
         {
           "id": "c",
-          "text": "A closure can outlive the function call that created its environment.",
+          "text": "That environment can outlive the original call. Returning the inner function does not erase the variables it closes over.",
           "verdict": "legit",
           "feedback": {
             "legit": "A closure can outlive the function call that created its environment. That makes your Legit call correct.",
@@ -165,11 +165,11 @@
     {
       "id": "javascript-microtasks",
       "difficulty": "medium",
-      "prompt": "When do resolved Promise callbacks normally run?",
+      "prompt": "I queued a resolved Promise callback and a zero-delay timer. Which one normally gets its turn first?",
       "answers": [
         {
           "id": "a",
-          "text": "They run synchronously inside the call to `then`.",
+          "text": "The `then` callback runs immediately inside the current call. Resolved promises are synchronous.",
           "verdict": "sus",
           "feedback": {
             "legit": "Promise reactions are queued rather than executed synchronously. The source contradicts the original reply.",
@@ -178,7 +178,7 @@
         },
         {
           "id": "b",
-          "text": "They normally run before the next timer task such as `setTimeout(..., 0)`.",
+          "text": "Promise reactions normally drain as microtasks before the event loop picks up the next timer task.",
           "verdict": "legit",
           "feedback": {
             "legit": "They normally run before the next timer task such as `setTimeout(..., 0)`. You were right to trust this reply.",
@@ -187,7 +187,7 @@
         },
         {
           "id": "c",
-          "text": "They run as microtasks after the current call stack finishes.",
+          "text": "The current JavaScript stack finishes first, then the Promise callback runs from the microtask queue.",
           "verdict": "legit",
           "feedback": {
             "legit": "They run as microtasks after the current call stack finishes. Your Legit vote was right.",
@@ -204,11 +204,11 @@
     {
       "id": "javascript-arrow-this",
       "difficulty": "medium",
-      "prompt": "How does `this` work inside an arrow function?",
+      "prompt": "Why doesn't `call`, `apply`, or `new` give an arrow function a fresh `this` like a normal function?",
       "answers": [
         {
           "id": "a",
-          "text": "Calling an arrow function with `call` or `apply` changes its `this` value.",
+          "text": "`call` and `apply` absolutely replace an arrow's `this`. Lexical binding only applies when it is invoked normally.",
           "verdict": "sus",
           "feedback": {
             "legit": "Arrow functions use lexical `this`; `call`, `apply`, and `bind` cannot replace it. That distinction makes the original answer Sus.",
@@ -217,7 +217,7 @@
         },
         {
           "id": "b",
-          "text": "An arrow function uses `this` from its surrounding lexical scope.",
+          "text": "An arrow reads `this` from the surrounding lexical scope instead of receiving one from how it is called.",
           "verdict": "legit",
           "feedback": {
             "legit": "An arrow function uses `this` from its surrounding lexical scope. Your Legit judgment holds up.",
@@ -226,7 +226,7 @@
         },
         {
           "id": "c",
-          "text": "Calling it with `new` creates a fresh `this` value.",
+          "text": "Use `new` and the arrow becomes a constructor with a brand-new instance as `this`.",
           "verdict": "sus",
           "feedback": {
             "legit": "Arrow functions are not constructors and cannot be called with `new`. The source contradicts the original reply.",
@@ -243,11 +243,11 @@
     {
       "id": "javascript-promise-all",
       "difficulty": "medium",
-      "prompt": "What happens when one input to `Promise.all` rejects?",
+      "prompt": "One task inside `Promise.all` rejected. What happens to the combined promise, and do the other tasks stop running?",
       "answers": [
         {
           "id": "a",
-          "text": "The returned promise rejects with that rejection reason.",
+          "text": "The combined promise rejects using that rejection reason rather than waiting for a successful array of results.",
           "verdict": "legit",
           "feedback": {
             "legit": "The returned promise rejects with that rejection reason. You were right to trust this reply.",
@@ -256,7 +256,7 @@
         },
         {
           "id": "b",
-          "text": "The other asynchronous operations are automatically cancelled.",
+          "text": "JavaScript automatically cancels every other operation in the list. Rejection acts like a broadcast abort signal.",
           "verdict": "sus",
           "feedback": {
             "legit": "Promise.all does not cancel work that has already started. The original wording does not hold up.",
@@ -265,7 +265,7 @@
         },
         {
           "id": "c",
-          "text": "Other inputs may continue running even though the aggregate has rejected.",
+          "text": "The remaining work may keep running because `Promise.all` does not provide cancellation by itself.",
           "verdict": "legit",
           "feedback": {
             "legit": "Other inputs may continue running even though the aggregate has rejected. Your Legit judgment holds up.",
@@ -282,11 +282,11 @@
     {
       "id": "javascript-map-async",
       "difficulty": "medium",
-      "prompt": "What does `array.map(async item => ...)` return?",
+      "prompt": "I wrote `items.map(async item => work(item))` and got an array of pending things. What did `map` actually return?",
       "answers": [
         {
           "id": "a",
-          "text": "It waits for every callback and returns resolved values.",
+          "text": "`map` waits for every async callback and replaces the promises with their resolved values before returning.",
           "verdict": "sus",
           "feedback": {
             "legit": "Use `await Promise.all(...)` when all mapped promises must resolve. The error puts the original reply under Sus.",
@@ -295,7 +295,7 @@
         },
         {
           "id": "b",
-          "text": "The `map` method itself remains synchronous.",
+          "text": "The mapping pass itself is synchronous. It calls each callback and immediately collects what that callback returns.",
           "verdict": "legit",
           "feedback": {
             "legit": "The `map` method itself remains synchronous. Your Legit vote was right.",
@@ -304,7 +304,7 @@
         },
         {
           "id": "c",
-          "text": "It returns an array of promises.",
+          "text": "An async callback returns a promise, so the final value is an array of promises. Use an aggregation step if you need their results.",
           "verdict": "legit",
           "feedback": {
             "legit": "It returns an array of promises. Your Legit judgment holds up.",
@@ -321,11 +321,11 @@
     {
       "id": "javascript-module-bindings",
       "difficulty": "medium",
-      "prompt": "Are imported ES module bindings live?",
+      "prompt": "If an ES module updates an exported variable, does an importer see the update or keep the original value forever?",
       "answers": [
         {
           "id": "a",
-          "text": "The importing module may assign a new value directly to an imported binding.",
+          "text": "The importer can assign directly to the imported name whenever it wants. Live bindings are writable from both modules.",
           "verdict": "sus",
           "feedback": {
             "legit": "Imported bindings are live but read-only from the importing module. The reply changes an important technical fact.",
@@ -334,7 +334,7 @@
         },
         {
           "id": "b",
-          "text": "An importer observes updates made to an exported binding by its module.",
+          "text": "Imports are live views of exported bindings, so updates made by the exporting module become visible.",
           "verdict": "legit",
           "feedback": {
             "legit": "An importer observes updates made to an exported binding by its module. That is a solid Legit pick.",
@@ -343,7 +343,7 @@
         },
         {
           "id": "c",
-          "text": "An importer receives an unrelated copy that never changes.",
+          "text": "Importing copies the current value once. From then on, the two modules hold unrelated variables.",
           "verdict": "sus",
           "feedback": {
             "legit": "ES module imports are live read-only views of exported bindings. The original claim needed a Sus vote.",
@@ -360,11 +360,11 @@
     {
       "id": "javascript-weakmap",
       "difficulty": "hard",
-      "prompt": "Why can WeakMap keys help avoid retaining objects?",
+      "prompt": "Why does storing metadata in a `WeakMap` avoid keeping an otherwise unreachable object alive?",
       "answers": [
         {
           "id": "a",
-          "text": "WeakMap does not keep its object keys alive by itself.",
+          "text": "The map does not hold a strong reference that keeps its object key alive by itself.",
           "verdict": "legit",
           "feedback": {
             "legit": "WeakMap does not keep its object keys alive by itself. Your Legit vote was right.",
@@ -373,7 +373,7 @@
         },
         {
           "id": "b",
-          "text": "WeakMap accepts strings as weakly held keys.",
+          "text": "String keys are weak too, which makes `WeakMap` ideal for temporary IDs and cache keys.",
           "verdict": "sus",
           "feedback": {
             "legit": "WeakMap keys must be objects or non-registered symbols, not ordinary strings. The original statement is materially misleading.",
@@ -382,7 +382,7 @@
         },
         {
           "id": "c",
-          "text": "WeakMap keys cannot be enumerated because their lifetime is not observable that way.",
+          "text": "Keys are deliberately not enumerable because exposing them would make garbage-collection lifetime observable.",
           "verdict": "legit",
           "feedback": {
             "legit": "WeakMap keys cannot be enumerated because their lifetime is not observable that way. That is a solid Legit pick.",
@@ -399,11 +399,11 @@
     {
       "id": "javascript-proxy-invariants",
       "difficulty": "hard",
-      "prompt": "Can every JavaScript Proxy trap return arbitrary results?",
+      "prompt": "Can a Proxy trap lie about absolutely anything, or does JavaScript still enforce invariants from the target object?",
       "answers": [
         {
           "id": "a",
-          "text": "Violating a Proxy invariant can cause a TypeError.",
+          "text": "Break one of the required Proxy invariants and the operation can throw a `TypeError` instead of accepting the lie.",
           "verdict": "legit",
           "feedback": {
             "legit": "Violating a Proxy invariant can cause a TypeError. You classified that correctly as Legit.",
@@ -412,7 +412,7 @@
         },
         {
           "id": "b",
-          "text": "A trap cannot report some impossible states for a non-extensible target.",
+          "text": "For a non-extensible target, traps cannot report certain impossible property states. The target still constrains the illusion.",
           "verdict": "legit",
           "feedback": {
             "legit": "A trap cannot report some impossible states for a non-extensible target. You were right to trust this reply.",
@@ -421,7 +421,7 @@
         },
         {
           "id": "c",
-          "text": "Yes. Proxy traps completely replace the language's object rules.",
+          "text": "A Proxy replaces all object rules. Every trap result is accepted, even when it contradicts a frozen target.",
           "verdict": "sus",
           "feedback": {
             "legit": "Proxy traps must respect invariants, including rules for non-configurable properties. The Legit label misses the flaw here.",
@@ -438,11 +438,11 @@
     {
       "id": "javascript-atomics",
       "difficulty": "hard",
-      "prompt": "When are JavaScript Atomics operations relevant?",
+      "prompt": "When do JavaScript `Atomics` matter? Are they general-purpose locks for ordinary arrays and object properties?",
       "answers": [
         {
           "id": "a",
-          "text": "Atomics operations work on any ordinary JavaScript array.",
+          "text": "They operate on every normal JavaScript array. Shared memory is optional because the runtime synchronizes the values for you.",
           "verdict": "sus",
           "feedback": {
             "legit": "Atomics require a supported integer typed array backed by SharedArrayBuffer. The Legit label misses the flaw here.",
@@ -451,7 +451,7 @@
         },
         {
           "id": "b",
-          "text": "Atomics operations guarantee that concurrent code never blocks.",
+          "text": "Atomic operations guarantee concurrent code never blocks. Waiting is impossible once `Atomics` is involved.",
           "verdict": "sus",
           "feedback": {
             "legit": "Atomics provide synchronization primitives, and operations such as Atomics.wait can block an eligible agent. The original statement is materially misleading.",
@@ -460,7 +460,7 @@
         },
         {
           "id": "c",
-          "text": "They make ordinary object property updates thread-safe.",
+          "text": "They make arbitrary object-property updates thread-safe, even when those objects are not backed by shared memory.",
           "verdict": "sus",
           "feedback": {
             "legit": "Atomics only operate on supported typed arrays over shared memory. The original wording does not hold up.",

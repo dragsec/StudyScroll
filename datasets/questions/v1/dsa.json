@@ -9,11 +9,11 @@
     {
       "id": "dsa-stack",
       "difficulty": "easy",
-      "prompt": "Which access order defines a stack?",
+      "prompt": "A stack is supposed to behave like a pile of plates. Which item comes back out after a few pushes?",
       "answers": [
         {
           "id": "a",
-          "text": "Push and pop normally operate at the same end.",
+          "text": "Push and pop use the same end of the structure. You remove from the end where you most recently added.",
           "verdict": "legit",
           "feedback": {
             "legit": "Push and pop normally operate at the same end. Legit was the accurate read.",
@@ -22,7 +22,7 @@
         },
         {
           "id": "b",
-          "text": "Last in, first out.",
+          "text": "Last one in is the first one back out. LIFO is the entire contract.",
           "verdict": "legit",
           "feedback": {
             "legit": "Last in, first out. Marking it Legit was correct.",
@@ -31,7 +31,7 @@
         },
         {
           "id": "c",
-          "text": "First in, first out describes a queue.",
+          "text": "If the oldest item leaves first, you built a queue. A stack gives priority to the newest item.",
           "verdict": "legit",
           "feedback": {
             "legit": "First in, first out describes a queue. The source agrees with your Legit vote.",
@@ -48,11 +48,11 @@
     {
       "id": "dsa-queue",
       "difficulty": "easy",
-      "prompt": "Which access order defines a basic queue?",
+      "prompt": "If requests join a basic queue one after another, which request should be served first?",
       "answers": [
         {
           "id": "a",
-          "text": "First in, first out.",
+          "text": "The earliest arrival leaves first. A basic queue follows FIFO order.",
           "verdict": "legit",
           "feedback": {
             "legit": "First in, first out. The evidence backs your Legit choice.",
@@ -61,7 +61,7 @@
         },
         {
           "id": "b",
-          "text": "The newest item always leaves first.",
+          "text": "Newest request wins. Queues pop the latest item so recent work does not wait.",
           "verdict": "sus",
           "feedback": {
             "legit": "A queue removes the oldest enqueued item first. The original claim needed a Sus vote.",
@@ -70,7 +70,7 @@
         },
         {
           "id": "c",
-          "text": "Enqueue and dequeue normally operate at opposite ends.",
+          "text": "Enqueue at one end and dequeue from the other. That separation produces first-in, first-out behavior.",
           "verdict": "legit",
           "feedback": {
             "legit": "Enqueue and dequeue normally operate at opposite ends. You classified that correctly as Legit.",
@@ -87,11 +87,11 @@
     {
       "id": "dsa-binary-search",
       "difficulty": "easy",
-      "prompt": "What prerequisite does ordinary binary search need?",
+      "prompt": "Binary search keeps cutting the search space in half. What must already be true about the data for that move to be valid?",
       "answers": [
         {
           "id": "a",
-          "text": "The target must be present.",
+          "text": "The target has to exist. If it is absent, binary search loses its logarithmic behavior.",
           "verdict": "sus",
           "feedback": {
             "legit": "Binary search also terminates correctly when the target is absent. The original reply was the misconception in the thread.",
@@ -100,7 +100,7 @@
         },
         {
           "id": "b",
-          "text": "Binary search always runs in O(log n) time on a linked list.",
+          "text": "It is always `O(log n)`, even on a linked list where reaching each midpoint takes a traversal.",
           "verdict": "sus",
           "feedback": {
             "legit": "Finding the middle of a basic linked list is not constant time, so the usual array bound does not apply. That distinction makes the original answer Sus.",
@@ -109,7 +109,7 @@
         },
         {
           "id": "c",
-          "text": "The searchable keys must be ordered under the comparison being used.",
+          "text": "The keys need to be ordered according to the comparison being used. Otherwise choosing a half tells you nothing.",
           "verdict": "legit",
           "feedback": {
             "legit": "The searchable keys must be ordered under the comparison being used. The source agrees with your Legit vote.",
@@ -126,11 +126,11 @@
     {
       "id": "dsa-hash-complexity",
       "difficulty": "medium",
-      "prompt": "Is hash-table lookup always O(1)?",
+      "prompt": "Everyone quotes `O(1)` for hash-table lookup. What assumptions and worst cases are hiding behind that answer?",
       "answers": [
         {
           "id": "a",
-          "text": "Resizing strategy affects amortized insertion cost.",
+          "text": "Insertion cost also depends on resizing. Individual resizes are expensive even when the long-run cost is amortized.",
           "verdict": "legit",
           "feedback": {
             "legit": "Resizing strategy affects amortized insertion cost. The evidence backs your Legit choice.",
@@ -139,7 +139,7 @@
         },
         {
           "id": "b",
-          "text": "Collisions can degrade worst-case lookup, potentially to linear time.",
+          "text": "Collisions can pile entries together and drive a bad lookup toward linear time in the worst case.",
           "verdict": "legit",
           "feedback": {
             "legit": "Collisions can degrade worst-case lookup, potentially to linear time. Your call matches the underlying rule.",
@@ -148,7 +148,7 @@
         },
         {
           "id": "c",
-          "text": "Expected lookup can be O(1) with a suitable hash function and load factor.",
+          "text": "Constant expected lookup needs a decent hash function and a controlled load factor. `O(1)` is not a magical universal guarantee.",
           "verdict": "legit",
           "feedback": {
             "legit": "Expected lookup can be O(1) with a suitable hash function and load factor. You classified that correctly as Legit.",
@@ -165,11 +165,11 @@
     {
       "id": "dsa-bfs-shortest",
       "difficulty": "medium",
-      "prompt": "When does breadth-first search find shortest paths?",
+      "prompt": "When can BFS call the first path it finds a shortest path, and when do edge weights ruin that claim?",
       "answers": [
         {
           "id": "a",
-          "text": "It finds paths with the fewest edges in an unweighted graph.",
+          "text": "In an unweighted graph, BFS finds a path with the fewest edges from the source.",
           "verdict": "legit",
           "feedback": {
             "legit": "It finds paths with the fewest edges in an unweighted graph. That makes your Legit call correct.",
@@ -178,7 +178,7 @@
         },
         {
           "id": "b",
-          "text": "It directly handles arbitrary negative edge weights.",
+          "text": "BFS handles any negative edge weight directly because it explores all neighbors before going deeper.",
           "verdict": "sus",
           "feedback": {
             "legit": "Weighted shortest paths require an algorithm suited to those weights. The original wording does not hold up.",
@@ -187,7 +187,7 @@
         },
         {
           "id": "c",
-          "text": "It explores vertices in nondecreasing distance from the source.",
+          "text": "Its layers visit vertices in nondecreasing distance when every edge has the same effective cost.",
           "verdict": "legit",
           "feedback": {
             "legit": "It explores vertices in nondecreasing distance from the source. Legit was the accurate read.",
@@ -204,11 +204,11 @@
     {
       "id": "dsa-stable-sort",
       "difficulty": "medium",
-      "prompt": "What does stability mean for a sorting algorithm?",
+      "prompt": "Two records have the same sort key. What must a stable sorting algorithm preserve between them?",
       "answers": [
         {
           "id": "a",
-          "text": "The algorithm never uses extra memory.",
+          "text": "Stability means the algorithm uses no extra memory. In-place and stable are two names for the same property.",
           "verdict": "sus",
           "feedback": {
             "legit": "Stability and memory usage are separate properties. The original statement is materially misleading.",
@@ -217,7 +217,7 @@
         },
         {
           "id": "b",
-          "text": "Every implementation of quicksort is stable.",
+          "text": "Quicksort is stable by definition, regardless of partition scheme or implementation details.",
           "verdict": "sus",
           "feedback": {
             "legit": "Quicksort is not inherently stable; stability depends on the algorithm and implementation. The original wording does not hold up.",
@@ -226,7 +226,7 @@
         },
         {
           "id": "c",
-          "text": "Equal-key items keep their original relative order.",
+          "text": "Equal-key records keep the relative order they had before sorting. That is the promise stability makes.",
           "verdict": "legit",
           "feedback": {
             "legit": "Equal-key items keep their original relative order. Your call matches the underlying rule.",
@@ -243,11 +243,11 @@
     {
       "id": "dsa-binary-heap",
       "difficulty": "medium",
-      "prompt": "What does a binary min-heap guarantee?",
+      "prompt": "A binary min-heap is not a fully sorted tree, so what ordering and complexity does it actually guarantee?",
       "answers": [
         {
           "id": "a",
-          "text": "Insertion and root removal take O(log n) time.",
+          "text": "Insertions and removing the root take logarithmic time as elements move along the tree height.",
           "verdict": "legit",
           "feedback": {
             "legit": "Insertion and root removal take O(log n) time. That makes your Legit call correct.",
@@ -256,7 +256,7 @@
         },
         {
           "id": "b",
-          "text": "The minimum element is at the root.",
+          "text": "The smallest element is at the root. That is the only element you can locate immediately from the heap property.",
           "verdict": "legit",
           "feedback": {
             "legit": "The minimum element is at the root. This supports the Legit label you chose.",
@@ -265,7 +265,7 @@
         },
         {
           "id": "c",
-          "text": "Every level is globally sorted from left to right.",
+          "text": "Every level is sorted left to right. Reading the array representation gives the values in ascending chunks.",
           "verdict": "sus",
           "feedback": {
             "legit": "A heap only guarantees the parent-child order property. The reply changes an important technical fact.",
@@ -282,11 +282,11 @@
     {
       "id": "dsa-union-find",
       "difficulty": "medium",
-      "prompt": "What problem does a disjoint-set union structure solve?",
+      "prompt": "I keep seeing union-find in connectivity problems. What question does the structure answer efficiently?",
       "answers": [
         {
           "id": "a",
-          "text": "It tracks which elements belong to the same connected component.",
+          "text": "It tracks disjoint groups and quickly tells whether two elements currently belong to the same component.",
           "verdict": "legit",
           "feedback": {
             "legit": "It tracks which elements belong to the same connected component. You classified that correctly as Legit.",
@@ -295,7 +295,7 @@
         },
         {
           "id": "b",
-          "text": "It returns the shortest weighted path between two vertices.",
+          "text": "Give it two vertices and it returns the cheapest weighted path between them, including the actual edge sequence.",
           "verdict": "sus",
           "feedback": {
             "legit": "Union-find tracks connectivity, not path length. The original reply should be marked Sus.",
@@ -304,7 +304,7 @@
         },
         {
           "id": "c",
-          "text": "Path compression and union by rank make operations nearly constant amortized time.",
+          "text": "Union by rank plus path compression makes a long sequence of operations almost constant-time on average.",
           "verdict": "legit",
           "feedback": {
             "legit": "Path compression and union by rank make operations nearly constant amortized time. Your Legit vote was right.",
@@ -321,11 +321,11 @@
     {
       "id": "dsa-dynamic-programming",
       "difficulty": "medium",
-      "prompt": "When is dynamic programming a useful approach?",
+      "prompt": "How do I know a problem wants dynamic programming instead of plain recursion or a greedy shortcut?",
       "answers": [
         {
           "id": "a",
-          "text": "Whenever recursion appears, regardless of repeated work.",
+          "text": "Any recursive function is a dynamic-programming problem, even when every call solves a completely new subproblem.",
           "verdict": "sus",
           "feedback": {
             "legit": "Recursion alone does not imply that dynamic programming is helpful. The original reply is what needed flagging.",
@@ -334,7 +334,7 @@
         },
         {
           "id": "b",
-          "text": "Dynamic programming always chooses the locally best option at each step.",
+          "text": "Dynamic programming always picks the locally best next move. That greedy choice is what avoids repeated work.",
           "verdict": "sus",
           "feedback": {
             "legit": "Choosing a locally best option describes a greedy strategy, not dynamic programming in general. The original reply was the misconception in the thread.",
@@ -343,7 +343,7 @@
         },
         {
           "id": "c",
-          "text": "When overlapping subproblems and reusable optimal substructure are present.",
+          "text": "Look for overlapping subproblems whose results can be reused, plus an optimal-substructure relationship you can build on.",
           "verdict": "legit",
           "feedback": {
             "legit": "When overlapping subproblems and reusable optimal substructure are present. Your Legit vote was right.",
@@ -360,11 +360,11 @@
     {
       "id": "dsa-dijkstra-negative",
       "difficulty": "hard",
-      "prompt": "Can standard Dijkstra's algorithm handle negative edge weights?",
+      "prompt": "One edge in my graph has a negative weight. Can ordinary Dijkstra still be trusted if there is no negative cycle?",
       "answers": [
         {
           "id": "a",
-          "text": "Dijkstra is correct with nonnegative edge weights.",
+          "text": "Dijkstra's greedy finalization is sound when edge weights are nonnegative.",
           "verdict": "legit",
           "feedback": {
             "legit": "Dijkstra is correct with nonnegative edge weights. That makes your Legit call correct.",
@@ -373,7 +373,7 @@
         },
         {
           "id": "b",
-          "text": "Yes, as long as there is no negative cycle.",
+          "text": "No negative cycle means Dijkstra is fine. A single negative edge cannot invalidate a finalized distance.",
           "verdict": "sus",
           "feedback": {
             "legit": "A negative edge can invalidate Dijkstra's greedy finalization step. The original wording does not hold up.",
@@ -382,7 +382,7 @@
         },
         {
           "id": "c",
-          "text": "Bellman-Ford is a common alternative when negative weights are allowed.",
+          "text": "Use Bellman-Ford when negative edges are allowed and you need an algorithm designed for that case.",
           "verdict": "legit",
           "feedback": {
             "legit": "Bellman-Ford is a common alternative when negative weights are allowed. Legit was the accurate read.",
@@ -399,11 +399,11 @@
     {
       "id": "dsa-topological-sort",
       "difficulty": "hard",
-      "prompt": "When does a topological ordering exist?",
+      "prompt": "What property must a directed graph have before a topological ordering can exist?",
       "answers": [
         {
           "id": "a",
-          "text": "For a directed acyclic graph.",
+          "text": "It needs to be directed and acyclic. A directed cycle creates impossible ordering constraints.",
           "verdict": "legit",
           "feedback": {
             "legit": "For a directed acyclic graph. You were right to trust this reply.",
@@ -412,7 +412,7 @@
         },
         {
           "id": "b",
-          "text": "For every directed graph.",
+          "text": "Every directed graph has one. Cycles simply appear as consecutive vertices in the result.",
           "verdict": "sus",
           "feedback": {
             "legit": "A directed cycle makes a topological ordering impossible. The original reply is what needed flagging.",
@@ -421,7 +421,7 @@
         },
         {
           "id": "c",
-          "text": "A graph can have more than one valid topological ordering.",
+          "text": "The ordering is not necessarily unique. Independent vertices can often trade positions without breaking any edge constraint.",
           "verdict": "legit",
           "feedback": {
             "legit": "A graph can have more than one valid topological ordering. Your Legit judgment holds up.",
@@ -438,11 +438,11 @@
     {
       "id": "dsa-red-black-tree",
       "difficulty": "hard",
-      "prompt": "What do red-black tree invariants provide?",
+      "prompt": "Red-black trees call themselves balanced, but how strong is that balance and what complexity does it buy?",
       "answers": [
         {
           "id": "a",
-          "text": "They force the tree to be perfectly balanced.",
+          "text": "Every subtree has exactly the same shape and height. Red-black invariants enforce perfect balance.",
           "verdict": "sus",
           "feedback": {
             "legit": "Red-black trees allow controlled imbalance. The original reply should be marked Sus.",
@@ -451,7 +451,7 @@
         },
         {
           "id": "b",
-          "text": "Every root-to-leaf path has exactly the same total number of nodes.",
+          "text": "All root-to-leaf paths contain exactly the same total number of nodes, regardless of color.",
           "verdict": "sus",
           "feedback": {
             "legit": "Red-black invariants equalize black height, not the total node count of every path. The Legit label misses the flaw here.",
@@ -460,7 +460,7 @@
         },
         {
           "id": "c",
-          "text": "Red-black tree lookup takes O(1) time in the worst case.",
+          "text": "Lookup is constant time in the worst case because rotations keep the root close to every key.",
           "verdict": "sus",
           "feedback": {
             "legit": "The height is logarithmic, so lookup is O(log n) in the worst case. The original statement is materially misleading.",

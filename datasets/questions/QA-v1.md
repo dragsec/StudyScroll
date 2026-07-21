@@ -2,6 +2,7 @@
 
 Status: approved for the StudyScroll prototype  
 Reviewed: 20 July 2026
+Social-copy pass: 21 July 2026
 
 ## Coverage
 
@@ -48,11 +49,15 @@ The review tightened several claims whose original wording left room for edge ca
 
 ## Social-feed voice
 
-The prompts and replies are written as direct technical posts and comments. They do not pass through reusable conversational wrappers. This keeps the feed social without making every learner sound like the same person repeating a handful of catchphrases.
+The prompts and replies are presented as posts and comments from a simulated technical community. The copy moves between study groups, code reviews, tutorials, interview preparation, documentation debates, and practical workplace questions. It intentionally varies confidence: a Sus reply can sound convincing because judging plausible misinformation is part of the exercise.
+
+All 168 prompts and 504 replies have dedicated editorial copy. They are paraphrased around the concept itself rather than passed through reusable sentence templates. Tone follows the fictional context: students may reason aloud, tutors define carefully, and experienced engineering roles tend to be concise or confident. Incorrect replies remain plausible social misinformation rather than obvious joke answers.
+
+The editorial layer changes only prompts and visible reply text. IDs, topics, difficulty, answer order, verdicts, sources, and both correction branches remain tied to the reviewed source claims. The validator rejects generated files that drift from the approved one-by-one editorial entries.
 
 Vote feedback leads with the question-specific fact or correction, then confirms the learner's judgment with varied language. The automated checks reject the canned openers removed during the editorial pass.
 
-The current release contains no exact duplicate prompt, answer statement, or feedback string. Similar openings remain only where the parallel wording teaches a real contrast, such as stack versus queue or injective versus surjective functions.
+The current release contains no exact duplicate prompt, answer statement, or feedback string. Similar technical wording remains only where the parallel wording teaches a real contrast, such as stack versus queue or injective versus surjective functions.
 
 ## Automated gates
 

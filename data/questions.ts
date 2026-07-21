@@ -6,18 +6,18 @@ import {
 } from "@/data/question-types";
 
 const personas = [
-  ["@bytewise", "Software Engineer"],
-  ["@querycraft", "Data Engineer"],
-  ["@packettrail", "Network Engineer"],
-  ["@runtime_notes", "Platform Engineer"],
-  ["@proofbycoffee", "CS Student"],
-  ["@stacktrace_sam", "Backend Developer"],
-  ["@cloudmargin", "Cloud Architect"],
-  ["@syntaxgarden", "Programming Tutor"],
-  ["@kernelcorner", "Systems Engineer"],
-  ["@latency_lens", "Site Reliability Engineer"],
-  ["@mathonpaper", "Math Student"],
-  ["@buildrepeat", "DevOps Engineer"],
+  ["@RinaK", "Software Engineer"],
+  ["@violetAfterRain", "Data Engineer"],
+  ["@PacketNico", "Network Engineer"],
+  ["@ivoryTerminal", "Platform Engineer"],
+  ["@marco.wav", "CS Student"],
+  ["@andrea92", "Backend Developer"],
+  ["@CirrusJane", "Cloud Architect"],
+  ["@DrMinaLee", "Programming Tutor"],
+  ["@kernel_kate", "Systems Engineer"],
+  ["@uptime99", "Site Reliability Engineer"],
+  ["@noetherFan", "Math Student"],
+  ["@sasha_oncall", "DevOps Engineer"],
 ] as const;
 
 function stableHash(value: string) {
@@ -36,6 +36,10 @@ export function personaFor(questionId: string, answerIndex: number) {
 const mappedQuestions: Question[] = questionDatasetFiles.flatMap((file) =>
   file.questions.map((question) => ({
     id: question.id,
+    author: (() => {
+      const [handle, role] = personaFor(question.id, 3);
+      return { handle, role };
+    })(),
     topic: file.topic.name,
     difficulty: question.difficulty,
     prompt: question.prompt,
