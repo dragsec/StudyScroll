@@ -1,7 +1,5 @@
 import Link from "next/link";
 import {
-  ArrowDown,
-  ArrowRight,
   BookOpen,
   Brain,
   CirclePlay,
@@ -117,31 +115,13 @@ export default function LandingPage() {
               <Link className="button button-secondary" href="/auth?mode=signup">
                 Sign up
               </Link>
-              <a className="scroll-more" href="#how-it-works">
+              <a className="scroll-more hero-scroll-more" href="#how-it-works">
                 <span>scroll for more info</span>
-                <ArrowDown aria-hidden="true" size={22} />
+                <svg className="scroll-more-icon" aria-hidden="true" viewBox="0 -960 960 960">
+                  <path d="M480-80 200-360l56-57 184 184v-287h80v287l184-183 56 56L480-80Zm-40-520v-120h80v120h-80Zm0-200v-80h80v80h-80Z" />
+                </svg>
               </a>
             </div>
-          </div>
-          <div className="hero-feed-preview" aria-hidden="true">
-            <div className="hero-preview-post">
-              <div className="hero-preview-author">
-                <span className="hero-preview-avatar">M</span>
-                <span>
-                  <strong>@mira.builds</strong>
-                  <small>Backend developer</small>
-                </span>
-                <span className="hero-preview-level">medium</span>
-              </div>
-              <p className="hero-preview-topic">System Design</p>
-              <p className="hero-preview-question">Why does a cache sometimes show old data even after the database has changed?</p>
-              <code>Cache-Control: max-age=300</code>
-              <div className="hero-preview-footer">
-                <span>ANSWER <ArrowRight size={17} /></span>
-                <span>3 replies to judge</span>
-              </div>
-            </div>
-            <p>One question. Three calls.</p>
           </div>
         </div>
       </section>
