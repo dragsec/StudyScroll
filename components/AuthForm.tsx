@@ -130,7 +130,7 @@ export function AuthForm({
 
         <div className="auth-switch" aria-label="Choose account action">
           <button type="button" className={mode === "login" ? "active" : ""} aria-pressed={mode === "login"} onClick={() => switchMode("login")}>Log in</button>
-          <button type="button" className={mode === "signup" ? "active" : ""} aria-pressed={mode === "signup"} onClick={() => switchMode("signup")}>Create account</button>
+          <button type="button" className={mode === "signup" ? "active" : ""} aria-pressed={mode === "signup"} onClick={() => switchMode("signup")}>Sign up</button>
         </div>
 
         {!configured && (

@@ -113,7 +113,7 @@ export default function LandingPage() {
               Start learning
             </Link>
             <Link className="button button-secondary" href="/auth?mode=signup">
-              Create account
+              Sign up
             </Link>
             <a className="scroll-more" href="#how-it-works">
               <span>scroll for more info</span>
@@ -223,7 +223,7 @@ export default function LandingPage() {
           </div>
           <div className="closing-actions">
             <Link className="button button-primary" href="/learn">Start learning</Link>
-            <Link className="button button-secondary" href="/auth?mode=signup">Create account</Link>
+            <Link className="button button-secondary" href="/auth?mode=signup">Sign up</Link>
           </div>
         </div>
       </section>
