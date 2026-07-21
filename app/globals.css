@@ -123,11 +123,6 @@ button:disabled {
   place-items: center;
   padding: 1.5rem;
   background: var(--surface);
-  animation: app-launch-exit 180ms var(--ease-out) 520ms both;
-}
-
-.route-loading-splash {
-  animation: none;
 }
 
 .app-launch-wordmark {
@@ -143,23 +138,6 @@ button:disabled {
 
 .app-launch-wordmark span:last-child {
   color: var(--primary);
-}
-
-@keyframes app-launch-exit {
-  from {
-    opacity: 1;
-    visibility: visible;
-  }
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .app-launch-splash {
-    animation-duration: 1ms;
-  }
 }
 
 .button {
