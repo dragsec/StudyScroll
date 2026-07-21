@@ -29,7 +29,15 @@ The MVP currently includes:
 - Email and Google login, password recovery, account settings, and account deletion
 - A responsive desktop layout built around the mobile experience
 
-The research behind the learning loop is documented in the [whitepaper](docs/WHITEPAPER.md).
+## Why StudyScroll?
+
+StudyScroll starts from three ideas:
+
+- **Critical thinking matters more in the AI era.** When answers are easy to generate, knowing what to trust becomes a skill of its own.
+- **Scrolling is already part of everyday life.** Instead of pretending that habit will disappear, StudyScroll redirects a small part of it toward something useful and enjoyable.
+- **Studying can also happen in small moments.** Short practice will not replace focused study, but it can complement it in places where traditional study does not fit.
+
+The learning science and research behind these choices are covered in the [StudyScroll whitepaper](docs/WHITEPAPER.md).
 
 ## Mobile first
 
